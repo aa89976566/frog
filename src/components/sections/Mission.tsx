@@ -67,7 +67,7 @@ export function Mission() {
           transition={{ delay: 0.2 }}
           className="mt-6 max-w-xl text-lg text-mist"
         >
-          狗看見青蛙會興奮，是本能。別阻止——把這股衝勁變成社區遊戲。
+          狗看見青蛙會興奮，是本能。別阻止——把這股興奮變成社區遊戲。
         </motion.p>
 
         <ol className="mt-16 grid gap-0 md:grid-cols-2">

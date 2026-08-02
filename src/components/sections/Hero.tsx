@@ -52,7 +52,7 @@ export function Hero() {
           {WALL.map((line, i) => (
             <span
               key={`${line}-${i}`}
-              className="font-display w-full whitespace-nowrap text-center text-[14vw] font-black text-fog-type/[0.16] md:text-[11vw]"
+              className="font-display w-full whitespace-nowrap text-center text-[14vw] font-black text-fog-type/[0.22] md:text-[11vw]"
               style={{
                 transform: i % 2 === 0 ? "translateX(-3%)" : "translateX(3%)",
               }}
@@ -71,27 +71,27 @@ export function Hero() {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-2"
+          className="mb-1"
         >
-          <p className="font-display text-[clamp(2.8rem,10vw,6.5rem)] leading-none tracking-[0.04em] text-cream-ink">
+          <p className="text-[clamp(2.75rem,9vw,5.75rem)] font-bold leading-none tracking-[0.08em] text-cream-ink">
             嗷嗚計畫
           </p>
-          <p className="mt-2 font-display text-sm tracking-[0.35em] text-dog-amber md:text-base">
+          <p className="mt-3 text-sm font-medium tracking-[0.28em] text-dog-amber md:text-base">
             青蛙誰在怕 · FURMOSA 匠寵
           </p>
         </motion.div>
 
-        <h1 className="sr-only">Who&apos;s Afraid of the Frog?</h1>
+        <h1 className="sr-only">Who&apos;s Afraid of the Frog? 嗷嗚計畫｜青蛙誰在怕</h1>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mt-4"
+          className="relative mt-2 md:mt-3"
         >
           <FrogMascot
             className="relative z-10 mx-auto drop-shadow-[0_28px_48px_rgba(0,0,0,0.5)]"
-            size={280}
+            size={300}
           />
         </motion.div>
 
