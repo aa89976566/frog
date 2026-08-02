@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -40,24 +39,21 @@ export function GrassHunt() {
   );
   const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const updatePointer = useCallback((clientX: number, clientY: number) => {
+  const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
     const el = stageRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
-    const x = ((clientX - rect.left) / rect.width) * 100;
-    const y = ((clientY - rect.top) / rect.height) * 100;
-    setPointer({
-      x: Math.min(100, Math.max(0, x)),
-      y: Math.min(100, Math.max(0, y)),
-    });
-  }, []);
-
-  const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
-    updatePointer(e.clientX, e.clientY);
+    const px = ((e.clientX - rect.left) / rect.width) * 100;
+    const py = ((e.clientY - rect.top) / rect.height) * 100;
+    const clamped = {
+      x: Math.min(100, Math.max(0, px)),
+      y: Math.min(100, Math.max(0, py)),
+    };
+    setPointer(clamped);
 
     // Occasional peek while parting grass — always just out of reach
     if (Math.random() > 0.96 && !frog) {
-      const x = Math.min(82, Math.max(18, pointer.x + (Math.random() - 0.5) * 18));
+      const x = Math.min(82, Math.max(18, clamped.x + (Math.random() - 0.5) * 18));
       const y = 55 + Math.random() * 20;
       setFrog({ x, y, key: Date.now() });
       if (hideTimer.current) clearTimeout(hideTimer.current);
