@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+:root {
+  --forest-night: #0a1a12;
+  --canopy: #132b1e;
+  --moss: #2d5a3d;
+  --leaf: #3f7a52;
+  --frog-skin: #6bae4a;
+  --frog-deep: #3d7a2e;
+  --frog-belly: #c8e6a0;
+  --fog-type: #c5d9b0;
+  --mist: #9bb092;
+  --dog-amber: #f0b429;
+  --soil: #2a1c12;
+  --cream-ink: #eef2e6;
+  --grain-opacity: 0.18;
+
+  --background: var(--forest-night);
+  --foreground: var(--cream-ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-forest-night: var(--forest-night);
+  --color-canopy: var(--canopy);
+  --color-moss: var(--moss);
+  --color-leaf: var(--leaf);
+  --color-frog-skin: var(--frog-skin);
+  --color-frog-deep: var(--frog-deep);
+  --color-frog-belly: var(--frog-belly);
+  --color-fog-type: var(--fog-type);
+  --color-mist: var(--mist);
+  --color-dog-amber: var(--dog-amber);
+  --color-soil: var(--soil);
+  --color-cream-ink: var(--cream-ink);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+html {
+  background: var(--forest-night);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), "Noto Sans TC", sans-serif;
+  overflow-x: clip;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--frog-skin) 55%, transparent);
+  color: var(--cream-ink);
+}
+
+.font-display {
+  font-family: var(--font-display), "Arial Narrow", Impact, sans-serif;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.torn-edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 48px;
+  background: var(--forest-night);
+  clip-path: polygon(
+    0% 40%,
+    3% 70%,
+    7% 35%,
+    12% 80%,
+    18% 30%,
+    24% 75%,
+    31% 45%,
+    38% 85%,
+    45% 35%,
+    52% 70%,
+    58% 40%,
+    65% 80%,
+    72% 30%,
+    78% 75%,
+    85% 45%,
+    91% 70%,
+    96% 40%,
+    100% 65%,
+    100% 100%,
+    0% 100%
+  );
+}
+
+@keyframes grass-sway {
+  0%,
+  100% {
+    transform: skewX(0deg) translateX(0);
+  }
+  50% {
+    transform: skewX(2deg) translateX(4px);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.015) translateY(-2px);
+  }
+}
+
+@keyframes blink-lid {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(0);
+  }
+  94%,
+  96% {
+    transform: scaleY(1);
+  }
+}
+
+.grass-blade {
+  transform-origin: bottom center;
+  animation: grass-sway 4s ease-in-out infinite;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grass-blade,
+  .frog-breathe {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
