@@ -55,13 +55,13 @@ export function GrassHunt() {
   const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
     updatePointer(e.clientX, e.clientY);
 
-    // Rare peek: when moving through dense grass zone
-    if (Math.random() > 0.985 && !frog) {
-      const x = 18 + Math.random() * 64;
-      const y = 48 + Math.random() * 28;
+    // Occasional peek while parting grass — always just out of reach
+    if (Math.random() > 0.96 && !frog) {
+      const x = Math.min(82, Math.max(18, pointer.x + (Math.random() - 0.5) * 18));
+      const y = 55 + Math.random() * 20;
       setFrog({ x, y, key: Date.now() });
       if (hideTimer.current) clearTimeout(hideTimer.current);
-      hideTimer.current = setTimeout(() => setFrog(null), 650);
+      hideTimer.current = setTimeout(() => setFrog(null), 780);
     }
   };
 
@@ -71,20 +71,20 @@ export function GrassHunt() {
     };
   }, []);
 
-  // Occasional autonomous peek so mobile/idle users still see the gag
+  // Autonomous peek so idle / touch users still see the gag
   useEffect(() => {
     const id = setInterval(() => {
       if (document.hidden) return;
       setFrog((current) => {
         if (current) return current;
         return {
-          x: 20 + Math.random() * 60,
-          y: 52 + Math.random() * 24,
+          x: 22 + Math.random() * 56,
+          y: 58 + Math.random() * 18,
           key: Date.now(),
         };
       });
-      setTimeout(() => setFrog(null), 700);
-    }, 5200);
+      setTimeout(() => setFrog(null), 820);
+    }, 3600);
 
     return () => clearInterval(id);
   }, []);
@@ -132,28 +132,8 @@ export function GrassHunt() {
           }}
         />
 
-        <AnimatePresence>
-          {frog && (
-            <motion.div
-              key={frog.key}
-              initial={{ opacity: 0, scale: 0.7, y: 16 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.85, y: 20 }}
-              transition={{ duration: 0.22 }}
-              className="pointer-events-none absolute z-20"
-              style={{
-                left: `${frog.x}%`,
-                top: `${frog.y}%`,
-                transform: "translate(-50%, -50%)",
-              }}
-            >
-              <FrogMascot interactive={false} size={96} />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         {/* Grass blades that lean away from pointer */}
-        <div className="absolute inset-x-0 bottom-0 top-[18%] overflow-hidden">
+        <div className="absolute inset-x-0 bottom-0 top-[18%] z-20 overflow-hidden">
           {blades.map((blade) => {
             const dx = blade.x - pointer.x;
             const dist = Math.abs(dx);
@@ -185,9 +165,30 @@ export function GrassHunt() {
           })}
         </div>
 
+        {/* Frog peeks ABOVE parting grass, then vanishes */}
+        <AnimatePresence>
+          {frog && (
+            <motion.div
+              key={frog.key}
+              initial={{ opacity: 0, scale: 0.7, y: 24 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 28 }}
+              transition={{ duration: 0.2 }}
+              className="pointer-events-none absolute z-30"
+              style={{
+                left: `${frog.x}%`,
+                top: `${frog.y}%`,
+                transform: "translate(-50%, -40%)",
+              }}
+            >
+              <FrogMascot interactive={false} size={110} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Custom cursor hint */}
         <div
-          className="pointer-events-none absolute z-30 hidden h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dog-amber/70 md:block"
+          className="pointer-events-none absolute z-40 hidden h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dog-amber/70 md:block"
           style={{ left: `${pointer.x}%`, top: `${pointer.y}%` }}
           aria-hidden="true"
         />
