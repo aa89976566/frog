@@ -135,7 +135,7 @@ export function TheTest() {
           )}
         </AnimatePresence>
 
-        <div className="relative mt-12 flex min-h-[340px] w-full items-center justify-center md:min-h-[400px]">
+        <div className="relative mt-12 flex min-h-[380px] w-full items-center justify-center overflow-visible md:min-h-[440px]">
           {(phase === "idle" || phase === "holding") && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -190,17 +190,17 @@ export function TheTest() {
           <AnimatePresence>
             {showDog && (
               <motion.div
-                initial={{ opacity: 0, y: 180, scale: 0.7, rotate: -8 }}
-                animate={{ opacity: 1, y: 90, scale: 1, rotate: 0 }}
+                initial={{ opacity: 0, y: 220, scale: 0.65, rotate: -10 }}
+                animate={{ opacity: 1, y: 40, scale: 1, rotate: 0 }}
                 transition={{
                   type: "spring",
-                  stiffness: 220,
-                  damping: 16,
-                  mass: 0.9,
+                  stiffness: 240,
+                  damping: 14,
+                  mass: 0.85,
                 }}
-                className="absolute bottom-0 right-[8%] md:right-[18%]"
+                className="absolute -bottom-4 right-[4%] z-20 md:right-[12%]"
               >
-                <ExcitedDog size={200} />
+                <ExcitedDog size={220} />
               </motion.div>
             )}
           </AnimatePresence>
