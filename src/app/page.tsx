@@ -1,10 +1,10 @@
 import { SiteNav } from "@/components/layout/SiteNav";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { Hero } from "@/components/sections/Hero";
-import { Whispers } from "@/components/sections/Whispers";
-import { DogGaze } from "@/components/sections/DogGaze";
-import { GrassHunt } from "@/components/sections/GrassHunt";
-import { Mission } from "@/components/sections/Mission";
+import { WhoIsAfraid } from "@/components/sections/WhoIsAfraid";
+import { TheTest } from "@/components/sections/TheTest";
+import { Exhibit } from "@/components/sections/Exhibit";
+import { Campaign } from "@/components/sections/Campaign";
 
 export default function Home() {
   return (
@@ -12,10 +12,10 @@ export default function Home() {
       <SiteNav />
       <main>
         <Hero />
-        <Whispers />
-        <DogGaze />
-        <GrassHunt />
-        <Mission />
+        <WhoIsAfraid />
+        <TheTest />
+        <Exhibit />
+        <Campaign />
       </main>
       <SiteFooter />
     </>

@@ -3,54 +3,48 @@
 import { motion } from "framer-motion";
 
 const links = [
-  { href: "#whispers", label: "傳聞" },
-  { href: "#gaze", label: "遠望" },
-  { href: "#hunt", label: "草叢" },
-  { href: "#mission", label: "任務" },
+  { href: "#afraid", label: "誰在怕" },
+  { href: "#test", label: "心理測驗" },
+  { href: "#exhibit", label: "展品" },
+  { href: "#campaign", label: "嗷嗚計畫" },
 ];
 
 export function SiteNav() {
   return (
     <motion.header
-      initial={{ y: -24, opacity: 0 }}
+      initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-forest-night/55 backdrop-blur-md"
+      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+      className="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-ink/50 backdrop-blur-md"
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 md:px-8 md:py-4">
-        <a href="#top" className="group flex min-w-0 items-center gap-3">
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-frog-skin text-[11px] font-bold text-forest-night">
-            蛙
+      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3.5 md:px-8">
+        <a href="#top" className="min-w-0">
+          <span className="block font-display text-sm font-bold tracking-[0.2em] text-fog md:text-base">
+            FURMOSA <span className="font-body font-bold tracking-normal">匠寵</span>
           </span>
-          <span className="min-w-0 leading-tight">
-            <span className="block truncate font-display text-sm tracking-[0.18em] text-cream-ink md:text-base">
-              FURMOSA{" "}
-              <span className="font-body tracking-normal">匠寵</span>
-            </span>
-            <span className="block truncate text-[11px] tracking-[0.12em] text-fog-type md:text-xs md:tracking-[0.18em]">
-              嗷嗚計畫｜青蛙誰在怕
-            </span>
+          <span className="block truncate text-[11px] tracking-[0.16em] text-fog-dim">
+            嗷嗚計畫｜青蛙誰在怕
           </span>
         </a>
 
-        <ul className="hidden items-center gap-7 md:flex">
-          {links.map((link) => (
-            <li key={link.href}>
+        <ul className="hidden items-center gap-8 md:flex">
+          {links.map((l) => (
+            <li key={l.href}>
               <a
-                href={link.href}
-                className="font-display text-xs tracking-[0.22em] text-fog-type transition-colors hover:text-dog-amber"
+                href={l.href}
+                className="text-xs tracking-[0.18em] text-fog-dim transition-colors hover:text-fog"
               >
-                {link.label}
+                {l.label}
               </a>
             </li>
           ))}
         </ul>
 
         <a
-          href="#mission"
-          className="font-display text-xs tracking-[0.18em] text-dog-amber transition-opacity hover:opacity-80 md:text-sm"
+          href="#campaign"
+          className="shrink-0 text-xs tracking-[0.16em] text-dog-gold transition-opacity hover:opacity-80 md:text-sm"
         >
-          開始找蛙
+          加入計畫
         </a>
       </nav>
     </motion.header>

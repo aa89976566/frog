@@ -1,16 +1,13 @@
 # 嗷嗚計畫｜青蛙誰在怕
 
-Furmosa 匠寵 campaign site — an interactive scroll story about dogs, frogs, and instinct turned into play.
+Furmosa 匠寵 brand experience — an Awwwards-style interactive story for Taiwanese dog owners.
+
+> 青蛙從來沒嚇到狗。牠嚇到的，是你。
 
 ## Stack
 
-- Next.js (App Router)
-- React
-- Tailwind CSS
-- GSAP + ScrollTrigger
-- Lenis
-- Framer Motion
-- Original SVG mascot
+- Next.js · React · Tailwind CSS
+- GSAP + ScrollTrigger · Lenis · Framer Motion
 
 ## Develop
 
@@ -19,15 +16,10 @@ npm install
 npm run dev
 ```
 
-## Build
+## Pages
 
-```bash
-npm run build
-npm start
-```
-
-## Creative notes
-
-- Design language inspired by oversized type / immersive scroll campaigns (layout only).
-- Original frog mascot — not Pepe, not Lil Frog artwork.
-- The dog is the hero; the frog is the mystery.
+1. Hero — mysterious frog watches you
+2. Who is afraid — owner vs dog, leash pull scroll
+3. The Test — hold to reveal 青蛙凍乾
+4. Exhibit F-001 — museum product presentation
+5. 嗷嗚計畫 — campaign invitation
