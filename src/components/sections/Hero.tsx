@@ -29,27 +29,23 @@ export function Hero() {
   });
 
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
-  const charY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
+  const charY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
   const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
   const scaleOut = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
 
-  // Character tilt from mouse
-  const tiltX = useTransform(springY, [-0.5, 0.5], [6, -6]);
-  const tiltY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
-  const shiftX = useTransform(springX, [-0.5, 0.5], [-18, 18]);
-  const shiftY = useTransform(springY, [-0.5, 0.5], [-10, 10]);
+  const tiltX = useTransform(springY, [-0.5, 0.5], [5, -5]);
+  const tiltY = useTransform(springX, [-0.5, 0.5], [-7, 7]);
+  const shiftX = useTransform(springX, [-0.5, 0.5], [-16, 16]);
+  const shiftY = useTransform(springY, [-0.5, 0.5], [-8, 8]);
 
-  // Typography parallax opposite to mouse
   const typeShiftX = useTransform(springX, [-0.5, 0.5], [28, -28]);
   const typeShiftY = useTransform(springY, [-0.5, 0.5], [16, -16]);
 
   useEffect(() => {
     setReady(true);
     const onMove = (e: PointerEvent) => {
-      const x = e.clientX / window.innerWidth - 0.5;
-      const y = e.clientY / window.innerHeight - 0.5;
-      mouseX.set(x);
-      mouseY.set(y);
+      mouseX.set(e.clientX / window.innerWidth - 0.5);
+      mouseY.set(e.clientY / window.innerHeight - 0.5);
     };
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);
@@ -61,7 +57,6 @@ export function Hero() {
       ref={ref}
       className="poster relative flex items-center justify-center overflow-hidden"
     >
-      {/* Psychedelic cloud field */}
       <motion.div
         style={{ y: bgY, scale: scaleOut, opacity: fade }}
         className="absolute inset-0"
@@ -90,7 +85,6 @@ export function Hero() {
         />
       </motion.div>
 
-      {/* Continuous marquee typography wall — lilfrogeth experience pattern */}
       <motion.div
         style={{ x: typeShiftX, y: typeShiftY, opacity: fade }}
         className="pointer-events-none absolute inset-0 z-[1] flex flex-col justify-center gap-[0.2vh] overflow-hidden rotate-[-8deg] scale-125"
@@ -117,45 +111,40 @@ export function Hero() {
         })}
       </motion.div>
 
-      {/* Soft vignette so character pops */}
       <div
         className="pointer-events-none absolute inset-0 z-[2]"
         style={{
           background:
-            "radial-gradient(ellipse 55% 65% at 50% 55%, transparent 20%, rgba(10,4,20,0.45) 100%)",
+            "radial-gradient(ellipse 60% 70% at 50% 55%, transparent 15%, rgba(10,4,20,0.5) 100%)",
         }}
         aria-hidden="true"
       />
 
-      {/* Hero character — float + mouse tilt */}
+      {/* Drive hero artwork — landscape */}
       <motion.div
-        style={{
-          y: charY,
-          opacity: fade,
-        }}
-        className="relative z-10 flex h-full w-full max-w-5xl items-end justify-center px-2 pt-16 [perspective:1200px] md:items-center"
+        style={{ y: charY, opacity: fade }}
+        className="relative z-10 flex h-full w-full items-center justify-center px-3 pt-20 [perspective:1200px] md:px-8"
       >
         <motion.div
-          initial={{ opacity: 0, scale: 0.86, y: 40 }}
+          initial={{ opacity: 0, scale: 0.9, y: 36 }}
           animate={ready ? { opacity: 1, scale: 1, y: 0 } : undefined}
-          transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+          transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1], delay: 0.12 }}
           style={{ x: shiftX, y: shiftY, rotateX: tiltX, rotateY: tiltY }}
-          className="relative"
+          className="relative w-full max-w-6xl"
         >
-          <div className="hero-float relative aspect-[2/3] w-[min(92vw,520px)]">
+          <div className="hero-float relative aspect-[16/9] w-full overflow-hidden rounded-sm shadow-[0_40px_80px_rgba(0,0,0,0.55)]">
             <Image
-              src="/images/hero-frog-suit.png"
+              src="/images/hero-frog-suit.jpg"
               alt="嗨嗨計畫｜匠寵 — 青蛙誰在怕"
               fill
               priority
-              sizes="(max-width: 768px) 92vw, 520px"
-              className="object-contain object-bottom drop-shadow-[0_30px_60px_rgba(0,0,0,0.55)]"
+              sizes="(max-width: 768px) 96vw, 1152px"
+              className="object-cover object-center"
             />
           </div>
         </motion.div>
       </motion.div>
 
-      {/* Brand badge — bottom right like mock */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -177,7 +166,6 @@ export function Hero() {
         </span>
       </motion.div>
 
-      {/* Scroll cue */}
       <motion.a
         href="#afraid"
         initial={{ opacity: 0 }}
@@ -188,7 +176,6 @@ export function Hero() {
         繼續往下 ↓
       </motion.a>
 
-      {/* Torn brush edge */}
       <div className="hero-torn-edge z-30" aria-hidden="true" />
     </section>
   );
