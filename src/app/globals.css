@@ -99,6 +99,44 @@ body {
   transform: translateZ(0);
 }
 
+.hero-scene {
+  isolation: isolate;
+}
+
+@keyframes hero-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes hero-marquee-rev {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-marquee-track {
+  will-change: transform;
+}
+
+.hero-marquee {
+  animation: hero-marquee 22s linear infinite;
+}
+
+.hero-marquee-rev {
+  animation: hero-marquee-rev 26s linear infinite;
+}
+
+.hero-type-wall {
+  user-select: none;
+}
+
 @keyframes breathe {
   0%,
   100% {
@@ -129,6 +167,11 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-marquee,
+  .hero-marquee-rev {
+    animation: none !important;
+  }
+
   *,
   *::before,
   *::after {
