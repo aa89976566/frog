@@ -218,6 +218,46 @@ body {
   isolation: isolate;
 }
 
+/* Default: fully visible. Entrance hide only when motion is explicitly allowed. */
+.hero-stage.can-motion:not(.is-entered) .hero-enter-bg {
+  opacity: 0;
+}
+
+.hero-stage.can-motion:not(.is-entered) .hero-enter-art {
+  opacity: 0;
+  transform: translateY(28px) scale(0.96);
+}
+
+.hero-stage.can-motion:not(.is-entered) .hero-enter-fg {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.hero-stage.can-motion:not(.is-entered) .hero-enter-type {
+  transform: translateY(110%);
+}
+
+.hero-stage.can-motion.is-entered .hero-enter-bg {
+  transition: opacity 0.55s ease;
+}
+
+.hero-stage.can-motion.is-entered .hero-enter-art {
+  transition:
+    opacity 1s cubic-bezier(0.22, 1, 0.36, 1) 0.28s,
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.28s;
+}
+
+.hero-stage.can-motion.is-entered .hero-enter-fg {
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.62s,
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.62s;
+}
+
+.hero-stage.can-motion.is-entered .hero-enter-type {
+  transition: transform 0.95s cubic-bezier(0.22, 1, 0.36, 1)
+    var(--enter-delay, 0.15s);
+}
+
 .poster {
   min-height: 100svh;
   min-height: 100dvh;

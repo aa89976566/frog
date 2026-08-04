@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import {
   motion,
-  useMotionTemplate,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -15,11 +14,9 @@ import {
 /**
  * Hero — immersive editorial poster
  *
- * Asset: single flattened JPEG (no transparent layers / sequence).
- * Depth is built with typography, texture, masks, and controlled transforms —
- * never fake cutouts of objects inside the artwork.
- *
- * Motion language inspired by lilfrogeth.com (composition only; no copied assets).
+ * Asset: single flattened JPEG/WebP (no transparent layers / sequence).
+ * Depth = typography + texture + masks + controlled transforms.
+ * Motion language inspired by lilfrogeth.com (composition only).
  */
 
 const HERO_SRC = "/assets/hero/hero-main.webp";
@@ -29,9 +26,12 @@ const TYPE_LINES = ["嗨嗨計畫", "青蛙誰在怕", "嗨嗨計畫", "青蛙�
 
 export function Hero() {
   const rootRef = useRef<HTMLElement>(null);
-  const reduced = useReducedMotion();
+  const reducedMotion = useReducedMotion();
+  const canMotion = reducedMotion === false;
   const [finePointer, setFinePointer] = useState(false);
   const [imgSrc, setImgSrc] = useState(HERO_SRC);
+  const [entered, setEntered] = useState(false);
+  const [scrollLive, setScrollLive] = useState(false);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -43,28 +43,23 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  /* Scroll-driven layer speeds — native scroll, mapped transforms only */
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "28%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
-  const typeY = useTransform(scrollYProgress, [0, 1], ["0%", "-32%"]);
-  const typeOpacity = useTransform(scrollYProgress, [0, 0.55, 0.85], [1, 0.55, 0]);
-  const artY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
-  const artScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.35, 0.55], [1, 0.4, 0]);
-  const copyY = useTransform(scrollYProgress, [0, 0.55], ["0%", "40%"]);
-  const maskRise = useTransform(scrollYProgress, [0.35, 0.95], ["100%", "0%"]);
-  const stageFade = useTransform(scrollYProgress, [0.7, 1], [1, 0.15]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const typeY = useTransform(scrollYProgress, [0, 1], [0, -180]);
+  const typeOpacity = useTransform(scrollYProgress, [0, 0.55, 0.85], [1, 0.5, 0]);
+  const artY = useTransform(scrollYProgress, [0, 1], [0, 70]);
+  const artScale = useTransform(scrollYProgress, [0, 1], [1, 1.07]);
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.35, 0.55], [1, 0.35, 0]);
+  const copyY = useTransform(scrollYProgress, [0, 0.55], [0, 48]);
+  const maskY = useTransform(scrollYProgress, [0.35, 0.95], ["100%", "0%"]);
+  const stageOpacity = useTransform(scrollYProgress, [0.72, 1], [1, 0.2]);
 
-  /* Pointer depth — different intensities per layer */
-  const bgShiftX = useTransform(springX, [-0.5, 0.5], [-10, 10]);
-  const typeShiftX = useTransform(springX, [-0.5, 0.5], [28, -28]);
-  const typeShiftY = useTransform(springY, [-0.5, 0.5], [14, -14]);
-  const artShiftX = useTransform(springX, [-0.5, 0.5], [-14, 14]);
-  const artShiftY = useTransform(springY, [-0.5, 0.5], [-8, 8]);
-  const fgShiftX = useTransform(springX, [-0.5, 0.5], [-6, 6]);
-  const fgShiftY = useTransform(springY, [-0.5, 0.5], [-4, 4]);
-
-  const artTransform = useMotionTemplate`translate3d(${artShiftX}px, calc(${artY} + ${artShiftY}px), 0) scale(${artScale})`;
+  const bgShiftX = useTransform(springX, [-0.5, 0.5], [-8, 8]);
+  const typeShiftX = useTransform(springX, [-0.5, 0.5], [24, -24]);
+  const typeShiftY = useTransform(springY, [-0.5, 0.5], [12, -12]);
+  const artShiftX = useTransform(springX, [-0.5, 0.5], [-12, 12]);
+  const artShiftY = useTransform(springY, [-0.5, 0.5], [-7, 7]);
+  const fgShiftX = useTransform(springX, [-0.5, 0.5], [-5, 5]);
 
   useEffect(() => {
     const mq = window.matchMedia("(pointer: fine)");
@@ -75,7 +70,20 @@ export function Hero() {
   }, []);
 
   useEffect(() => {
-    if (reduced || !finePointer) {
+    /* Entrance via class — never leave critical art at opacity 0 via FM initial */
+    const enterId = requestAnimationFrame(() => setEntered(true));
+    const liveId = window.setTimeout(
+      () => setScrollLive(true),
+      canMotion ? 1100 : 0,
+    );
+    return () => {
+      cancelAnimationFrame(enterId);
+      window.clearTimeout(liveId);
+    };
+  }, [canMotion]);
+
+  useEffect(() => {
+    if (!canMotion || !finePointer) {
       mouseX.set(0);
       mouseY.set(0);
       return;
@@ -106,31 +114,26 @@ export function Hero() {
       window.removeEventListener("pointermove", onMove);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [finePointer, reduced, mouseX, mouseY]);
+  }, [finePointer, canMotion, mouseX, mouseY]);
 
-  const instant = reduced
-    ? { duration: 0 }
-    : { duration: 1.05, ease: [0.22, 1, 0.36, 1] as const };
+  const motionOn = scrollLive && canMotion;
 
   return (
     <section
       id="top"
       ref={rootRef}
-      className="hero-stage relative h-[175svh]"
+      className={`hero-stage relative h-[175svh]${canMotion ? " can-motion" : ""}${entered ? " is-entered" : ""}`}
       aria-label="嗨嗨計畫主視覺"
     >
       <div className="sticky top-0 h-[100svh] overflow-hidden">
-        {/* 1. Atmospheric field derived from artwork palette */}
+        {/* 1. Atmospheric field from artwork palette */}
         <motion.div
-          className="absolute inset-0"
+          className="hero-enter-bg absolute inset-0"
           style={
-            reduced
-              ? undefined
-              : { y: bgY, scale: bgScale, x: bgShiftX, opacity: stageFade }
+            motionOn
+              ? { y: bgY, scale: bgScale, x: bgShiftX, opacity: stageOpacity }
+              : undefined
           }
-          initial={reduced ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: reduced ? 0 : 0.55 }}
           aria-hidden="true"
         >
           <div
@@ -161,30 +164,20 @@ export function Hero() {
         <motion.div
           className="pointer-events-none absolute inset-[-8%] z-[1] flex items-center justify-center overflow-hidden"
           style={
-            reduced
-              ? { opacity: typeOpacity }
-              : {
-                  x: typeShiftX,
-                  y: typeShiftY,
-                  opacity: typeOpacity,
-                }
+            motionOn
+              ? { x: typeShiftX, y: typeShiftY, opacity: typeOpacity }
+              : { opacity: typeOpacity }
           }
           aria-hidden="true"
         >
           <motion.div
-            style={reduced ? undefined : { y: typeY }}
+            style={motionOn ? { y: typeY } : undefined}
             className="flex w-[140%] rotate-[-8deg] flex-col gap-[0.12em]"
           >
             {TYPE_LINES.map((line, i) => (
               <div key={`${line}-${i}`} className="overflow-hidden">
-                <motion.p
-                  initial={reduced ? false : { y: "110%" }}
-                  animate={{ y: "0%" }}
-                  transition={{
-                    ...instant,
-                    delay: reduced ? 0 : 0.18 + i * 0.08,
-                  }}
-                  className={`hero-type-line whitespace-nowrap text-center font-black leading-[0.86] tracking-tight text-[#f5e14a]/[0.88] ${
+                <p
+                  className={`hero-enter-type hero-type-line whitespace-nowrap text-center font-black leading-[0.86] tracking-tight text-[#f5e14a]/[0.88] ${
                     i % 2 === 1 ? "hero-marquee-rev" : "hero-marquee"
                   }`}
                   style={{
@@ -192,10 +185,11 @@ export function Hero() {
                     textShadow: "0 2px 0 rgba(0,0,0,0.3)",
                     animationDuration: `${18 + (i % 3) * 4}s`,
                     animationDelay: `${i * -2.5}s`,
+                    ["--enter-delay" as string]: `${0.12 + i * 0.07}s`,
                   }}
                 >
                   {`${line}　${line}　${line}　${line}　${line}　`}
-                </motion.p>
+                </p>
               </div>
             ))}
           </motion.div>
@@ -210,26 +204,25 @@ export function Hero() {
           aria-hidden="true"
         />
 
-        {/* 3. Dominant artwork — intact flattened image */}
+        {/* 3. Dominant artwork — intact flattened image (always visible by default) */}
         <motion.div
           className="absolute inset-0 z-10 flex items-center justify-center px-0 pt-16 md:pt-12"
-          style={{ opacity: stageFade }}
+          style={motionOn ? { opacity: stageOpacity } : undefined}
         >
           <motion.div
-            className="hero-art relative h-[min(72svh,680px)] w-full max-w-none md:h-[min(78svh,760px)]"
-            initial={reduced ? false : { opacity: 0, scale: 0.94, y: 36 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{
-              ...instant,
-              delay: reduced ? 0 : 0.32,
-            }}
+            className="hero-enter-art hero-art relative h-[min(72svh,680px)] w-full md:h-[min(78svh,760px)]"
+            style={
+              motionOn
+                ? { x: artShiftX, y: artY, scale: artScale }
+                : undefined
+            }
           >
             <motion.div
               className="relative h-full w-full will-change-transform"
-              style={reduced ? undefined : { transform: artTransform }}
+              style={motionOn ? { x: 0, y: artShiftY } : undefined}
             >
               <div
-                className={`relative h-full w-full ${reduced ? "" : "hero-float"}`}
+                className={`relative h-full w-full ${motionOn ? "hero-float" : ""}`}
               >
                 <Image
                   src={imgSrc}
@@ -245,23 +238,17 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* 4. Foreground brand + supporting copy + CTA */}
+        {/* 4. Foreground brand + copy + CTA */}
         <motion.div
-          className="absolute inset-x-0 bottom-0 z-20 px-4 pb-[4.75rem] md:px-10 md:pb-24"
+          className="hero-enter-fg absolute inset-x-0 bottom-0 z-20 px-4 pb-[4.75rem] md:px-10 md:pb-24"
           style={
-            reduced
-              ? { opacity: copyOpacity }
-              : { opacity: copyOpacity, y: copyY, x: fgShiftX }
+            motionOn
+              ? { opacity: copyOpacity, y: copyY, x: fgShiftX }
+              : { opacity: copyOpacity }
           }
         >
           <div className="flex items-end justify-between gap-4">
-            <motion.div
-              initial={reduced ? false : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ ...instant, delay: reduced ? 0 : 0.72 }}
-              className="max-w-[14rem] md:max-w-xs"
-              style={reduced ? undefined : { y: fgShiftY }}
-            >
+            <div className="max-w-[14rem] md:max-w-xs">
               <p className="text-[11px] leading-relaxed tracking-[0.18em] text-white/70 md:text-xs">
                 真正怕青蛙的，一直都是主人。
               </p>
@@ -282,15 +269,9 @@ export function Hero() {
                 </span>
                 <span aria-hidden="true">↓</span>
               </a>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={reduced ? false : { opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ ...instant, delay: reduced ? 0 : 0.58 }}
-              className="text-right"
-              style={reduced ? undefined : { y: fgShiftY }}
-            >
+            <div className="text-right">
               <h1 className="sr-only">嗨嗨計畫｜匠寵｜青蛙誰在怕</h1>
               <p
                 className="font-black text-4xl leading-none tracking-wide md:text-6xl"
@@ -306,14 +287,14 @@ export function Hero() {
               <span className="mt-2 inline-block rounded-full bg-black/85 px-4 py-1.5 text-xs tracking-[0.2em] text-white md:text-sm">
                 嗨嗨計畫
               </span>
-            </motion.div>
+            </div>
           </div>
         </motion.div>
 
-        {/* 5. Scroll mask — introduces next section without scroll lock */}
+        {/* 5. Scroll mask introducing next section */}
         <motion.div
           className="pointer-events-none absolute inset-x-0 bottom-0 z-[25] h-[42%] bg-ink"
-          style={{ y: maskRise }}
+          style={{ y: maskY }}
           aria-hidden="true"
         />
 
