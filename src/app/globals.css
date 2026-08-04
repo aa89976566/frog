@@ -95,21 +95,83 @@ body {
   isolation: isolate;
 }
 
-.hero-bg,
+/* L01 — procedural atmosphere */
+.hero-atm-base {
+  background: linear-gradient(160deg, #4a1578 0%, #14061f 42%, #2a0f45 100%);
+}
+
+.hero-atm-plane {
+  will-change: transform;
+}
+
+.hero-atm-a {
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 30%, rgba(196, 59, 154, 0.55), transparent 55%),
+    radial-gradient(ellipse 60% 45% at 80% 20%, rgba(94, 40, 176, 0.5), transparent 50%);
+  animation: hero-atm-drift-a 22s ease-in-out infinite alternate;
+}
+
+.hero-atm-b {
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 90%, rgba(26, 8, 56, 0.85), transparent 55%),
+    radial-gradient(circle at 60% 50%, rgba(255, 120, 200, 0.18), transparent 40%);
+  animation: hero-atm-drift-b 28s ease-in-out infinite alternate;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+.hero-atm-c {
+  background:
+    radial-gradient(ellipse 40% 30% at 30% 60%, rgba(120, 60, 200, 0.25), transparent 60%),
+    radial-gradient(ellipse 35% 28% at 75% 65%, rgba(255, 160, 90, 0.12), transparent 55%);
+  animation: hero-atm-drift-c 18s ease-in-out infinite alternate;
+}
+
+@keyframes hero-atm-drift-a {
+  from {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(3%, 2%, 0) scale(1.05);
+  }
+}
+
+@keyframes hero-atm-drift-b {
+  from {
+    transform: translate3d(2%, 1%, 0) scale(1.04);
+  }
+  to {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+}
+
+@keyframes hero-atm-drift-c {
+  from {
+    transform: translate3d(-1%, 2%, 0);
+  }
+  to {
+    transform: translate3d(2%, -2%, 0);
+  }
+}
+
 .hero-frog {
   image-rendering: auto;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   user-select: none;
+  filter:
+    drop-shadow(0 22px 28px rgba(8, 2, 18, 0.55))
+    drop-shadow(0 0 42px rgba(180, 90, 255, 0.22))
+    drop-shadow(0 0 80px rgba(255, 90, 180, 0.1));
+  will-change: transform;
 }
 
 .hero-frog-stage {
   transform-origin: 50% 80%;
 }
 
-.hero-frog {
+.hero-frog-float {
   animation: hero-frog-float 4.8s ease-in-out infinite;
-  filter: drop-shadow(0 28px 48px rgba(0, 0, 0, 0.5));
   will-change: transform;
 }
 
@@ -186,34 +248,42 @@ body {
   }
 }
 
-@keyframes hero-marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
+/* L04 — street sticker */
+.hero-sticker-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.85rem 1.15rem 0.7rem;
+  background: #ffd24a;
+  color: #1a0a2e;
+  border: 3px solid #1a0a2e;
+  border-radius: 1.1rem 1.35rem 1rem 1.4rem;
+  box-shadow:
+    4px 5px 0 #ff4db8,
+    0 12px 28px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease;
 }
 
-@keyframes hero-marquee-rev {
-  from {
-    transform: translate3d(-50%, 0, 0);
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-  }
+.hero-sticker-card:hover {
+  transform: rotate(-2deg) scale(1.04);
 }
 
-.hero-marquee-track {
-  will-change: transform;
+.hero-sticker-brand {
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 0.9;
+  letter-spacing: 0.04em;
 }
 
-.hero-marquee {
-  animation: hero-marquee 22s linear infinite;
-}
-
-.hero-marquee-rev {
-  animation: hero-marquee-rev 26s linear infinite;
+.hero-sticker-sub {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: #1a0a2e;
+  color: #ffd24a;
 }
 
 @keyframes breathe {
@@ -246,9 +316,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-marquee,
-  .hero-marquee-rev,
-  .hero-frog,
+  .hero-atm-a,
+  .hero-atm-b,
+  .hero-atm-c,
+  .hero-frog-float,
   .hero-frog-glow,
   .hero-frog-shadow {
     animation: none !important;

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Syne, Noto_Sans_TC, Instrument_Serif } from "next/font/google";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import "./globals.css";
 
 const display = Syne({
@@ -53,7 +54,10 @@ export default function RootLayout({
       className={`${display.variable} ${body.variable} ${serif.variable}`}
     >
       <body className="min-h-dvh bg-ink text-fog antialiased">
-        <SmoothScroll>{children}</SmoothScroll>
+        <SmoothScroll>
+          <GrainOverlay />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );
