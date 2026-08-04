@@ -96,11 +96,24 @@ body {
   image-rendering: auto;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  transform: translateZ(0);
 }
 
 .hero-scene {
   isolation: isolate;
+}
+
+/* Fuse marquees into the PNG so it reads as one surface */
+.hero-type-fuse {
+  z-index: 1;
+  mix-blend-mode: soft-light;
+  opacity: 0.72;
+}
+
+@supports not (mix-blend-mode: soft-light) {
+  .hero-type-fuse {
+    mix-blend-mode: overlay;
+    opacity: 0.55;
+  }
 }
 
 @keyframes hero-marquee {
@@ -131,10 +144,6 @@ body {
 
 .hero-marquee-rev {
   animation: hero-marquee-rev 26s linear infinite;
-}
-
-.hero-type-wall {
-  user-select: none;
 }
 
 @keyframes breathe {
