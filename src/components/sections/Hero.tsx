@@ -1,13 +1,11 @@
 /**
- * Hero — movie-poster compositing
+ * Hero — movie-poster compositing (lilfrogeth motion language, original assets)
  *
  * Layers (back → front):
  * 1. Text-free atmospheric background PNG
- * 2. HTML flowing typography (never rasterized into images)
- * 3. Independent transparent frog PNG
+ * 2. HTML flowing typography
+ * 3. Independent transparent frog PNG (floating poster subject)
  * 4. HTML brand lockup
- *
- * Source flattened JPEG kept only as archive: public/assets/hero/hero-main.jpg
  */
 
 const LINE_A = "青蛙誰在怕　嗷嗚計畫　青蛙誰在怕　嗷嗚計畫　";
@@ -42,7 +40,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-[-12%] z-[1] flex items-center justify-center overflow-hidden"
         aria-hidden="true"
       >
-        <div className="flex w-[150%] rotate-[-8deg] flex-col gap-[0.08em]">
+        <div className="flex w-[155%] rotate-[-8deg] flex-col gap-[0.08em]">
           {Array.from({ length: ROWS }).map((_, i) => {
             const reverse = i % 2 === 1;
             const text = reverse ? LINE_B : LINE_A;
@@ -71,31 +69,34 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Soft depth so frog stays readable over type */}
       <div
         className="pointer-events-none absolute inset-0 z-[2]"
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 50% 60% at 50% 55%, transparent 0%, rgba(10,4,20,0.28) 100%)",
+            "radial-gradient(ellipse 48% 58% at 50% 52%, transparent 0%, rgba(10,4,20,0.22) 100%)",
         }}
       />
 
-      {/* 3. Frog — independent transparent PNG */}
-      <div className="absolute inset-0 z-10 flex items-end justify-center px-2 pb-0 pt-16 md:items-center md:pt-10">
-        <img
-          src="/assets/hero/hero-frog.png"
-          alt="嗷嗚計畫青蛙角色"
-          width={877}
-          height={1215}
-          fetchPriority="high"
-          decoding="async"
-          className="hero-frog h-[min(88svh,820px)] w-auto max-w-[min(92vw,560px)] object-contain object-bottom drop-shadow-[0_24px_50px_rgba(0,0,0,0.45)] md:max-w-[min(70vw,640px)]"
-        />
+      {/* 3. Frog — dominant floating subject (reference: lilfrogeth character presence) */}
+      <div className="absolute inset-0 z-10 flex items-center justify-center px-2 pt-10 md:pt-6">
+        <div className="hero-frog-stage relative flex h-[min(92svh,900px)] w-full max-w-[720px] items-end justify-center md:max-w-[780px]">
+          <div className="hero-frog-glow" aria-hidden="true" />
+          <div className="hero-frog-shadow" aria-hidden="true" />
+          <img
+            src="/assets/hero/hero-frog.png"
+            alt="嗷嗚計畫青蛙角色"
+            width={1376}
+            height={1900}
+            fetchPriority="high"
+            decoding="async"
+            className="hero-frog relative z-[1] h-[min(86svh,860px)] w-auto max-w-[min(96vw,640px)] object-contain object-bottom md:max-w-[min(72vw,700px)]"
+          />
+        </div>
       </div>
 
       {/* 4. Brand lockup — HTML only */}
-      <div className="absolute bottom-8 right-4 z-20 text-right md:bottom-12 md:right-10">
+      <div className="absolute bottom-7 right-4 z-20 text-right md:bottom-11 md:right-10">
         <p
           className="font-black text-4xl leading-none tracking-wide md:text-6xl"
           style={{
