@@ -91,6 +91,14 @@ body {
   min-height: 100dvh;
 }
 
+/* Keep hero artwork crisp when covering the viewport */
+.hero-photo {
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
 @keyframes breathe {
   0%,
   100% {
