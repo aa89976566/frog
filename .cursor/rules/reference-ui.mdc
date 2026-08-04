@@ -1,0 +1,368 @@
+---
+description: Engineering and visual rules for building a LilFrog-inspired immersive landing page
+globs:
+  - "src/**/*.{ts,tsx,js,jsx,css,scss}"
+  - "app/**/*.{ts,tsx,js,jsx,css,scss}"
+  - "components/**/*.{ts,tsx,js,jsx,css,scss}"
+alwaysApply: true
+---
+
+# Project Role
+
+Act as a senior creative frontend engineer specializing in immersive, animation-led websites.
+
+The visual and interaction reference for this project is:
+
+https://lilfrogeth.com
+
+Treat the reference as the primary source of truth for:
+
+- Visual hierarchy
+- Composition and density
+- Section rhythm
+- Navigation behavior
+- Scroll interaction
+- Motion character
+- Responsive adaptation
+- Image layering
+- Typography scale
+- Overall creative direction
+
+Do not turn the project into a generic SaaS landing page, conventional startup website, or component-library demo.
+
+The project’s original branding, text, characters, illustrations, and assets must remain unique. Reproduce the reference’s design principles and interaction logic, but do not copy its protected artwork, logos, characters, wording, or proprietary assets.
+
+# Working Method
+
+Before changing code:
+
+1. Inspect the existing project structure, framework, dependencies, styles, and reusable components.
+2. Inspect the supplied hero design, content, and local assets.
+3. Compare the requested implementation against the reference website.
+4. Create a short implementation plan.
+5. Reuse existing architecture when it is sound.
+6. Do not rewrite unrelated files.
+
+Never invent major sections, visual styles, colors, or interaction patterns that conflict with the reference direction.
+
+If information is missing, preserve the reference website’s structural logic and use clearly replaceable placeholder content.
+
+# Creative Direction
+
+The site should feel:
+
+- Surreal
+- Character-led
+- Playful
+- Psychedelic
+- Editorial
+- Bold
+- Tactile
+- Slightly chaotic but intentionally composed
+- Premium rather than childish
+- Immersive rather than informational
+
+Avoid:
+
+- Generic gradients
+- Glassmorphism
+- Corporate cards
+- Dashboard styling
+- Excessive rounded rectangles
+- Standard centered hero layouts
+- Stock illustrations
+- Random decorative effects
+- Small, timid typography
+- Large amounts of empty white space
+- Animations without narrative purpose
+
+# Visual System
+
+Preserve these reference characteristics unless the provided design explicitly replaces them:
+
+## Color
+
+- Use a dark or highly saturated base.
+- Use a tightly controlled palette of approximately 3–5 dominant colors.
+- Favor high-contrast combinations such as purple, acid yellow, pink, green, black, and off-white.
+- Define all recurring colors as CSS variables or design tokens.
+- Do not introduce unapproved colors casually.
+
+## Typography
+
+- Typography is a primary visual object, not just body content.
+- Use oversized display typography with aggressive viewport-relative scaling.
+- Allow intentional cropping at viewport edges.
+- Use tight line height and strong weight.
+- Use uppercase display text where appropriate.
+- Keep supporting copy concise and highly legible.
+- Use `clamp()` for responsive type sizing.
+- Do not substitute the display treatment with ordinary headings.
+
+## Texture
+
+- Preserve a tactile, printed, poster-like feel.
+- Texture may be created with lightweight overlays, optimized raster assets, SVG filters, or CSS.
+- Texture must not reduce readability.
+- Never load huge uncompressed texture files.
+- Respect the project’s original artwork rather than downloading assets from the reference.
+
+## Composition
+
+- Favor layered compositions over simple vertical stacks.
+- Combine oversized typography, character artwork, foreground objects, and background patterns.
+- Controlled overflow and intentional cropping are allowed.
+- Important visual elements should respond to viewport size.
+- Every decorative layer must support depth, focus, or narrative.
+
+# Page Structure
+
+Unless project requirements say otherwise, organize the page around this experience:
+
+1. Immersive hero
+2. Short brand or character introduction
+3. Feature/story sections driven by visuals
+4. Interactive or collectible/product information
+5. Strong final call to action
+6. Minimal credits/footer
+
+Sections should feel like scenes in one continuous visual story, not independent cards.
+
+Use semantic HTML even when the visual presentation is unconventional.
+
+# Hero Requirements
+
+The hero is the primary experience.
+
+It should generally include:
+
+- A full-viewport or taller-than-viewport stage
+- An oversized typographic background
+- A dominant original character or product visual
+- Layered foreground and background assets
+- A compact floating or fixed navigation
+- Subtle entrance motion
+- Scroll-linked depth, movement, or frame progression
+- A clear but visually integrated primary action
+
+Do not place all hero elements inside a centered max-width container.
+
+The hero must remain legible and intentionally composed at:
+
+- 1440px desktop
+- 1024px laptop/tablet landscape
+- 768px tablet
+- 390px mobile
+
+Mobile should be recomposed, not merely scaled down.
+
+# Navigation
+
+Navigation should follow the reference’s compact floating-pill logic:
+
+- Fixed or sticky near the top
+- Visually lightweight
+- High contrast against the scene
+- Minimal number of destinations
+- Smooth scrolling to page sections
+- Clear hover, focus, and active states
+- Collapsed or simplified mobile behavior
+
+Navigation must not dominate the hero.
+
+Use meaningful anchor IDs and account for fixed-header scroll offset.
+
+# Motion System
+
+Motion should feel elastic, playful, and art-directed.
+
+Preferred techniques:
+
+- CSS transitions for simple states
+- CSS transforms and opacity for lightweight motion
+- Framer Motion or GSAP only if already installed or clearly justified
+- Scroll progress mapped to transforms
+- Sticky scene containers
+- Layered parallax
+- Frame-by-frame image sequences only when assets are provided
+- Mask, clip-path, scale, rotation, or position transitions
+
+Motion rules:
+
+- Animate `transform` and `opacity` whenever possible.
+- Avoid layout-thrashing properties during scroll.
+- Keep scroll handlers passive and throttle work through `requestAnimationFrame`.
+- Never create motion merely to make the page busy.
+- Motion must reinforce hierarchy, depth, discovery, or storytelling.
+- Avoid long blocking intro animations.
+- Interactive controls must respond immediately.
+- Provide a complete `prefers-reduced-motion` fallback.
+- The page must remain understandable when motion is disabled.
+
+For image-sequence animation:
+
+- Preload only the first critical frames.
+- Lazy-load later frames.
+- Draw only when the active frame changes.
+- Provide a static poster fallback.
+- Do not create a 20,000px page by repeating rendered frames as DOM images.
+- Use a sticky stage with scroll progress mapped to frame index.
+
+# Component Architecture
+
+Use maintainable, reusable components without flattening the creative design.
+
+Recommended boundaries:
+
+- `SiteHeader`
+- `HeroScene`
+- `DisplayTypography`
+- `CharacterLayer`
+- `ScrollSequence`
+- `StorySection`
+- `CTASection`
+- `SiteFooter`
+- Small reusable motion primitives
+
+Requirements:
+
+- Keep content separate from presentation where practical.
+- Store repeated copy, links, and asset metadata in typed data objects.
+- Keep components focused.
+- Avoid premature abstraction.
+- Do not create a separate component for every decorative `<div>`.
+- Do not place the entire page in one oversized component.
+- Use TypeScript when the project supports it.
+
+# Styling Rules
+
+- Follow the project’s existing styling system.
+- Do not add a second styling framework.
+- Define design tokens for colors, spacing, typography, radii, z-index, and motion.
+- Prefer fluid sizing with `clamp()`, percentages, viewport units, and aspect ratios.
+- Use absolute positioning only inside clearly defined scene containers.
+- Establish an explicit z-index scale.
+- Avoid unexplained magic numbers.
+- Comment only on non-obvious animation math or layout constraints.
+- Prevent accidental horizontal scrolling while retaining intentional visual cropping.
+
+# Assets
+
+- Use only supplied, licensed, generated, or project-owned assets.
+- Never hotlink or download artwork from the reference website.
+- Preserve transparent backgrounds and correct aspect ratios.
+- Use descriptive filenames.
+- Provide meaningful `alt` text for content images.
+- Mark purely decorative images appropriately.
+- Prefer AVIF or WebP where supported.
+- Set explicit dimensions or aspect ratios to prevent layout shift.
+- Lazy-load non-critical imagery.
+- Do not optimize assets destructively without preserving originals.
+
+# Responsive Behavior
+
+Responsive implementation is required, not optional.
+
+For every major scene:
+
+1. Define desktop composition.
+2. Define tablet adjustments.
+3. Create a deliberate mobile composition.
+4. Verify that focal artwork is not awkwardly cropped.
+5. Verify display text remains visually strong.
+6. Verify controls remain reachable and readable.
+7. Remove or simplify expensive effects on lower-powered/mobile devices when appropriate.
+
+Do not rely exclusively on one breakpoint.
+
+Prefer CSS container queries when they make component behavior more robust.
+
+# Accessibility
+
+Creative direction does not override accessibility.
+
+Required:
+
+- Semantic landmarks
+- Logical heading hierarchy
+- Keyboard-accessible navigation and controls
+- Visible focus styles
+- Sufficient text contrast
+- Descriptive labels
+- No essential information available only through animation
+- Reduced-motion support
+- Decorative imagery hidden from assistive technology
+- No scroll hijacking
+- No removal of native scrolling behavior
+
+# Performance
+
+Target:
+
+- Smooth interaction on modern mobile devices
+- Stable layout
+- Fast initial hero render
+- No unnecessary client-side JavaScript
+- No duplicate animation systems
+- No continuously running animation outside the viewport
+- No unbounded event listeners or timers
+
+Implementation expectations:
+
+- Lazy-load below-the-fold scenes.
+- Dynamically import heavy animation features when practical.
+- Pause animations when scenes leave the viewport.
+- Use responsive images.
+- Avoid loading all image-sequence frames before first paint.
+- Clean up observers, animation frames, and listeners.
+- Preserve SSR and static rendering where supported.
+
+# Integration Rules
+
+When integrating a hero or content generated elsewhere:
+
+- Preserve the project’s existing working behavior.
+- Adapt incoming content to the established visual system.
+- Do not paste incompatible markup and CSS blindly.
+- Normalize typography, spacing, colors, and motion tokens.
+- Reuse existing navigation and scene components.
+- Resolve duplicated styles and dependencies.
+- Keep one source of truth for design tokens.
+- Ensure the merged result feels like one authored website.
+- Do not let new content drift into a different design language.
+
+If incoming content conflicts with the reference:
+
+1. Preserve the meaning of the content.
+2. Recompose it using the reference-inspired visual hierarchy.
+3. Explain any important compromise before making a major structural change.
+
+# Verification Checklist
+
+Before reporting completion, verify:
+
+- The project builds without errors.
+- No TypeScript errors were introduced.
+- No broken imports or missing assets remain.
+- Desktop, tablet, and mobile layouts are intentional.
+- Navigation destinations work.
+- Scroll-linked scenes work in both directions.
+- Reduced-motion mode works.
+- Text remains readable over artwork.
+- No accidental horizontal scrollbar appears.
+- No major layout shift occurs during image loading.
+- Interactive elements have hover, focus, and pressed states.
+- The final page follows the reference’s visual and interaction logic.
+- No reference artwork, branding, or text was copied.
+
+# Response Format
+
+When completing an implementation task, respond with:
+
+1. What was implemented
+2. Files changed
+3. Important visual or engineering decisions
+4. Verification performed
+5. Remaining placeholders or asset requirements
+
+Be concise. Do not claim that something was tested unless it was actually tested.
