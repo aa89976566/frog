@@ -91,29 +91,16 @@ body {
   min-height: 100dvh;
 }
 
-/* Keep hero artwork crisp when covering the viewport */
-.hero-photo {
-  image-rendering: auto;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
 .hero-scene {
   isolation: isolate;
 }
 
-/* Fuse marquees into the PNG so it reads as one surface */
-.hero-type-fuse {
-  z-index: 1;
-  mix-blend-mode: soft-light;
-  opacity: 0.72;
-}
-
-@supports not (mix-blend-mode: soft-light) {
-  .hero-type-fuse {
-    mix-blend-mode: overlay;
-    opacity: 0.55;
-  }
+.hero-bg,
+.hero-frog {
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  user-select: none;
 }
 
 @keyframes hero-marquee {
