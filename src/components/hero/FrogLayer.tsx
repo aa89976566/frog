@@ -50,14 +50,14 @@ export function FrogLayer() {
   }, []);
 
   return (
-    <div className="absolute inset-0 z-10 flex items-end justify-center overflow-hidden px-0 pt-10">
+    <div className="absolute inset-0 z-10 flex items-center justify-center overflow-hidden px-0 pt-14 md:pt-10">
       <div
         ref={stageRef}
-        className="hero-frog-stage relative flex h-[115%] w-full max-w-none items-end justify-center"
+        className="hero-frog-stage relative flex h-full w-full max-w-none items-end justify-center pb-0"
       >
         <div className="hero-frog-glow" aria-hidden="true" />
         <div className="hero-frog-shadow" aria-hidden="true" />
-        <div className="hero-frog-float relative z-[1]">
+        <div className="hero-frog-float relative z-[1] mb-[-8vh] md:mb-[-12vh]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             ref={imgRef}
@@ -67,7 +67,7 @@ export function FrogLayer() {
             height={972}
             fetchPriority="high"
             decoding="async"
-            className="hero-frog h-[min(118svh,1100px)] w-auto max-w-none object-contain object-bottom"
+            className="hero-frog h-[min(108svh,980px)] w-auto max-w-none object-contain object-bottom md:h-[min(112svh,1080px)]"
           />
         </div>
       </div>

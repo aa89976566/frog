@@ -332,16 +332,13 @@ export function FiveActStory() {
           ref={captionRef}
           className="story-caption absolute inset-x-0 bottom-0 z-30 px-4 pb-5 pt-3 md:px-8 md:pb-7"
         >
-          <div className="mx-auto flex max-w-5xl items-end gap-4">
-            <span className="shrink-0 font-display text-sm font-extrabold tracking-[0.28em] text-[#f5e14a]">
+          <div className="mx-auto max-w-5xl">
+            <p className="story-caption-chapter">
               {current.chapter}
-            </span>
-            <div className="min-w-0">
+            </p>
+            <div className="mt-1.5 min-w-0">
               {current.lines.map((line) => (
-                <p
-                  key={line}
-                  className="text-[clamp(1.05rem,2.8vw,1.65rem)] font-bold leading-snug tracking-wide text-[#f5e14a]"
-                >
+                <p key={line} className="story-caption-line">
                   {line}
                 </p>
               ))}
