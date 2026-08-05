@@ -2,21 +2,20 @@
 
 import { motion } from "framer-motion";
 
-/** Soft closing — bright candy, no ecommerce */
 export function Close() {
   return (
     <section
       id="close"
-      className="relative flex min-h-[70svh] items-center justify-center overflow-hidden bg-[#f7e9ff]"
+      className="relative flex min-h-[70svh] items-center justify-center overflow-hidden bg-[#050706]"
     >
       <div
         className="absolute inset-0"
         aria-hidden="true"
         style={{
           background: `
-            radial-gradient(ellipse at 50% 30%, rgba(255,180,220,0.55) 0%, transparent 50%),
-            radial-gradient(ellipse at 20% 80%, rgba(200,170,255,0.45) 0%, transparent 40%),
-            linear-gradient(180deg, #ffe8f6 0%, #f7e9ff 100%)
+            radial-gradient(ellipse at 50% 30%, rgba(57,255,20,0.12) 0%, transparent 45%),
+            radial-gradient(ellipse at 80% 70%, rgba(255,56,199,0.12) 0%, transparent 40%),
+            radial-gradient(ellipse at 20% 80%, rgba(110,45,255,0.16) 0%, transparent 40%)
           `,
         }}
       />
@@ -25,7 +24,7 @@ export function Close() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-[11px] font-bold tracking-[0.4em] text-[#ff4db8]"
+          className="text-[11px] font-bold tracking-[0.4em] text-[#B8FF32]"
         >
           嗷嗚計畫
         </motion.p>
@@ -34,7 +33,7 @@ export function Close() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
-          className="mt-5 text-4xl font-black tracking-[0.06em] text-[#2a1840] md:text-6xl"
+          className="mt-5 text-4xl font-black tracking-[0.06em] text-[#39FF14] md:text-6xl"
         >
           青蛙誰在怕
         </motion.h2>
@@ -43,7 +42,7 @@ export function Close() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1, duration: 0.8 }}
-          className="mx-auto mt-8 max-w-lg text-base leading-relaxed text-[#6b4f8a] md:text-lg"
+          className="mx-auto mt-8 max-w-lg text-base leading-relaxed text-[#9ccc8a] md:text-lg"
         >
           真正怕青蛙的，一直都是主人。
           <br />
@@ -57,7 +56,7 @@ export function Close() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="mt-12 inline-flex rounded-full bg-[#F3F597] px-10 py-4 text-sm font-bold tracking-[0.22em] text-[#2a1840] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+          className="mt-12 inline-flex rounded-full bg-[#FF38C7] px-10 py-4 text-sm font-bold tracking-[0.22em] text-white transition-transform hover:scale-[1.02] active:scale-[0.98]"
         >
           跟著匠寵
         </motion.a>

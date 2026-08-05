@@ -10,10 +10,7 @@ import { BrandSticker } from "@/components/hero/BrandSticker";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * Hero — bright candy underground-comic installation
- * Seamless zoom/crop handoff into Story act 01.
- */
+/** Blacklight neon Hero — matches Lil Frogeth contrast, original branding */
 export function Hero() {
   const sceneRef = useRef<HTMLElement>(null);
 
@@ -36,15 +33,9 @@ export function Hero() {
       },
     });
 
-    if (frog) {
-      tween.to(frog, { scale: 1.28, yPercent: 10, ease: "none" }, 0);
-    }
-    if (type) {
-      tween.to(type, { opacity: 0.25, scale: 1.06, ease: "none" }, 0);
-    }
-    if (veil) {
-      tween.to(veil, { opacity: 1, ease: "none" }, 0.4);
-    }
+    if (frog) tween.to(frog, { scale: 1.3, yPercent: 10, ease: "none" }, 0);
+    if (type) tween.to(type, { opacity: 0.2, scale: 1.06, ease: "none" }, 0);
+    if (veil) tween.to(veil, { opacity: 1, ease: "none" }, 0.4);
 
     return () => {
       tween.scrollTrigger?.kill();
@@ -66,22 +57,23 @@ export function Hero() {
       </div>
       <FrogLayer />
       <BrandSticker />
-      <div className="hero-drybrush pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[14%]" aria-hidden="true" />
-      {/* Soft candy handoff — no black fog */}
+      <div className="hero-drybrush pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[12%]" aria-hidden="true" />
       <div
         className="hero-exit-veil pointer-events-none absolute inset-0 z-30 opacity-0"
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 80% 70% at 50% 55%, rgba(255,210,240,0.15) 0%, rgba(232,200,255,0.55) 100%)",
+            "radial-gradient(ellipse 80% 70% at 50% 55%, rgba(110,45,255,0.12) 0%, rgba(5,7,6,0.75) 100%)",
         }}
       />
-      <a
-        href="#story"
-        className="absolute bottom-5 left-1/2 z-40 -translate-x-1/2 text-[10px] font-bold tracking-[0.35em] text-[#f3f597] transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f3f597]"
-      >
-        往下看故事
-      </a>
+      <div className="hero-caption-bar absolute inset-x-0 bottom-0 z-40 px-4 py-2.5 text-center">
+        <a
+          href="#story"
+          className="text-[11px] font-black tracking-[0.32em] text-[#050706] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8FF32]"
+        >
+          往下看故事｜青蛙誰在怕
+        </a>
+      </div>
     </section>
   );
 }

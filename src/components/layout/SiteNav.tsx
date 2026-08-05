@@ -20,7 +20,7 @@ function RollLink({
   return (
     <a
       href={href}
-      className={`group relative inline-flex overflow-hidden text-[11px] font-medium tracking-[0.16em] text-white/75 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5e14a] ${className}`}
+      className={`group relative inline-flex overflow-hidden text-[11px] font-medium tracking-[0.16em] text-white/75 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8FF32] ${className}`}
     >
       <span className="block transition-transform duration-300 ease-out group-hover:-translate-y-full">
         {label}
@@ -53,13 +53,13 @@ export function SiteNav() {
       <div className="pointer-events-auto mx-auto mt-3 flex max-w-[min(100%,42rem)] items-center justify-between gap-3 px-3 md:mt-5 md:px-4">
         <nav
           aria-label="主要導覽"
-          className="flex w-full items-center justify-between gap-3 rounded-full border border-[#2a1840]/15 bg-[#2a1840]/55 px-3 py-2 shadow-[0_10px_30px_rgba(80,30,120,0.25)] backdrop-blur-md md:px-5 md:py-2.5"
+          className="flex w-full items-center justify-between gap-3 rounded-full border border-[#39FF14]/20 bg-[#050706]/70 px-3 py-2 shadow-[0_10px_30px_rgba(0,0,0,0.45)] backdrop-blur-md md:px-5 md:py-2.5"
         >
           <a
             href="#top"
-            className="flex min-w-0 items-center gap-2 rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5e14a]"
+            className="flex min-w-0 items-center gap-2 rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8FF32]"
           >
-            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#b6ff3c] text-[10px] font-black text-[#1a0a2e] transition-transform duration-300 hover:scale-105 md:h-8 md:w-8 md:text-[11px]">
+            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#39FF14] text-[10px] font-black text-[#050706] transition-transform duration-300 hover:scale-105 md:h-8 md:w-8 md:text-[11px]">
               蛙
             </span>
             <span className="truncate text-xs font-bold tracking-[0.14em] text-white md:text-sm">
@@ -77,7 +77,7 @@ export function SiteNav() {
 
           <a
             href="#story"
-            className="group relative shrink-0 overflow-hidden rounded-full bg-[#ff4db8] px-3 py-1.5 text-[10px] font-bold tracking-[0.16em] text-white transition-transform duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f5e14a] active:scale-[0.97] md:text-[11px]"
+            className="group relative shrink-0 overflow-hidden rounded-full bg-[#FF38C7] px-3 py-1.5 text-[10px] font-bold tracking-[0.16em] text-white transition-transform duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8FF32] active:scale-[0.97] md:text-[11px]"
           >
             <span className="relative z-10">開始</span>
           </a>
