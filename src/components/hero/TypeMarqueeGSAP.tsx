@@ -56,14 +56,14 @@ export function TypeMarqueeGSAP() {
             <div
               key={i}
               className="overflow-hidden whitespace-nowrap leading-[0.86]"
-              style={{ opacity: 0.55 + (i % 3) * 0.12 }}
+              style={{ opacity: 0.72 + (i % 3) * 0.08 }}
             >
               <div
                 data-marquee-track
-                className="inline-block font-black tracking-tight text-[#f5e14a]"
+                className="inline-block font-black tracking-tight text-[#F3F597]"
                 style={{
                   fontSize: "clamp(3.4rem, 14vw, 9.5rem)",
-                  textShadow: "0 2px 0 rgba(0,0,0,0.22)",
+                  textShadow: "0 2px 0 rgba(80,40,120,0.18)",
                   willChange: "transform",
                 }}
               >

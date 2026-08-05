@@ -53,7 +53,7 @@ export function SiteNav() {
       <div className="pointer-events-auto mx-auto mt-3 flex max-w-[min(100%,42rem)] items-center justify-between gap-3 px-3 md:mt-5 md:px-4">
         <nav
           aria-label="主要導覽"
-          className="flex w-full items-center justify-between gap-3 rounded-full border border-white/15 bg-black/45 px-3 py-2 shadow-[0_10px_40px_rgba(0,0,0,0.4)] backdrop-blur-md md:px-5 md:py-2.5"
+          className="flex w-full items-center justify-between gap-3 rounded-full border border-[#2a1840]/15 bg-[#2a1840]/55 px-3 py-2 shadow-[0_10px_30px_rgba(80,30,120,0.25)] backdrop-blur-md md:px-5 md:py-2.5"
         >
           <a
             href="#top"

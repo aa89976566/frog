@@ -1,20 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #0e0e0c;
-  --ink-soft: #171714;
-  --panel: #1c1c18;
-  --fog: #ebe6dc;
-  --fog-dim: #b7b1a4;
-  --moss: #6f8f57;
-  --moss-deep: #3f5a32;
-  --owner: #d06a5a;
-  --dog-gold: #e2b34a;
-  --glass: rgba(235, 230, 220, 0.08);
-  --grain-opacity: 0.22;
+  --ink: #2a1840;
+  --ink-soft: #3b2060;
+  --panel: #fff0fb;
+  --fog: #2a1840;
+  --fog-dim: #6b4f8a;
+  --moss: #9dff4a;
+  --moss-deep: #6fbf2a;
+  --owner: #ff4db8;
+  --dog-gold: #f3f597;
+  --cream-lemon: #f3f597;
+  --bubblegum: #ff8ad8;
+  --lavender: #d9b8ff;
+  --glass: rgba(255, 255, 255, 0.35);
+  --grain-opacity: 0.12;
 
-  --background: var(--ink);
-  --foreground: var(--fog);
+  --background: #f7e9ff;
+  --foreground: #2a1840;
 }
 
 @theme inline {
@@ -35,7 +38,7 @@
 }
 
 html {
-  background: var(--ink);
+  background: var(--background);
 }
 
 html.lenis,
@@ -59,8 +62,8 @@ body {
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--moss) 50%, transparent);
-  color: var(--fog);
+  background: color-mix(in oklab, var(--cream-lemon) 70%, transparent);
+  color: #2a1840;
 }
 
 .font-display {
@@ -82,8 +85,8 @@ body {
   inset: 0;
   z-index: 90;
   opacity: var(--grain-opacity);
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .poster {
@@ -93,11 +96,12 @@ body {
 
 .hero-scene {
   isolation: isolate;
+  background: #e8c8ff;
 }
 
-/* L01 — procedural pink-purple cloud atmosphere */
+/* Bright lavender / bubblegum cloud atmosphere */
 .hero-atm-base {
-  background: linear-gradient(165deg, #6b21a8 0%, #2e1065 38%, #4a044e 72%, #1a0a2e 100%);
+  background: linear-gradient(165deg, #ffd6f2 0%, #e4c2ff 38%, #c9a6ff 68%, #ffc2e8 100%);
 }
 
 .hero-atm-plane {
@@ -106,26 +110,26 @@ body {
 
 .hero-atm-a {
   background:
-    radial-gradient(ellipse 80% 55% at 18% 28%, rgba(244, 114, 182, 0.72), transparent 58%),
-    radial-gradient(ellipse 70% 50% at 82% 18%, rgba(167, 139, 250, 0.65), transparent 52%),
-    radial-gradient(ellipse 50% 40% at 50% 0%, rgba(251, 113, 133, 0.35), transparent 55%);
+    radial-gradient(ellipse 85% 60% at 18% 30%, rgba(255, 170, 220, 0.95), transparent 58%),
+    radial-gradient(ellipse 75% 55% at 82% 22%, rgba(190, 160, 255, 0.9), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 50% 8%, rgba(255, 210, 240, 0.8), transparent 55%);
   animation: hero-atm-drift-a 22s ease-in-out infinite alternate;
 }
 
 .hero-atm-b {
   background:
-    radial-gradient(ellipse 95% 65% at 50% 95%, rgba(26, 8, 56, 0.9), transparent 55%),
-    radial-gradient(circle at 62% 48%, rgba(255, 120, 200, 0.32), transparent 42%),
-    radial-gradient(ellipse 40% 30% at 70% 40%, rgba(192, 132, 252, 0.4), transparent 50%);
+    radial-gradient(ellipse 90% 55% at 50% 90%, rgba(255, 200, 235, 0.75), transparent 55%),
+    radial-gradient(circle at 60% 50%, rgba(255, 150, 210, 0.45), transparent 42%),
+    radial-gradient(ellipse 45% 35% at 70% 40%, rgba(210, 180, 255, 0.55), transparent 50%);
   animation: hero-atm-drift-b 28s ease-in-out infinite alternate;
-  mix-blend-mode: screen;
-  opacity: 0.85;
+  mix-blend-mode: multiply;
+  opacity: 0.55;
 }
 
 .hero-atm-c {
   background:
-    radial-gradient(ellipse 45% 35% at 28% 60%, rgba(232, 121, 249, 0.35), transparent 60%),
-    radial-gradient(ellipse 40% 30% at 75% 65%, rgba(255, 150, 200, 0.22), transparent 55%);
+    radial-gradient(ellipse 50% 40% at 28% 62%, rgba(255, 240, 160, 0.35), transparent 60%),
+    radial-gradient(ellipse 42% 32% at 75% 68%, rgba(255, 180, 220, 0.4), transparent 55%);
   animation: hero-atm-drift-c 18s ease-in-out infinite alternate;
 }
 
@@ -162,9 +166,8 @@ body {
   backface-visibility: hidden;
   user-select: none;
   filter:
-    drop-shadow(0 22px 28px rgba(8, 2, 18, 0.55))
-    drop-shadow(0 0 42px rgba(180, 90, 255, 0.22))
-    drop-shadow(0 0 80px rgba(255, 90, 180, 0.1));
+    drop-shadow(0 18px 22px rgba(80, 30, 120, 0.22))
+    drop-shadow(0 0 28px rgba(255, 140, 210, 0.28));
   will-change: transform;
 }
 
@@ -189,11 +192,11 @@ body {
   border-radius: 50%;
   background: radial-gradient(
     ellipse at center,
-    rgba(180, 80, 255, 0.28) 0%,
-    rgba(80, 30, 120, 0.08) 55%,
+    rgba(255, 245, 160, 0.55) 0%,
+    rgba(255, 170, 220, 0.28) 45%,
     transparent 72%
   );
-  filter: blur(8px);
+  filter: blur(10px);
   animation: hero-frog-glow 4.8s ease-in-out infinite;
 }
 
@@ -209,7 +212,7 @@ body {
   border-radius: 50%;
   background: radial-gradient(
     ellipse at center,
-    rgba(0, 0, 0, 0.45) 0%,
+    rgba(80, 40, 120, 0.22) 0%,
     transparent 70%
   );
   filter: blur(2px);
@@ -250,7 +253,7 @@ body {
   }
 }
 
-/* L04 — pink street sticker */
+/* Pink street sticker */
 .hero-sticker-card {
   display: inline-flex;
   flex-direction: column;
@@ -263,7 +266,7 @@ body {
   border-radius: 1.15rem 1.4rem 1.05rem 1.45rem;
   box-shadow:
     4px 5px 0 #b6ff3c,
-    0 14px 32px rgba(0, 0, 0, 0.4);
+    0 10px 24px rgba(80, 30, 120, 0.2);
   transition: transform 0.25s ease;
 }
 
@@ -285,14 +288,13 @@ body {
   padding: 0.22rem 0.7rem;
   border-radius: 999px;
   background: #1a0a2e;
-  color: #ff4db8;
+  color: #f3f597;
 }
 
-/* Black dry-brush bottom cut */
+/* Solid black dry-brush edge only — not a dark fog wash */
 .hero-drybrush,
 .story-drybrush {
-  background:
-    linear-gradient(to top, rgba(8, 2, 16, 0.92) 0%, rgba(8, 2, 16, 0.55) 42%, transparent 100%);
+  background: #111018;
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0 40c40 28 80-10 120 8s70 40 120 20 90-30 140-8 80 48 130 30 95-35 150-12 85 42 140 22 95-38 140-10 80 36 140 18 100-20 120 0v72H0z'/%3E%3C/svg%3E");
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0 40c40 28 80-10 120 8s70 40 120 20 90-30 140-8 80 48 130 30 95-35 150-12 85 42 140 22 95-38 140-10 80 36 140 18 100-20 120 0v72H0z'/%3E%3C/svg%3E");
   -webkit-mask-size: 100% 100%;
@@ -308,7 +310,8 @@ body {
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.35em;
-  color: #f5e14a;
+  color: #f3f597;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
 }
 
 .story-caption-line {
@@ -316,14 +319,15 @@ body {
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: 0.02em;
-  color: #f5e14a;
+  color: #f3f597;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
 }
 
 .story-caption {
   background: linear-gradient(
     to top,
-    rgba(10, 4, 20, 0.88) 0%,
-    rgba(10, 4, 20, 0.55) 55%,
+    rgba(17, 16, 24, 0.72) 0%,
+    rgba(17, 16, 24, 0.28) 55%,
     transparent 100%
   );
 }
@@ -331,35 +335,6 @@ body {
 .hero-type-layer {
   transform-origin: 50% 45%;
   will-change: transform, opacity;
-}
-
-@keyframes breathe {
-  0%,
-  100% {
-    transform: scale(1) translateY(0);
-  }
-  50% {
-    transform: scale(1.012) translateY(-3px);
-  }
-}
-
-@keyframes wag {
-  0%,
-  100% {
-    transform: rotate(-18deg);
-  }
-  50% {
-    transform: rotate(22deg);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -383,7 +358,7 @@ body {
 
 @media (max-width: 767px) {
   :root {
-    --grain-opacity: 0.14;
+    --grain-opacity: 0.09;
   }
 }
 

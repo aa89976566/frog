@@ -219,7 +219,7 @@ export function FiveActStory() {
   // Reduced-motion: simple section stack with clickable chapters
   if (reduced) {
     return (
-      <section id="story" className="bg-[#12061c]" aria-label="五幕故事">
+      <section id="story" className="bg-[#f3e4ff]" aria-label="五幕故事">
         {STORY_ACTS.map((act) => (
           <article
             key={act.id}
@@ -234,13 +234,13 @@ export function FiveActStory() {
               className="absolute inset-0 h-full w-full object-cover"
             />
             <div className="relative z-10 bg-gradient-to-t from-black/80 to-transparent px-5 pb-10 pt-24">
-              <p className="text-[11px] tracking-[0.35em] text-[#f5e14a]">
+              <p className="text-[11px] tracking-[0.35em] text-[#2a1840]">
                 {act.chapter}
               </p>
               {act.lines.map((line) => (
                 <p
                   key={line}
-                  className="mt-2 text-xl font-bold leading-snug text-[#f5e14a] md:text-2xl"
+                  className="mt-2 text-xl font-bold leading-snug text-[#2a1840] md:text-2xl"
                 >
                   {line}
                 </p>
@@ -258,7 +258,7 @@ export function FiveActStory() {
     <section
       ref={rootRef}
       id="story"
-      className="relative bg-[#12061c]"
+      className="relative bg-[#f3e4ff]"
       aria-label="五幕故事"
     >
       <div
@@ -268,7 +268,7 @@ export function FiveActStory() {
       >
         {/* Continuity veil from Hero */}
         <div
-          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-[#2a0f45]/40 via-transparent to-transparent"
+          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-[#ffe0f4]/50 via-transparent to-transparent"
           aria-hidden="true"
         />
 
@@ -311,7 +311,7 @@ export function FiveActStory() {
                 aria-hidden="true"
                 style={{
                   background:
-                    "repeating-linear-gradient(95deg, transparent 0 14px, rgba(255,225,80,0.12) 14px 16px, transparent 16px 30px)",
+                    "repeating-linear-gradient(95deg, transparent 0 14px, rgba(243,245,151,0.35) 14px 16px, transparent 16px 30px)",
                   mixBlendMode: "screen",
                 }}
               />
@@ -350,7 +350,7 @@ export function FiveActStory() {
               <li
                 key={act.id}
                 className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
-                  i === active ? "bg-[#f5e14a]" : "bg-white/20"
+                  i === active ? "bg-[#F3F597]" : "bg-[#2a1840]/20"
                 }`}
               />
             ))}
