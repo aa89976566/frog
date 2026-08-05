@@ -63,8 +63,8 @@ export function FrogLayer() {
             ref={imgRef}
             src="/assets/hero/hero-frog.png"
             alt="嗷嗚計畫青蛙角色"
-            width={622}
-            height={1404}
+            width={642}
+            height={1426}
             fetchPriority="high"
             decoding="async"
             className="hero-frog h-[min(108svh,980px)] w-auto max-w-none object-contain object-bottom md:h-[min(112svh,1080px)]"
