@@ -3,8 +3,8 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Drive-cropped transparent frog — readable, independent layer.
- * Subtle float + fine-pointer parallax only (no glitch / distortion).
+ * Drive-cropped transparent frog — oversized beyond viewport like reference hero.
+ * Subtle float + fine-pointer parallax only.
  */
 export function FrogLayer() {
   const stageRef = useRef<HTMLDivElement>(null);
@@ -36,8 +36,8 @@ export function FrogLayer() {
       const rect = stage.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
-      tx = x * 12;
-      ty = y * 8;
+      tx = x * 14;
+      ty = y * 9;
     };
 
     raf = requestAnimationFrame(tick);
@@ -50,14 +50,15 @@ export function FrogLayer() {
   }, []);
 
   return (
-    <div className="absolute inset-0 z-10 flex items-center justify-center px-2 pt-12 md:pt-8">
+    <div className="absolute inset-0 z-10 flex items-end justify-center overflow-hidden px-0 pt-10">
       <div
         ref={stageRef}
-        className="hero-frog-stage relative flex h-[min(92svh,900px)] w-full max-w-[720px] items-end justify-center md:max-w-[780px]"
+        className="hero-frog-stage relative flex h-[115%] w-full max-w-none items-end justify-center"
       >
         <div className="hero-frog-glow" aria-hidden="true" />
         <div className="hero-frog-shadow" aria-hidden="true" />
         <div className="hero-frog-float relative z-[1]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             ref={imgRef}
             src="/assets/hero/hero-frog.png"
@@ -66,7 +67,7 @@ export function FrogLayer() {
             height={972}
             fetchPriority="high"
             decoding="async"
-            className="hero-frog h-[min(86svh,860px)] w-auto max-w-[min(96vw,640px)] object-contain object-bottom md:max-w-[min(72vw,700px)]"
+            className="hero-frog h-[min(118svh,1100px)] w-auto max-w-none object-contain object-bottom"
           />
         </div>
       </div>

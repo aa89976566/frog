@@ -1,10 +1,8 @@
 import { SiteNav } from "@/components/layout/SiteNav";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { Hero } from "@/components/sections/Hero";
-import { WhoIsAfraid } from "@/components/sections/WhoIsAfraid";
-import { TheTest } from "@/components/sections/TheTest";
-import { Exhibit } from "@/components/sections/Exhibit";
-import { Campaign } from "@/components/sections/Campaign";
+import { FiveActStory } from "@/components/story/FiveActStory";
+import { Close } from "@/components/sections/Close";
 
 export default function Home() {
   return (
@@ -12,10 +10,8 @@ export default function Home() {
       <SiteNav />
       <main>
         <Hero />
-        <WhoIsAfraid />
-        <TheTest />
-        <Exhibit />
-        <Campaign />
+        <FiveActStory />
+        <Close />
       </main>
       <SiteFooter />
     </>

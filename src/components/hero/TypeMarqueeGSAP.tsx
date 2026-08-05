@@ -5,7 +5,8 @@ import gsap from "gsap";
 
 const LINE_A = "青蛙誰在怕　嗷嗚計畫　";
 const LINE_B = "嗷嗚計畫　青蛙誰在怕　";
-const ROWS = 10;
+/** Four oversized rows — lilfrogeth EXPERIENCE density */
+const ROWS = 4;
 
 /**
  * GSAP marquee type wall — HTML text only, independent row speeds.
@@ -25,8 +26,7 @@ export function TypeMarqueeGSAP() {
 
     tracks.forEach((track, i) => {
       const reverse = i % 2 === 1;
-      const duration = 18 + (i % 5) * 3.2;
-      // Duplicate content width ≈ 50% of track (two identical spans)
+      const duration = 16 + i * 4.5;
       gsap.set(track, { xPercent: reverse ? -50 : 0 });
       const tween = gsap.to(track, {
         xPercent: reverse ? 0 : -50,
@@ -45,24 +45,25 @@ export function TypeMarqueeGSAP() {
   return (
     <div
       ref={rootRef}
-      className="pointer-events-none absolute inset-[-12%] z-[1] flex items-center justify-center overflow-hidden"
+      className="pointer-events-none absolute inset-[-8%] z-[1] flex items-center justify-center overflow-hidden"
       aria-hidden="true"
     >
-      <div className="flex w-[155%] rotate-[-8deg] flex-col gap-[0.08em]">
+      <div className="flex w-[160%] rotate-[-7deg] flex-col gap-[0.02em]">
         {Array.from({ length: ROWS }).map((_, i) => {
           const reverse = i % 2 === 1;
-          const text = (reverse ? LINE_B : LINE_A).repeat(6);
+          const text = (reverse ? LINE_B : LINE_A).repeat(8);
           return (
             <div
               key={i}
-              className="overflow-hidden whitespace-nowrap leading-[0.84]"
+              className="overflow-hidden whitespace-nowrap leading-[0.86]"
+              style={{ opacity: 0.55 + (i % 3) * 0.12 }}
             >
               <div
                 data-marquee-track
                 className="inline-block font-black tracking-tight text-[#f5e14a]"
                 style={{
-                  fontSize: "clamp(2.8rem, 12vw, 8.75rem)",
-                  textShadow: "0 2px 0 rgba(0,0,0,0.25)",
+                  fontSize: "clamp(3.4rem, 14vw, 9.5rem)",
+                  textShadow: "0 2px 0 rgba(0,0,0,0.22)",
                   willChange: "transform",
                 }}
               >

@@ -248,20 +248,20 @@ body {
   }
 }
 
-/* L04 — street sticker */
+/* L04 — pink street sticker */
 .hero-sticker-card {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.85rem 1.15rem 0.7rem;
-  background: #ffd24a;
-  color: #1a0a2e;
+  padding: 0.85rem 1.2rem 0.75rem;
+  background: #ff4db8;
+  color: #fff;
   border: 3px solid #1a0a2e;
-  border-radius: 1.1rem 1.35rem 1rem 1.4rem;
+  border-radius: 1.15rem 1.4rem 1.05rem 1.45rem;
   box-shadow:
-    4px 5px 0 #ff4db8,
-    0 12px 28px rgba(0, 0, 0, 0.35);
+    4px 5px 0 #b6ff3c,
+    0 14px 32px rgba(0, 0, 0, 0.4);
   transition: transform 0.25s ease;
 }
 
@@ -277,13 +277,42 @@ body {
 }
 
 .hero-sticker-sub {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.28em;
-  padding: 0.2rem 0.65rem;
+  padding: 0.22rem 0.7rem;
   border-radius: 999px;
   background: #1a0a2e;
-  color: #ffd24a;
+  color: #ff4db8;
+}
+
+/* Black dry-brush bottom cut */
+.hero-drybrush,
+.story-drybrush {
+  background:
+    linear-gradient(to top, rgba(8, 2, 16, 0.92) 0%, rgba(8, 2, 16, 0.55) 42%, transparent 100%);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0 40c40 28 80-10 120 8s70 40 120 20 90-30 140-8 80 48 130 30 95-35 150-12 85 42 140 22 95-38 140-10 80 36 140 18 100-20 120 0v72H0z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 160' preserveAspectRatio='none'%3E%3Cpath fill='white' d='M0 40c40 28 80-10 120 8s70 40 120 20 90-30 140-8 80 48 130 30 95-35 150-12 85 42 140 22 95-38 140-10 80 36 140 18 100-20 120 0v72H0z'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: bottom;
+  mask-position: bottom;
+}
+
+.story-caption {
+  background: linear-gradient(
+    to top,
+    rgba(10, 4, 20, 0.88) 0%,
+    rgba(10, 4, 20, 0.55) 55%,
+    transparent 100%
+  );
+}
+
+.hero-type-layer {
+  transform-origin: 50% 45%;
+  will-change: transform, opacity;
 }
 
 @keyframes breathe {
