@@ -53,7 +53,6 @@ export function ScrollFilm() {
         gsap.set(el, {
           yPercent: 55,
           scale: 1.12,
-          clipPath: "inset(18% 0 0 0)",
           autoAlpha: 0,
           zIndex: 30 + i,
         });
@@ -64,7 +63,6 @@ export function ScrollFilm() {
         gsap.set(el, {
           yPercent: 55,
           scale: 1.08,
-          clipPath: "inset(18% 0 0 0)",
           autoAlpha: 0,
           zIndex: 50 + i,
         });
@@ -152,19 +150,11 @@ export function ScrollFilm() {
       ) => {
         stackZ += 1;
         tl.set(plate, { autoAlpha: 1, zIndex: stackZ }, at);
+        // Rise from below — torn brush on plate top forms the seam (no hard clip)
         tl.fromTo(
           plate,
-          {
-            yPercent: 55,
-            scale: 1.12,
-            clipPath: "inset(18% 0 0 0)",
-          },
-          {
-            yPercent: 0,
-            scale: 1,
-            clipPath: "inset(0% 0% 0% 0%)",
-            duration: dur,
-          },
+          { yPercent: 55, scale: 1.12 },
+          { yPercent: 0, scale: 1, duration: dur },
           at,
         );
         // Caption switches when incoming reaches ~35%
@@ -413,6 +403,7 @@ export function ScrollFilm() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={a.image} alt="" data-ghost className="candy-ghost candy-ghost--c" />
               </div>
+              <BrushMask edge="top" className="candy-plate__seam" />
             </div>
           ))}
 
@@ -427,6 +418,7 @@ export function ScrollFilm() {
               <span className="candy-type__text" data-type-text>
                 {b.text}
               </span>
+              <BrushMask edge="top" className="candy-plate__seam" />
             </div>
           ))}
         </div>

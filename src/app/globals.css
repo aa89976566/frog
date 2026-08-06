@@ -479,6 +479,16 @@ body {
   transform-origin: 50% 50%;
 }
 
+.candy-plate__seam {
+  z-index: 12;
+  top: 0;
+  height: clamp(70px, 10vh, 118px);
+}
+
+.candy-type .candy-plate__seam {
+  z-index: 12;
+}
+
 .candy-plate__img {
   position: absolute;
   inset: 0;
