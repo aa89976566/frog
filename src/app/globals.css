@@ -154,7 +154,8 @@ body {
 
 @media (max-width: 640px) {
   .candy-nav {
-    width: calc(100% - 24px);
+    width: 100%;
+    max-width: calc(100vw - 24px);
     height: 50px;
     padding: 0 0.65rem;
     grid-template-columns: 1.2fr repeat(3, 0.7fr);
@@ -208,8 +209,14 @@ body {
   inset: 0;
   z-index: 25;
   overflow: clip;
-  /* Never fall back to black void */
-  background: #c45cff;
+  /* Transparent — hero shows through until plates cover it */
+  background: transparent;
+  pointer-events: none;
+}
+
+.candy-film__stage .candy-plate,
+.candy-film__stage .candy-type-overlay {
+  pointer-events: auto;
 }
 
 /* ═══ HERO ═══ */

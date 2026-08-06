@@ -57,6 +57,7 @@ export const STORY_ACTS: StoryAct[] = [
     pillBg: "#7DFFB2",
     pillFg: "#2A1040",
     pillLabel: "對視",
+    enterType: "只有牠",
     ghost: "soft",
   },
   {
