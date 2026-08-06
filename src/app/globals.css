@@ -231,7 +231,8 @@ body {
 .candy-film__stage {
   position: absolute;
   inset: 0;
-  z-index: 5;
+  /* Above hero so story plates can cover the type-wall frog */
+  z-index: 25;
   overflow: clip;
 }
 

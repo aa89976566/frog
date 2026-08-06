@@ -253,6 +253,8 @@ export function ScrollFilm() {
         tl.to(heroFrog, { yPercent: -10, duration: h2a }, t);
       }
       enterPlate(acts[0], t, h2a, { captionIndex: 0 });
+      // Hide hero once act1 has covered ~55% — prevents type-wall frog bleed-through
+      tl.to(hero!, { autoAlpha: 0, duration: h2a * 0.2 }, t + h2a * 0.55);
       t += h2a;
 
       // Act 1 hold

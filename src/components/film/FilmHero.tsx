@@ -9,7 +9,7 @@ import { BrushMask } from "@/components/story/BrushMask";
  */
 export function FilmHero() {
   return (
-    <div className="candy-hero" data-film-hero aria-label="嗷嗚計畫開場">
+    <div className="candy-hero" data-film-hero aria-label="嗷嗚計畫開場" style={{ zIndex: 4 }}>
       <div className="candy-hero__clouds" data-hero-clouds aria-hidden="true">
         <span className="candy-hero__cloud candy-hero__cloud--a" />
         <span className="candy-hero__cloud candy-hero__cloud--b" />
