@@ -4,20 +4,18 @@ export type StoryAct = {
   image: string;
   lines: string[];
   aria: string;
-  /** object-position for cinematic crop */
+  /** Extreme cinematic crop */
   objectPosition: string;
-  /** Caption pill accent colors */
+  /** Extra cover scale beyond base 1.15 */
+  coverScale: number;
   pillBg: string;
   pillFg: string;
   pillLabel: string;
-  /** Onion-skin mode for emotional beats */
-  ghost: "none" | "scatter" | "breathe" | "chase";
-  /** Giant type interlude after this chapter (optional) */
-  interlude?: string;
+  ghost: "scatter" | "breathe" | "chase" | "soft";
 };
 
 /**
- * Locked five-act film strip — do not regenerate or swap character art.
+ * Locked five-act film — do not regenerate or swap character art.
  */
 export const STORY_ACTS: StoryAct[] = [
   {
@@ -25,22 +23,23 @@ export const STORY_ACTS: StoryAct[] = [
     chapter: "01",
     image: "/assets/story/01-hope.jpg",
     lines: ["我以為穿成這樣，大家就會喜歡我。"],
-    aria: "第一章：西裝青蛙站在派對入口，期待被喜歡",
-    objectPosition: "center 42%",
-    pillBg: "#F3F597",
-    pillFg: "#12081c",
+    aria: "第一章：西裝青蛙上半身特寫",
+    objectPosition: "48% 32%",
+    coverScale: 1.28,
+    pillBg: "#FFF4A3",
+    pillFg: "#2A1040",
     pillLabel: "希望",
-    ghost: "none",
-    interlude: "合群？",
+    ghost: "soft",
   },
   {
     id: "act-02",
     chapter: "02",
     image: "/assets/story/02-scare.jpg",
     lines: ["結果他們看見我，還是嚇得四散而逃。"],
-    aria: "第二章：青蛙特寫，人群四散逃離",
-    objectPosition: "center 28%",
-    pillBg: "#FF38C7",
+    aria: "第二章：青蛙巨大眼睛超近特寫",
+    objectPosition: "50% 18%",
+    coverScale: 1.35,
+    pillBg: "#FF4EC8",
     pillFg: "#ffffff",
     pillLabel: "驚散",
     ghost: "scatter",
@@ -50,23 +49,24 @@ export const STORY_ACTS: StoryAct[] = [
     chapter: "03",
     image: "/assets/story/03-dog.jpg",
     lines: ["人群散去後，只有牠留在原地看著我。"],
-    aria: "第三章：空場只剩一隻狗直視鏡頭",
-    objectPosition: "center 40%",
-    pillBg: "#39FF14",
-    pillFg: "#12081c",
+    aria: "第三章：狗正面臉升起",
+    objectPosition: "50% 38%",
+    coverScale: 1.3,
+    pillBg: "#7DFFB2",
+    pillFg: "#2A1040",
     pillLabel: "對視",
-    ghost: "none",
-    interlude: "只有牠",
+    ghost: "soft",
   },
   {
     id: "act-04",
     chapter: "04",
     image: "/assets/story/04-free.jpg",
     lines: ["原來我不需要合群，我只需要做回自己。"],
-    aria: "第四章：青蛙做回自己",
-    objectPosition: "center 48%",
-    pillBg: "#6E2DFF",
-    pillFg: "#F3F597",
+    aria: "第四章：發光身體青蛙從底部顯現",
+    objectPosition: "50% 58%",
+    coverScale: 1.22,
+    pillBg: "#FFF4A3",
+    pillFg: "#2A1040",
     pillLabel: "做自己",
     ghost: "breathe",
   },
@@ -75,38 +75,33 @@ export const STORY_ACTS: StoryAct[] = [
     chapter: "05",
     image: "/assets/story/05-chase.jpg",
     lines: ["然後牠衝了過來——嗷嗚！跑啊！"],
-    aria: "第五章：狗追咬青蛙玩鬧追逐，無血腥",
-    objectPosition: "center 55%",
-    pillBg: "#12081c",
-    pillFg: "#B8FF32",
+    aria: "第五章：狗咬腿奔跑追逐",
+    objectPosition: "52% 62%",
+    coverScale: 1.32,
+    pillBg: "#FF4EC8",
+    pillFg: "#ffffff",
     pillLabel: "嗷嗚",
     ghost: "chase",
-    interlude: "嗷嗚！",
   },
 ];
 
 export const LOCKED_STORY_IMAGES: readonly string[] = STORY_ACTS.map((a) => a.image);
 
-/** Chapter wrapper height in svh — sticky stage is 100svh inside */
-export const CHAPTER_HEIGHT_SVH = 180;
+/** Pure-black giant type beats inserted in the master timeline */
+export const TYPE_BEATS = [
+  { id: "type-conform", text: "合群？", afterAct: 1 },
+  { id: "type-owoo", text: "嗷嗚！", afterAct: 3 },
+] as const;
 
 /**
- * Overlap so next chapter begins ~previous progress 0.58.
- * chapterScroll ≈ CHAPTER_HEIGHT - 100; overlapFrac = 1 - 0.58.
+ * Master timeline segment lengths (relative units, ease:none scrub).
+ * Transition segments keep both plates in-frame.
  */
-export const CHAPTER_OVERLAP_SVH =
-  (1 - 0.58) * (CHAPTER_HEIGHT_SVH - 100); // ~33.6svh
-
-/** Scroll progress bands within a chapter (0–1 sticky range) */
-export const SCROLL_RANGES = {
-  /** Incoming plate: rise / unclip / settle (driven by chapter top travel) */
-  incomingStart: 0,
-  incomingEnd: 0.42,
-  /** Hold cinematic plate */
-  holdEnd: 0.58,
-  /** Outgoing under next plate: scale up + darken — next begins ~here */
-  outgoingStart: 0.58,
-  outgoingEnd: 0.82,
-  /** Fully covered / release */
-  releaseEnd: 1,
+export const FILM_SEGMENTS = {
+  heroHold: 0.7,
+  heroToAct1: 1.05,
+  actHold: 0.75,
+  transition: 1.25,
+  typeBeat: 0.85,
+  act5Hold: 1.05,
 } as const;
