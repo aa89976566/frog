@@ -1,7 +1,6 @@
 import { SiteNav } from "@/components/layout/SiteNav";
 import { SiteFooter } from "@/components/layout/SiteFooter";
-import { Hero } from "@/components/sections/Hero";
-import { FiveActStory } from "@/components/story/FiveActStory";
+import { ScrollFilm } from "@/components/film/ScrollFilm";
 import { Close } from "@/components/sections/Close";
 
 export default function Home() {
@@ -9,8 +8,7 @@ export default function Home() {
     <>
       <SiteNav />
       <main>
-        <Hero />
-        <FiveActStory />
+        <ScrollFilm />
         <Close />
       </main>
       <SiteFooter />
