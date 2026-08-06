@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { STORY_ACTS, TYPE_BEATS, FILM_SEGMENTS } from "@/lib/story";
+import { STORY_ACTS, FILM_SEGMENTS } from "@/lib/story";
 import { FilmHero } from "@/components/film/FilmHero";
 import { CaptionPill } from "@/components/story/CaptionPill";
 import { BrushMask } from "@/components/story/BrushMask";
@@ -11,8 +11,9 @@ import { BrushMask } from "@/components/story/BrushMask";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Master pinned candy film — one GSAP timeline, overlapping plates.
- * Previous stays in upper viewport while next rises from below.
+ * Continuous candy film — one pin, one scrub timeline.
+ * Transitions keep outgoing + type overlay + incoming simultaneously visible.
+ * No fullscreen black type pages.
  */
 export function ScrollFilm() {
   const rootRef = useRef<HTMLElement>(null);
@@ -41,77 +42,48 @@ export function ScrollFilm() {
     const acts = gsap.utils.toArray<HTMLElement>(
       pin.querySelectorAll("[data-act-plate]"),
     );
-    const types = gsap.utils.toArray<HTMLElement>(
-      pin.querySelectorAll("[data-type-plate]"),
+    const typeOverlays = gsap.utils.toArray<HTMLElement>(
+      pin.querySelectorAll("[data-type-overlay]"),
     );
-    const seam = pin.querySelector<HTMLElement>("[data-seam-brush]");
+
+    const { heroHold, transition, actHold, act5Hold } = FILM_SEGMENTS;
+    // 1 hero→1 + 4 act→act = 5 transitions
+    const totalUnits =
+      heroHold + transition + actHold * 4 + transition * 4 + act5Hold;
 
     const ctx = gsap.context(() => {
-      // Initial states
-      gsap.set(hero, { yPercent: 0, autoAlpha: 1, zIndex: 20 });
-      acts.forEach((el, i) => {
+      gsap.set(hero, { yPercent: 0, autoAlpha: 1, zIndex: 10 });
+      acts.forEach((el) => {
         gsap.set(el, {
-          yPercent: 55,
+          yPercent: 100,
           scale: 1.12,
           autoAlpha: 0,
-          zIndex: 30 + i,
+          zIndex: 30,
+          filter: "brightness(1)",
         });
-        const ghosts = el.querySelectorAll<HTMLElement>("[data-ghost]");
-        gsap.set(ghosts, { autoAlpha: 0 });
+        gsap.set(el.querySelectorAll("[data-ghost]"), { autoAlpha: 0 });
       });
-      types.forEach((el, i) => {
+      typeOverlays.forEach((el) => {
         gsap.set(el, {
-          yPercent: 55,
-          scale: 1.08,
+          yPercent: 70,
           autoAlpha: 0,
-          zIndex: 50 + i,
+          zIndex: 20,
         });
       });
-      if (seam) gsap.set(seam, { autoAlpha: 0, zIndex: 60 });
-
-      const {
-        heroHold,
-        heroToAct1,
-        actHold,
-        transition,
-        typeBeat,
-        act5Hold,
-      } = FILM_SEGMENTS;
-
-      // Total scroll distance ~ multi-viewport pin
-      const totalUnits =
-        heroHold +
-        heroToAct1 +
-        actHold + // act1
-        transition + // 1→type or 1→2
-        typeBeat + // type after act1
-        transition + // type→act2
-        actHold + // act2
-        transition + // 2→3
-        actHold + // act3
-        transition + // 3→type
-        typeBeat + // type after act3
-        transition + // type→act4
-        actHold + // act4
-        transition + // 4→5
-        act5Hold;
 
       const tl = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
           trigger: root,
           start: "top top",
-          end: () => `+=${window.innerHeight * totalUnits * 0.92}`,
+          end: () => `+=${window.innerHeight * totalUnits}`,
           pin: pin,
-          scrub: 1.25,
+          scrub: 1.3,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           fastScrollEnd: true,
-          preventOverlaps: true,
         },
       });
-
-      let stackZ = 30;
 
       const setCaption = (index: number, visible: boolean) => {
         setActive(index);
@@ -121,206 +93,160 @@ export function ScrollFilm() {
       const showGhosts = (plate: HTMLElement, at: number, dur: number) => {
         const ghosts = plate.querySelectorAll<HTMLElement>("[data-ghost]");
         ghosts.forEach((g, i) => {
-          const ox = (i % 2 === 0 ? 1 : -1) * (12 + i * 6);
-          const oy = (i - 1) * 8;
+          const ox = (i % 2 === 0 ? 1 : -1) * (12 + i * 5);
+          const oy = (i - 1) * 7;
           tl.fromTo(
             g,
             { autoAlpha: 0, x: 0, y: 0 },
             {
-              autoAlpha: 0.08 + i * 0.04,
+              autoAlpha: 0.1 + i * 0.03,
               x: ox,
               y: oy,
-              duration: dur * 0.45,
+              duration: dur * 0.4,
             },
-            at,
+            at + dur * 0.2,
           );
-          tl.to(
-            g,
-            { autoAlpha: 0, duration: dur * 0.35 },
-            at + dur * 0.55,
-          );
+          tl.to(g, { autoAlpha: 0, duration: dur * 0.3 }, at + dur * 0.7);
         });
       };
 
-      const enterPlate = (
-        plate: HTMLElement,
+      /**
+       * Triple-layer transition (~125vh):
+       * 0–0.35  outgoing stays 65–100vh; type rises to 25–45vh
+       * 0.25–0.75 incoming rises 0→55vh; outgoing ≥30vh
+       * 0.55–1   incoming →100vh; outgoing exits
+       * z: out 10 · type 20 · in 30
+       */
+      const transitionTriple = (
+        outgoing: HTMLElement | null,
+        incoming: HTMLElement,
+        typeEl: HTMLElement | null,
         at: number,
         dur: number,
-        opts?: { captionIndex?: number },
+        captionIndex: number,
       ) => {
-        stackZ += 1;
-        tl.set(plate, { autoAlpha: 1, zIndex: stackZ }, at);
-        // Rise from below — torn brush on plate top forms the seam (no hard clip)
-        tl.fromTo(
-          plate,
-          { yPercent: 55, scale: 1.12 },
-          { yPercent: 0, scale: 1, duration: dur },
-          at,
-        );
-        // Caption switches when incoming reaches ~35%
-        if (opts?.captionIndex !== undefined) {
-          tl.call(
-            () => setCaption(opts.captionIndex!, true),
-            undefined,
-            at + dur * 0.35,
+        // z-order for this beat
+        if (outgoing) tl.set(outgoing, { zIndex: 10, autoAlpha: 1 }, at);
+        if (typeEl) tl.set(typeEl, { zIndex: 20 }, at);
+        tl.set(incoming, { zIndex: 30, autoAlpha: 1 }, at);
+
+        // —— 0–0.35: type enters from below; outgoing holds ——
+        if (typeEl) {
+          tl.fromTo(
+            typeEl,
+            { yPercent: 70, autoAlpha: 0 },
+            { yPercent: 28, autoAlpha: 1, duration: dur * 0.35 },
+            at,
           );
         }
-        showGhosts(plate, at, dur);
-      };
+        if (outgoing) {
+          tl.to(
+            outgoing,
+            {
+              yPercent: -8,
+              scale: 1.03,
+              filter: "brightness(0.85)",
+              duration: dur * 0.35,
+            },
+            at,
+          );
+        }
 
-      const exitPlate = (
-        plate: HTMLElement,
-        at: number,
-        /** keep visible until next has entered 55% of its dur */
-        nextEnterDur: number,
-      ) => {
-        // Hold visibility through 55% of next entrance, then finish exit
-        const hold = nextEnterDur * 0.55;
-        tl.to(
-          plate,
-          {
-            yPercent: -12,
-            scale: 1.04,
-            filter: "brightness(0.78)",
-            duration: hold,
-          },
-          at,
+        // —— 0.25–0.75: incoming rises to ~55vh; out still ≥30vh ——
+        tl.fromTo(
+          incoming,
+          { yPercent: 100, scale: 1.12 },
+          { yPercent: 45, scale: 1.06, duration: dur * 0.5 },
+          at + dur * 0.25,
         );
+        if (outgoing) {
+          tl.to(
+            outgoing,
+            {
+              yPercent: -22,
+              scale: 1.06,
+              filter: "brightness(0.65)",
+              duration: dur * 0.5,
+            },
+            at + dur * 0.25,
+          );
+        }
+        if (typeEl) {
+          tl.to(
+            typeEl,
+            { yPercent: 10, autoAlpha: 0.92, duration: dur * 0.5 },
+            at + dur * 0.25,
+          );
+        }
+
+        // Caption when incoming covers ~35% viewport (yPercent ~65 → visible ~35%)
+        // At yPercent 65, bottom 35% shows incoming
+        tl.call(() => setCaption(captionIndex, true), undefined, at + dur * 0.42);
+
+        // —— 0.55–1: incoming expands to full; outgoing leaves ——
         tl.to(
-          plate,
-          {
-            yPercent: -20,
-            scale: 1.08,
-            filter: "brightness(0.55)",
-            duration: nextEnterDur * 0.45,
-          },
-          at + hold,
+          incoming,
+          { yPercent: 0, scale: 1, duration: dur * 0.45 },
+          at + dur * 0.55,
         );
+        if (outgoing) {
+          tl.to(
+            outgoing,
+            {
+              yPercent: -55,
+              scale: 1.1,
+              filter: "brightness(0.45)",
+              autoAlpha: 0,
+              duration: dur * 0.45,
+            },
+            at + dur * 0.55,
+          );
+        }
+        if (typeEl) {
+          tl.to(
+            typeEl,
+            { yPercent: -15, autoAlpha: 0, duration: dur * 0.4 },
+            at + dur * 0.6,
+          );
+        }
+
+        showGhosts(incoming, at + dur * 0.3, dur * 0.55);
       };
 
       let t = 0;
 
-      // —— Hero hold + parallax drift ——
-      if (heroClouds) {
-        tl.to(heroClouds, { yPercent: -6, duration: heroHold }, t);
-      }
-      if (heroType) {
-        tl.to(heroType, { yPercent: -12, duration: heroHold }, t);
-      }
-      if (heroFrog) {
-        tl.to(heroFrog, { yPercent: -4, duration: heroHold }, t);
-      }
+      // Hero hold + parallax
+      if (heroClouds) tl.to(heroClouds, { yPercent: -8, duration: heroHold }, t);
+      if (heroType) tl.to(heroType, { yPercent: -14, duration: heroHold }, t);
+      if (heroFrog) tl.to(heroFrog, { yPercent: -5, duration: heroHold }, t);
       t += heroHold;
 
-      // —— Hero → Act 1 ——
-      const h2a = heroToAct1;
-      if (seam) {
-        tl.fromTo(
-          seam,
-          { autoAlpha: 0, yPercent: 20 },
-          { autoAlpha: 1, yPercent: 0, duration: h2a * 0.35 },
-          t,
-        );
-        tl.to(seam, { autoAlpha: 0, duration: h2a * 0.25 }, t + h2a * 0.7);
+      // Hero → Act1
+      const type0 = typeOverlays[0] ?? null;
+      transitionTriple(hero, acts[0], type0, t, transition, 0);
+      t += transition;
+
+      // Act holds + act→act transitions
+      for (let i = 0; i < acts.length; i++) {
+        const hold = i === acts.length - 1 ? act5Hold : actHold;
+        tl.to(acts[i], { scale: 1.02, duration: hold }, t);
+        t += hold;
+
+        if (i < acts.length - 1) {
+          const raw = typeOverlays[i + 1] ?? null;
+          const typeEl =
+            raw && !raw.classList.contains("candy-type-overlay--empty")
+              ? raw
+              : null;
+          transitionTriple(acts[i], acts[i + 1], typeEl, t, transition, i + 1);
+          t += transition;
+        }
       }
-      tl.to(
-        hero!,
-        {
-          yPercent: -28,
-          scale: 1.06,
-          filter: "brightness(0.55)",
-          duration: h2a,
-        },
-        t,
-      );
-      if (heroClouds) {
-        tl.to(heroClouds, { yPercent: -18, duration: h2a }, t);
-      }
-      if (heroType) {
-        tl.to(heroType, { yPercent: -28, duration: h2a }, t);
-      }
-      if (heroFrog) {
-        tl.to(heroFrog, { yPercent: -10, duration: h2a }, t);
-      }
-      enterPlate(acts[0], t, h2a, { captionIndex: 0 });
-      // Hide hero once act1 has covered ~55% — prevents type-wall frog bleed-through
-      tl.to(hero!, { autoAlpha: 0, duration: h2a * 0.2 }, t + h2a * 0.55);
-      t += h2a;
-
-      // Act 1 hold
-      tl.to(acts[0], { scale: 1.02, duration: actHold }, t);
-      t += actHold;
-
-      // Act1 → Type "合群？"
-      exitPlate(acts[0], t, transition);
-      enterPlate(types[0], t, transition);
-      tl.call(() => setCaptionVisible(false), undefined, t + transition * 0.2);
-      t += transition;
-
-      // Type beat hold
-      tl.fromTo(
-        types[0].querySelector("[data-type-text]"),
-        { xPercent: -8, scale: 1.05 },
-        { xPercent: 4, scale: 1, duration: typeBeat },
-        t,
-      );
-      t += typeBeat;
-
-      // Type → Act 2
-      exitPlate(types[0], t, transition);
-      enterPlate(acts[1], t, transition, { captionIndex: 1 });
-      t += transition;
-
-      // Act 2 hold
-      tl.to(acts[1], { scale: 1.02, duration: actHold }, t);
-      t += actHold;
-
-      // Act2 → Act3 (eyes up, dog rises)
-      exitPlate(acts[1], t, transition);
-      enterPlate(acts[2], t, transition, { captionIndex: 2 });
-      t += transition;
-
-      // Act 3 hold
-      tl.to(acts[2], { scale: 1.02, duration: actHold }, t);
-      t += actHold;
-
-      // Act3 → Type "嗷嗚！"
-      exitPlate(acts[2], t, transition);
-      enterPlate(types[1], t, transition);
-      tl.call(() => setCaptionVisible(false), undefined, t + transition * 0.2);
-      t += transition;
-
-      tl.fromTo(
-        types[1].querySelector("[data-type-text]"),
-        { xPercent: -10, scale: 1.08 },
-        { xPercent: 6, scale: 1, duration: typeBeat },
-        t,
-      );
-      t += typeBeat;
-
-      // Type → Act 4
-      exitPlate(types[1], t, transition);
-      enterPlate(acts[3], t, transition, { captionIndex: 3 });
-      t += transition;
-
-      // Act 4 hold
-      tl.to(acts[3], { scale: 1.02, duration: actHold }, t);
-      t += actHold;
-
-      // Act4 → Act5
-      exitPlate(acts[3], t, transition);
-      enterPlate(acts[4], t, transition, { captionIndex: 4 });
-      t += transition;
-
-      // Act 5 hold
-      tl.to(acts[4], { scale: 1.04, duration: act5Hold }, t);
 
       ScrollTrigger.refresh();
     }, root);
 
-    return () => {
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, [reduced]);
 
   const act = active >= 0 ? STORY_ACTS[active] : STORY_ACTS[0];
@@ -353,11 +279,6 @@ export function ScrollFilm() {
               </div>
             </article>
           ))}
-          {TYPE_BEATS.map((b) => (
-            <div key={b.id} className="candy-type candy-type--static" aria-hidden="true">
-              <span>{b.text}</span>
-            </div>
-          ))}
         </div>
       </section>
     );
@@ -381,7 +302,6 @@ export function ScrollFilm() {
                 {
                   "--cover-scale": a.coverScale,
                   "--obj-pos": a.objectPosition,
-                  zIndex: 30 + i,
                 } as CSSProperties
               }
             >
@@ -395,6 +315,7 @@ export function ScrollFilm() {
                 decoding="async"
                 loading={i === 0 ? "eager" : "lazy"}
               />
+              <div className="candy-plate__grade" aria-hidden="true" />
               <div className="candy-plate__ghosts" aria-hidden="true">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={a.image} alt="" data-ghost className="candy-ghost candy-ghost--a" />
@@ -407,24 +328,27 @@ export function ScrollFilm() {
             </div>
           ))}
 
-          {TYPE_BEATS.map((b, i) => (
-            <div
-              key={b.id}
-              className="candy-type"
-              data-type-plate
-              aria-hidden="true"
-              style={{ zIndex: 40 + i }}
-            >
-              <span className="candy-type__text" data-type-text>
-                {b.text}
-              </span>
-              <BrushMask edge="top" className="candy-plate__seam" />
-            </div>
-          ))}
-        </div>
-
-        <div className="candy-film__seam" data-seam-brush aria-hidden="true">
-          <BrushMask edge="bottom" />
+          {/* Type overlays — NEVER fullscreen black pages; sit between out/in */}
+          {STORY_ACTS.map((a, i) =>
+            a.enterType ? (
+              <div
+                key={`type-${a.id}`}
+                className="candy-type-overlay"
+                data-type-overlay
+                data-type-for={a.id}
+                aria-hidden="true"
+              >
+                <span className="candy-type-overlay__text">{a.enterType}</span>
+              </div>
+            ) : (
+              <div
+                key={`type-spacer-${i}`}
+                className="candy-type-overlay candy-type-overlay--empty"
+                data-type-overlay
+                aria-hidden="true"
+              />
+            ),
+          )}
         </div>
 
         <CaptionPill

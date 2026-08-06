@@ -4,13 +4,13 @@ export type StoryAct = {
   image: string;
   lines: string[];
   aria: string;
-  /** Extreme cinematic crop */
   objectPosition: string;
-  /** Extra cover scale beyond base 1.15 */
   coverScale: number;
   pillBg: string;
   pillFg: string;
   pillLabel: string;
+  /** Giant type overlay shown during transition INTO this act */
+  enterType?: string;
   ghost: "scatter" | "breathe" | "chase" | "soft";
 };
 
@@ -29,6 +29,7 @@ export const STORY_ACTS: StoryAct[] = [
     pillBg: "#FFF4A3",
     pillFg: "#2A1040",
     pillLabel: "希望",
+    enterType: "合群？",
     ghost: "soft",
   },
   {
@@ -42,6 +43,7 @@ export const STORY_ACTS: StoryAct[] = [
     pillBg: "#FF4EC8",
     pillFg: "#ffffff",
     pillLabel: "驚散",
+    enterType: "嚇跑",
     ghost: "scatter",
   },
   {
@@ -68,6 +70,7 @@ export const STORY_ACTS: StoryAct[] = [
     pillBg: "#FFF4A3",
     pillFg: "#2A1040",
     pillLabel: "做自己",
+    enterType: "做自己",
     ghost: "breathe",
   },
   {
@@ -81,27 +84,21 @@ export const STORY_ACTS: StoryAct[] = [
     pillBg: "#FF4EC8",
     pillFg: "#ffffff",
     pillLabel: "嗷嗚",
+    enterType: "嗷嗚！",
     ghost: "chase",
   },
 ];
 
 export const LOCKED_STORY_IMAGES: readonly string[] = STORY_ACTS.map((a) => a.image);
 
-/** Pure-black giant type beats inserted in the master timeline */
-export const TYPE_BEATS = [
-  { id: "type-conform", text: "合群？", afterAct: 1 },
-  { id: "type-owoo", text: "嗷嗚！", afterAct: 3 },
-] as const;
-
 /**
- * Master timeline segment lengths (relative units, ease:none scrub).
- * Transition segments keep both plates in-frame.
+ * Master timeline units (ease:none scrub).
+ * Transition ≈ 1.25 vh-units (~125vh) — never a separate black page.
  */
 export const FILM_SEGMENTS = {
-  heroHold: 0.7,
-  heroToAct1: 1.05,
-  actHold: 0.75,
+  heroHold: 0.55,
+  /** hero → act1 transition (~125vh) */
   transition: 1.25,
-  typeBeat: 0.85,
-  act5Hold: 1.05,
+  actHold: 0.7,
+  act5Hold: 0.95,
 } as const;

@@ -4,12 +4,12 @@ import { BrandSticker } from "@/components/hero/BrandSticker";
 import { BrushMask } from "@/components/story/BrushMask";
 
 /**
- * Lil Frogeth grammar hero — candy clouds + type wall + full-body frog.
- * No traditional bottom-left title block; type IS the composition.
+ * Candy hero — type wall + full-body frog + layered clouds + grain.
+ * No traditional title block; type IS the composition.
  */
 export function FilmHero() {
   return (
-    <div className="candy-hero" data-film-hero aria-label="嗷嗚計畫開場" style={{ zIndex: 4 }}>
+    <div className="candy-hero" data-film-hero aria-label="嗷嗚計畫開場">
       <div className="candy-hero__clouds" data-hero-clouds aria-hidden="true">
         <span className="candy-hero__cloud candy-hero__cloud--a" />
         <span className="candy-hero__cloud candy-hero__cloud--b" />
@@ -17,31 +17,22 @@ export function FilmHero() {
         <span className="candy-hero__cloud candy-hero__cloud--d" />
       </div>
 
+      <div className="candy-hero__halftone" aria-hidden="true" />
+
       <div className="candy-hero__typewall" data-hero-type aria-hidden="true">
-        <div className="candy-hero__type-row candy-hero__type-row--a">
-          <span>青蛙誰在怕</span>
-          <span>FROG WHO&apos;S AFRAID</span>
-          <span>青蛙誰在怕</span>
-          <span>FROG WHO&apos;S AFRAID</span>
-        </div>
-        <div className="candy-hero__type-row candy-hero__type-row--b">
-          <span>FROG WHO&apos;S AFRAID</span>
-          <span>青蛙誰在怕</span>
-          <span>FROG WHO&apos;S AFRAID</span>
-          <span>青蛙誰在怕</span>
-        </div>
-        <div className="candy-hero__type-row candy-hero__type-row--c">
-          <span>青蛙誰在怕</span>
-          <span>FROG WHO&apos;S AFRAID</span>
-          <span>青蛙誰在怕</span>
-          <span>FROG WHO&apos;S AFRAID</span>
-        </div>
-        <div className="candy-hero__type-row candy-hero__type-row--d">
-          <span>FROG WHO&apos;S AFRAID</span>
-          <span>青蛙誰在怕</span>
-          <span>FROG WHO&apos;S AFRAID</span>
-          <span>青蛙誰在怕</span>
-        </div>
+        {Array.from({ length: 5 }).map((_, row) => (
+          <div
+            key={row}
+            className={`candy-hero__type-row candy-hero__type-row--${row % 2 === 0 ? "a" : "b"}`}
+            style={{ transform: `translateX(${-6 - row * 4}%)` }}
+          >
+            <span>青蛙誰在怕</span>
+            <span>FROG WHO&apos;S AFRAID</span>
+            <span>青蛙誰在怕</span>
+            <span>FROG WHO&apos;S AFRAID</span>
+            <span>青蛙誰在怕</span>
+          </div>
+        ))}
       </div>
 
       <div className="candy-hero__frog" data-hero-frog>
@@ -58,6 +49,8 @@ export function FilmHero() {
       </div>
 
       <BrandSticker />
+
+      <div className="candy-hero__grain" aria-hidden="true" />
 
       <BrushMask edge="bottom" className="candy-hero__brush" />
     </div>

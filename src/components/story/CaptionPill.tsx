@@ -9,10 +9,7 @@ type CaptionPillProps = {
   visible: boolean;
 };
 
-/**
- * Bottom-center caption capsule — label | copy with vertical rule.
- * Colors cross-fade when chapter props change.
- */
+/** Bottom-center caption — desktop centered; mobile inset 12px */
 export function CaptionPill({
   chapter,
   label,

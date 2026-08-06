@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  /* Psychedelic candy — bright purple / pink / cream / lime */
   --candy-purple: #c45cff;
   --candy-purple-deep: #9b3dff;
   --candy-pink: #ff4ec8;
@@ -14,25 +13,17 @@
   --candy-void: #0a0612;
 
   --void: #c45cff;
-  --void-deep: #9b3dff;
   --lime: #39ff14;
   --ylime: #fff4a3;
   --magenta: #ff4ec8;
   --violet: #c45cff;
-  --violet-soft: #e0a0ff;
   --cream: #fff4a3;
-
   --ink: #2a1040;
-  --ink-soft: #4a1a6e;
-  --panel: #b14dff;
   --fog: #fff8e8;
-  --fog-dim: #ffe9a8;
   --moss: #39ff14;
-  --moss-deep: #1f9a0c;
   --owner: #ff4ec8;
   --dog-gold: #fff4a3;
-  --glass: rgba(255, 244, 163, 0.12);
-  --grain-opacity: 0.1;
+  --grain-opacity: 0.12;
 
   --background: #c45cff;
   --foreground: #2a1040;
@@ -42,12 +33,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-panel: var(--panel);
   --color-fog: var(--fog);
-  --color-fog-dim: var(--fog-dim);
   --color-moss: var(--moss);
-  --color-moss-deep: var(--moss-deep);
   --color-owner: var(--owner);
   --color-dog-gold: var(--dog-gold);
   --font-display: var(--font-display);
@@ -68,10 +55,6 @@ html.lenis body {
   scroll-behavior: auto !important;
 }
 
-.lenis.lenis-stopped {
-  overflow: clip;
-}
-
 body {
   background: #c45cff;
   color: var(--foreground);
@@ -86,15 +69,6 @@ body {
 
 .font-display {
   font-family: var(--font-display), "Arial Narrow", Impact, sans-serif;
-  letter-spacing: 0.01em;
-}
-
-.font-serif {
-  font-family: var(--font-serif), Georgia, serif;
-}
-
-.font-body {
-  font-family: var(--font-body), "Noto Sans TC", sans-serif;
 }
 
 .grain {
@@ -107,40 +81,33 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.poster {
-  min-height: 100svh;
-  min-height: 100dvh;
-}
-
-/* ═══════════════════════════════════════════
-   CANDY NAV — wide olive/purple capsule
-   ═══════════════════════════════════════════ */
-
+/* ═══ NAV ═══ */
 .candy-nav {
   display: grid;
-  grid-template-columns: 1.4fr repeat(3, 1fr);
+  grid-template-columns: 1.35fr repeat(3, 1fr);
   align-items: center;
-  width: min(820px, calc(100vw - 1.5rem));
-  min-width: min(680px, calc(100vw - 1.5rem));
-  padding: 0.55rem 1.1rem;
+  width: min(800px, calc(100vw - 24px));
+  height: 52px;
+  padding: 0 1rem;
   border-radius: 999px;
   border: 1.5px solid rgba(255, 244, 163, 0.35);
   background: linear-gradient(
     105deg,
-    rgba(107, 122, 58, 0.72) 0%,
-    rgba(155, 61, 255, 0.68) 48%,
-    rgba(196, 92, 255, 0.62) 100%
+    rgba(107, 122, 58, 0.78) 0%,
+    rgba(155, 61, 255, 0.72) 45%,
+    rgba(196, 92, 255, 0.68) 100%
   );
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   box-shadow:
-    0 10px 36px rgba(80, 20, 140, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    0 10px 32px rgba(80, 20, 140, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .candy-nav__brand {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.45rem;
   min-width: 0;
   text-decoration: none;
   color: #fff;
@@ -149,20 +116,20 @@ body {
 .candy-nav__mark {
   display: grid;
   place-items: center;
-  width: 2rem;
-  height: 2rem;
+  width: 1.85rem;
+  height: 1.85rem;
   border-radius: 999px;
   background: #39ff14;
   color: #2a1040;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 900;
   flex-shrink: 0;
 }
 
 .candy-nav__name {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -170,12 +137,15 @@ body {
 
 .candy-nav__link {
   justify-self: center;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.88);
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
-  transition: color 0.2s ease;
+}
+
+.candy-nav__link-short {
+  display: none;
 }
 
 .candy-nav__link:hover {
@@ -184,34 +154,39 @@ body {
 
 @media (max-width: 640px) {
   .candy-nav {
-    grid-template-columns: 1fr auto auto auto;
-    min-width: 0;
-    width: calc(100vw - 1.25rem);
-    padding: 0.45rem 0.75rem;
-    gap: 0.15rem;
+    width: calc(100% - 24px);
+    height: 50px;
+    padding: 0 0.65rem;
+    grid-template-columns: 1.2fr repeat(3, 0.7fr);
+    gap: 0;
   }
 
   .candy-nav__name {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+  }
+
+  .candy-nav__link-full {
+    display: none;
+  }
+
+  .candy-nav__link-short {
+    display: inline;
+  }
+
+  .candy-nav__link {
     font-size: 0.7rem;
     letter-spacing: 0.08em;
   }
 
-  .candy-nav__link {
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-  }
-
   .candy-nav__mark {
-    width: 1.7rem;
-    height: 1.7rem;
-    font-size: 0.62rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    font-size: 0.6rem;
   }
 }
 
-/* ═══════════════════════════════════════════
-   MASTER PINNED FILM
-   ═══════════════════════════════════════════ */
-
+/* ═══ FILM PIN ═══ */
 .candy-film {
   position: relative;
   background: #c45cff;
@@ -231,38 +206,28 @@ body {
 .candy-film__stage {
   position: absolute;
   inset: 0;
-  /* Above hero so story plates can cover the type-wall frog */
   z-index: 25;
   overflow: clip;
+  /* Never fall back to black void */
+  background: #c45cff;
 }
 
-.candy-film__seam {
-  position: absolute;
-  inset-x: 0;
-  bottom: 0;
-  z-index: 55;
-  pointer-events: none;
-}
-
-/* ═══════════════════════════════════════════
-   HERO — candy clouds + type wall + full frog
-   ═══════════════════════════════════════════ */
-
+/* ═══ HERO ═══ */
 .candy-hero {
   position: absolute;
   inset: 0;
   z-index: 4;
   overflow: clip;
   background:
-    radial-gradient(ellipse 90% 70% at 50% 20%, #ff8adf 0%, transparent 55%),
-    radial-gradient(ellipse 80% 60% at 20% 70%, #c45cff 0%, transparent 50%),
-    radial-gradient(ellipse 70% 55% at 85% 60%, #ff4ec8 0%, transparent 50%),
-    linear-gradient(180deg, #e8a0ff 0%, #c45cff 40%, #ff6ad5 100%);
+    radial-gradient(ellipse 90% 70% at 50% 15%, #ff9ae0 0%, transparent 55%),
+    radial-gradient(ellipse 80% 60% at 15% 65%, #d06bff 0%, transparent 50%),
+    radial-gradient(ellipse 70% 55% at 88% 55%, #ff4ec8 0%, transparent 50%),
+    linear-gradient(180deg, #f0b4ff 0%, #c45cff 42%, #ff6ad5 100%);
 }
 
 .candy-hero__clouds {
   position: absolute;
-  inset: -10%;
+  inset: -12%;
   z-index: 1;
   pointer-events: none;
   will-change: transform;
@@ -271,70 +236,80 @@ body {
 .candy-hero__cloud {
   position: absolute;
   border-radius: 50%;
-  filter: blur(2px);
+  filter: blur(3px);
   mix-blend-mode: screen;
 }
 
 .candy-hero__cloud--a {
-  width: 55vw;
-  height: 32vw;
-  left: -8%;
-  top: 8%;
+  width: 58vw;
+  height: 34vw;
+  left: -10%;
+  top: 6%;
   background: radial-gradient(
     ellipse at 40% 50%,
-    rgba(255, 244, 163, 0.55),
-    rgba(255, 138, 223, 0.35) 45%,
+    rgba(255, 244, 163, 0.6),
+    rgba(255, 138, 223, 0.4) 45%,
     transparent 70%
   );
 }
 
 .candy-hero__cloud--b {
-  width: 48vw;
-  height: 28vw;
-  right: -10%;
-  top: 18%;
+  width: 50vw;
+  height: 30vw;
+  right: -12%;
+  top: 16%;
   background: radial-gradient(
     ellipse at 50% 50%,
-    rgba(125, 255, 178, 0.4),
-    rgba(196, 92, 255, 0.3) 50%,
+    rgba(125, 255, 178, 0.45),
+    rgba(196, 92, 255, 0.35) 50%,
     transparent 70%
   );
 }
 
 .candy-hero__cloud--c {
-  width: 70vw;
-  height: 36vw;
-  left: 10%;
-  bottom: 5%;
+  width: 72vw;
+  height: 38vw;
+  left: 8%;
+  bottom: 0;
   background: radial-gradient(
     ellipse at 50% 40%,
-    rgba(255, 78, 200, 0.5),
-    rgba(232, 160, 255, 0.25) 50%,
+    rgba(255, 78, 200, 0.55),
+    rgba(232, 160, 255, 0.3) 50%,
     transparent 70%
   );
 }
 
 .candy-hero__cloud--d {
-  width: 40vw;
-  height: 22vw;
-  left: 35%;
-  top: 40%;
+  width: 42vw;
+  height: 24vw;
+  left: 32%;
+  top: 38%;
   background: radial-gradient(
     ellipse at 50% 50%,
-    rgba(255, 244, 163, 0.35),
+    rgba(255, 244, 163, 0.4),
     transparent 65%
   );
-  opacity: 0.85;
+}
+
+.candy-hero__halftone {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  background-image: radial-gradient(#2a1040 0.9px, transparent 1px);
+  background-size: 5px 5px;
 }
 
 .candy-hero__typewall {
   position: absolute;
-  inset: -8% -20%;
+  inset: -6% -25%;
   z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.02em;
+  gap: 0.04em;
   pointer-events: none;
   user-select: none;
   will-change: transform;
@@ -344,12 +319,13 @@ body {
 .candy-hero__type-row {
   display: flex;
   flex-wrap: nowrap;
-  gap: 0.12em;
+  gap: 0.18em;
   font-family: var(--font-display), "Arial Narrow", Impact, sans-serif;
-  font-weight: 900;
-  font-size: clamp(16vw, 19vw, 22vw);
-  line-height: 0.82;
-  letter-spacing: -0.04em;
+  font-weight: 800;
+  font-stretch: condensed;
+  font-size: clamp(15vw, 18vw, 21vw);
+  line-height: 0.84;
+  letter-spacing: -0.03em;
   color: #fff4a3;
   white-space: nowrap;
   text-transform: uppercase;
@@ -357,28 +333,18 @@ body {
 
 .candy-hero__type-row span {
   flex-shrink: 0;
+  /* Unified condensed weight — Chinese + Latin share tracking */
+  font-weight: 800;
+  letter-spacing: -0.03em;
 }
 
 .candy-hero__type-row--a {
-  opacity: 0.92;
-  transform: translateX(-6%);
+  opacity: 0.9;
 }
 
 .candy-hero__type-row--b {
-  opacity: 0.72;
+  opacity: 0.7;
   color: #ffe56a;
-  transform: translateX(-18%);
-}
-
-.candy-hero__type-row--c {
-  opacity: 0.85;
-  transform: translateX(-2%);
-}
-
-.candy-hero__type-row--d {
-  opacity: 0.55;
-  color: #ffd84a;
-  transform: translateX(-22%);
 }
 
 .candy-hero__frog {
@@ -393,100 +359,133 @@ body {
 }
 
 .candy-hero__frog-img {
-  height: 100svh;
-  height: 100dvh;
+  height: 96svh;
+  height: 96dvh;
   width: auto;
   max-width: none;
-  object-fit: cover;
-  object-position: center top;
-  transform: translateY(8%) scale(1.05);
+  object-fit: contain;
+  object-position: center bottom;
+  transform: translateY(4%);
   filter:
-    drop-shadow(0 0 28px rgba(57, 255, 20, 0.45))
-    drop-shadow(0 18px 40px rgba(80, 20, 120, 0.35));
+    drop-shadow(0 0 28px rgba(57, 255, 20, 0.4))
+    drop-shadow(0 16px 36px rgba(80, 20, 120, 0.3));
   user-select: none;
 }
 
-@media (min-width: 768px) {
-  .candy-hero__frog-img {
-    height: 108svh;
-    transform: translateY(10%) scale(1.02);
-  }
+.candy-hero__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .candy-hero__brush {
   z-index: 6;
 }
 
-/* Brand sticker — upper-right campaign badge */
+/* Sticker — desktop top-right; mobile bottom-right away from face */
 .hero-sticker {
-  position: absolute !important;
-  top: 18% !important;
-  right: 3% !important;
-  bottom: auto !important;
+  position: absolute;
+  top: 16%;
+  right: 3%;
   z-index: 20;
+  pointer-events: none;
 }
 
 .hero-sticker-card {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.85rem 1.2rem 0.75rem;
+  gap: 0.3rem;
+  padding: 0.75rem 1.05rem 0.65rem;
   background: #ff4ec8;
   color: #fff;
   border: 3px solid #2a1040;
-  border-radius: 1.15rem 1.4rem 1.05rem 1.45rem;
+  border-radius: 1.1rem 1.35rem 1rem 1.4rem;
   box-shadow:
     4px 5px 0 #fff4a3,
-    0 10px 28px rgba(0, 0, 0, 0.25);
-  transition: transform 0.25s ease;
-}
-
-.hero-sticker-card:hover {
-  transform: rotate(-2deg) scale(1.04);
+    0 10px 28px rgba(0, 0, 0, 0.22);
 }
 
 .hero-sticker-brand {
   font-weight: 900;
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
   line-height: 0.9;
   letter-spacing: 0.04em;
 }
 
 .hero-sticker-sub {
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.28em;
-  padding: 0.22rem 0.7rem;
+  letter-spacing: 0.24em;
+  padding: 0.18rem 0.55rem;
   border-radius: 999px;
   background: #2a1040;
   color: #fff4a3;
 }
 
-/* ═══════════════════════════════════════════
-   STORY PLATES — extreme cover crops
-   ═══════════════════════════════════════════ */
+@media (min-width: 768px) {
+  .candy-hero__frog-img {
+    height: 102svh;
+    transform: translateY(6%);
+  }
+}
 
+@media (max-width: 767px) {
+  .candy-hero__frog-img {
+    height: 86dvh;
+    max-height: 86dvh;
+    transform: translateY(2%);
+    object-fit: contain;
+  }
+
+  .candy-hero__type-row {
+    font-size: clamp(14vw, 17vw, 20vw);
+    opacity: 0.95;
+  }
+
+  .candy-hero__typewall {
+    /* Keep ≥35% type visible beside/behind frog */
+    inset: -4% -30%;
+  }
+
+  .hero-sticker {
+    top: auto;
+    bottom: 14%;
+    right: 3%;
+    transform: scale(0.72);
+    transform-origin: bottom right;
+  }
+
+  .hero-sticker-card {
+    width: 80px;
+    padding: 0.5rem 0.55rem 0.45rem;
+  }
+
+  .hero-sticker-brand {
+    font-size: 1.15rem;
+  }
+
+  .hero-sticker-sub {
+    font-size: 0.48rem;
+    letter-spacing: 0.12em;
+    padding: 0.12rem 0.35rem;
+  }
+}
+
+/* ═══ STORY PLATES ═══ */
 .candy-plate {
   position: absolute;
   inset: 0;
-  width: 100vw;
-  height: 100svh;
-  height: 100dvh;
+  width: 100%;
+  height: 100%;
   overflow: clip;
-  background: #0a0612;
-  will-change: transform, clip-path, filter;
+  background: #2a1040;
+  will-change: transform, filter;
   transform-origin: 50% 50%;
-}
-
-.candy-plate__seam {
-  z-index: 12;
-  top: 0;
-  height: clamp(70px, 10vh, 118px);
-}
-
-.candy-type .candy-plate__seam {
-  z-index: 12;
 }
 
 .candy-plate__img {
@@ -498,6 +497,20 @@ body {
   object-position: var(--obj-pos, center center);
   transform: scale(var(--cover-scale, 1.25));
   transform-origin: var(--obj-pos, center center);
+}
+
+/* Unify story media — grain + soft outline wash (no new art) */
+.candy-plate__grade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1.5px rgba(10, 6, 18, 0.35);
+  background:
+    radial-gradient(ellipse at center, transparent 40%, rgba(42, 16, 64, 0.18) 100%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+  opacity: 0.55;
 }
 
 .candy-plate__ghosts {
@@ -520,78 +533,68 @@ body {
 }
 
 .candy-ghost--a {
-  filter: hue-rotate(-20deg);
+  filter: hue-rotate(-18deg);
 }
-
 .candy-ghost--b {
-  filter: hue-rotate(35deg);
+  filter: hue-rotate(32deg);
 }
-
 .candy-ghost--c {
-  filter: hue-rotate(55deg) saturate(1.4);
+  filter: hue-rotate(50deg) saturate(1.3);
 }
 
-/* ═══════════════════════════════════════════
-   GIANT TYPE BLACKOUTS
-   ═══════════════════════════════════════════ */
+.candy-plate__seam {
+  z-index: 12;
+  top: 0;
+  height: clamp(60px, 8vh, 100px);
+}
 
-.candy-type {
+/* ═══ TYPE OVERLAY — between plates, NOT a black page ═══ */
+.candy-type-overlay {
   position: absolute;
   inset: 0;
-  z-index: 40;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: clip;
-  background: #0a0612;
-  will-change: transform, clip-path;
+  pointer-events: none;
+  overflow: visible;
+  /* Transparent — images show through */
+  background: transparent;
+  will-change: transform, opacity;
 }
 
-.candy-type__text {
+.candy-type-overlay--empty {
+  display: none;
+}
+
+.candy-type-overlay__text {
   font-family: var(--font-display), "Arial Narrow", Impact, sans-serif;
   font-weight: 900;
-  font-size: clamp(18vw, 26vw, 30vw);
+  font-size: clamp(18vw, 24vw, 28vw);
   line-height: 0.78;
   letter-spacing: -0.05em;
   color: #fff4a3;
   white-space: nowrap;
+  text-shadow:
+    0 0 40px rgba(42, 16, 64, 0.55),
+    4px 4px 0 rgba(10, 6, 18, 0.65);
+  mix-blend-mode: normal;
+  transform: translateX(-6%);
   user-select: none;
-  transform: translateX(-8%);
 }
 
-.candy-type--static {
-  position: relative;
-  height: 100svh;
-  height: 100dvh;
-}
-
-.candy-type--static span {
-  font-family: var(--font-display), "Arial Narrow", Impact, sans-serif;
-  font-weight: 900;
-  font-size: clamp(18vw, 26vw, 30vw);
-  line-height: 0.78;
-  letter-spacing: -0.05em;
-  color: #fff4a3;
-  white-space: nowrap;
-}
-
-/* ═══════════════════════════════════════════
-   BRUSH SEAM — 60–120px only
-   ═══════════════════════════════════════════ */
-
+/* ═══ BRUSH ═══ */
 .candy-brush {
   position: absolute;
   inset-x: 0;
   z-index: 30;
-  height: clamp(60px, 9vh, 120px);
+  height: clamp(60px, 8vh, 100px);
   pointer-events: none;
-  background: transparent;
 }
 
 .candy-brush--top {
   top: 0;
 }
-
 .candy-brush--bottom {
   bottom: 0;
 }
@@ -602,21 +605,19 @@ body {
   height: 100%;
 }
 
-/* ═══════════════════════════════════════════
-   CAPTION PILL
-   ═══════════════════════════════════════════ */
-
+/* ═══ CAPTION — desktop center; mobile 12px inset ═══ */
 .candy-caption {
   position: absolute;
-  inset-x: 0;
-  bottom: max(1.1rem, env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  bottom: max(1rem, env(safe-area-inset-bottom));
   z-index: 70;
   display: flex;
   justify-content: center;
-  padding: 0 0.75rem;
+  padding: 0 12px;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.28s ease;
+  transition: opacity 0.25s ease;
 }
 
 .candy-caption.is-visible {
@@ -627,10 +628,7 @@ body {
   pointer-events: auto;
   display: flex;
   align-items: center;
-  gap: 0;
-  width: min(760px, calc(100vw - 1.5rem));
-  max-width: 760px;
-  min-width: min(620px, calc(100vw - 1.5rem));
+  width: min(720px, 100%);
   border-radius: 999px;
   border: 1.5px solid rgba(42, 16, 64, 0.12);
   box-shadow: 0 14px 40px rgba(42, 16, 64, 0.28);
@@ -642,29 +640,29 @@ body {
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  width: 5.75rem;
-  padding: 0.85rem 0 0.85rem 1.35rem;
+  width: 5.5rem;
+  padding: 0.8rem 0 0.8rem 1.25rem;
 }
 
 .candy-caption__chapter {
   font-family: var(--font-display), "Arial Narrow", sans-serif;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 800;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.3em;
   opacity: 0.7;
 }
 
 .candy-caption__label {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
-  letter-spacing: 0.16em;
-  margin-top: 0.1rem;
+  letter-spacing: 0.14em;
+  margin-top: 0.08rem;
 }
 
 .candy-caption__rule {
   width: 1.5px;
   align-self: stretch;
-  margin: 0.65rem 0;
+  margin: 0.6rem 0;
   background: currentColor;
   opacity: 0.28;
   flex-shrink: 0;
@@ -673,51 +671,38 @@ body {
 .candy-caption__copy {
   flex: 1;
   margin: 0;
-  padding: 0.9rem 1.4rem 0.9rem 1.1rem;
-  font-size: clamp(0.92rem, 1.6vw, 1.12rem);
+  padding: 0.85rem 1.3rem 0.85rem 1rem;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   font-weight: 800;
   line-height: 1.3;
-  letter-spacing: 0.02em;
 }
 
 @media (max-width: 640px) {
+  .candy-caption {
+    padding: 0 12px;
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+
   .candy-caption__pill {
-    min-width: 0;
-    width: calc(100vw - 1.25rem);
-    border-radius: 1.35rem;
-    flex-direction: column;
-    align-items: stretch;
+    width: 100%;
+    border-radius: 1.25rem;
+    flex-direction: row;
+    align-items: center;
   }
 
   .candy-caption__meta {
-    flex-direction: row;
-    align-items: baseline;
-    gap: 0.5rem;
     width: auto;
-    padding: 0.75rem 1.1rem 0;
-  }
-
-  .candy-caption__rule {
-    display: none;
+    min-width: 3.5rem;
+    padding: 0.7rem 0.65rem 0.7rem 0.9rem;
   }
 
   .candy-caption__copy {
-    padding: 0.35rem 1.1rem 0.85rem;
-    font-size: 0.95rem;
-  }
-
-  .hero-sticker {
-    top: 14% !important;
-    right: 2% !important;
-    transform: scale(0.78);
-    transform-origin: top right;
+    padding: 0.7rem 0.9rem 0.7rem 0.65rem;
+    font-size: 0.88rem;
   }
 }
 
-/* ═══════════════════════════════════════════
-   REDUCED MOTION — stacked full-bleed
-   ═══════════════════════════════════════════ */
-
+/* Reduced motion stack */
 .candy-film--reduced .candy-hero {
   position: relative;
   height: 100svh;
@@ -729,7 +714,7 @@ body {
   height: 100svh;
   height: 100dvh;
   overflow: clip;
-  background: #0a0612;
+  background: #2a1040;
 }
 
 .candy-reduced__img {
@@ -741,15 +726,11 @@ body {
 
 .candy-reduced__caption {
   position: absolute;
-  left: 50%;
+  left: 12px;
+  right: 12px;
   bottom: max(1rem, env(safe-area-inset-bottom));
-  transform: translateX(-50%);
-  width: min(720px, calc(100% - 1.25rem));
   border-radius: 999px;
   padding: 0.85rem 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
 }
 
 .candy-reduced__caption strong {
@@ -758,12 +739,10 @@ body {
 }
 
 .candy-reduced__caption p {
-  margin: 0;
+  margin: 0.2rem 0 0;
   font-weight: 800;
-  font-size: 1rem;
 }
 
-/* Close / footer stay readable on candy field */
 #close {
   background: #2a1040 !important;
 }
