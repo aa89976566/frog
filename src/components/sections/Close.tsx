@@ -6,7 +6,7 @@ export function Close() {
   return (
     <section
       id="close"
-      className="relative flex min-h-[70svh] items-center justify-center overflow-hidden bg-[#050706]"
+      className="relative flex min-h-[70svh] items-center justify-center overflow-hidden bg-[#12081c]"
     >
       <div
         className="absolute inset-0"

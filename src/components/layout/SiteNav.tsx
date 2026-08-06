@@ -53,13 +53,13 @@ export function SiteNav() {
       <div className="pointer-events-auto mx-auto mt-3 flex max-w-[min(100%,42rem)] items-center justify-between gap-3 px-3 md:mt-5 md:px-4">
         <nav
           aria-label="主要導覽"
-          className="flex w-full items-center justify-between gap-3 rounded-full border border-[#39FF14]/20 bg-[#050706]/70 px-3 py-2 shadow-[0_10px_30px_rgba(0,0,0,0.45)] backdrop-blur-md md:px-5 md:py-2.5"
+          className="flex w-full items-center justify-between gap-3 rounded-full border border-[#39FF14]/25 bg-[#12081c]/72 px-3 py-2 shadow-[0_10px_30px_rgba(80,20,140,0.35)] backdrop-blur-md md:px-5 md:py-2.5"
         >
           <a
             href="#top"
             className="flex min-w-0 items-center gap-2 rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B8FF32]"
           >
-            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#39FF14] text-[10px] font-black text-[#050706] transition-transform duration-300 hover:scale-105 md:h-8 md:w-8 md:text-[11px]">
+            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#39FF14] text-[10px] font-black text-[#12081c] transition-transform duration-300 hover:scale-105 md:h-8 md:w-8 md:text-[11px]">
               蛙
             </span>
             <span className="truncate text-xs font-bold tracking-[0.14em] text-white md:text-sm">

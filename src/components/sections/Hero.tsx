@@ -10,7 +10,11 @@ import { BrandSticker } from "@/components/hero/BrandSticker";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/** Blacklight neon Hero — matches Lil Frogeth contrast, original branding */
+/**
+ * Lil Frogeth layout language:
+ * full-bleed psychedelic field · oversized cropped type · central character ·
+ * capsule nav (SiteNav) · bottom caption strip — Furmosa brand & frog kept.
+ */
 export function Hero() {
   const sceneRef = useRef<HTMLElement>(null);
 
@@ -22,6 +26,7 @@ export function Hero() {
 
     const frog = scene.querySelector<HTMLElement>(".hero-frog-float");
     const type = scene.querySelector<HTMLElement>(".hero-type-layer");
+    const bloom = scene.querySelector<HTMLElement>(".hero-scroll-bloom");
     const veil = scene.querySelector<HTMLElement>(".hero-exit-veil");
 
     const tween = gsap.timeline({
@@ -29,13 +34,14 @@ export function Hero() {
         trigger: scene,
         start: "top top",
         end: "bottom top",
-        scrub: 0.5,
+        scrub: 0.45,
       },
     });
 
-    if (frog) tween.to(frog, { scale: 1.3, yPercent: 10, ease: "none" }, 0);
-    if (type) tween.to(type, { opacity: 0.2, scale: 1.06, ease: "none" }, 0);
-    if (veil) tween.to(veil, { opacity: 1, ease: "none" }, 0.4);
+    if (frog) tween.to(frog, { scale: 1.28, yPercent: 12, ease: "none" }, 0);
+    if (type) tween.to(type, { opacity: 0.18, scale: 1.08, yPercent: -6, ease: "none" }, 0);
+    if (bloom) tween.to(bloom, { opacity: 0.85, scale: 1.15, ease: "none" }, 0);
+    if (veil) tween.to(veil, { opacity: 1, ease: "none" }, 0.35);
 
     return () => {
       tween.scrollTrigger?.kill();
@@ -57,14 +63,14 @@ export function Hero() {
       </div>
       <FrogLayer />
       <BrandSticker />
+      <div
+        className="hero-scroll-bloom pointer-events-none absolute inset-0 z-[15] opacity-0"
+        aria-hidden="true"
+      />
       <div className="hero-drybrush pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[12%]" aria-hidden="true" />
       <div
         className="hero-exit-veil pointer-events-none absolute inset-0 z-30 opacity-0"
         aria-hidden="true"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 70% at 50% 55%, rgba(110,45,255,0.12) 0%, rgba(5,7,6,0.75) 100%)",
-        }}
       />
       <div className="hero-caption-bar absolute inset-x-0 bottom-0 z-40 px-4 py-2.5 text-center">
         <a
