@@ -47,7 +47,6 @@ export function ScrollFilm() {
     );
 
     const { heroHold, transition, actHold, act5Hold } = FILM_SEGMENTS;
-    // 1 hero→1 + 4 act→act = 5 transitions
     const totalUnits =
       heroHold + transition + actHold * 4 + transition * 4 + act5Hold;
 
@@ -78,7 +77,7 @@ export function ScrollFilm() {
           start: "top top",
           end: () => `+=${window.innerHeight * totalUnits}`,
           pin: pin,
-          scrub: 1.3,
+          scrub: 1.25,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           fastScrollEnd: true,
@@ -99,7 +98,7 @@ export function ScrollFilm() {
             g,
             { autoAlpha: 0, x: 0, y: 0 },
             {
-              autoAlpha: 0.1 + i * 0.03,
+              autoAlpha: 0.12 + i * 0.03,
               x: ox,
               y: oy,
               duration: dur * 0.4,
@@ -112,9 +111,7 @@ export function ScrollFilm() {
 
       /**
        * Triple-layer transition (~125vh):
-       * 0–0.35  outgoing stays 65–100vh; type rises to 25–45vh
-       * 0.25–0.75 incoming rises 0→55vh; outgoing ≥30vh
-       * 0.55–1   incoming →100vh; outgoing exits
+       * Always see: outgoing image · giant type · incoming image
        * z: out 10 · type 20 · in 30
        */
       const transitionTriple = (
@@ -125,17 +122,16 @@ export function ScrollFilm() {
         dur: number,
         captionIndex: number,
       ) => {
-        // z-order for this beat
         if (outgoing) tl.set(outgoing, { zIndex: 10, autoAlpha: 1 }, at);
         if (typeEl) tl.set(typeEl, { zIndex: 20 }, at);
         tl.set(incoming, { zIndex: 30, autoAlpha: 1 }, at);
 
-        // —— 0–0.35: type enters from below; outgoing holds ——
+        // 0–0.35: type rises; outgoing holds ≥65vh
         if (typeEl) {
           tl.fromTo(
             typeEl,
-            { yPercent: 70, autoAlpha: 0 },
-            { yPercent: 28, autoAlpha: 1, duration: dur * 0.35 },
+            { yPercent: 72, autoAlpha: 0 },
+            { yPercent: 22, autoAlpha: 1, duration: dur * 0.35 },
             at,
           );
         }
@@ -143,47 +139,46 @@ export function ScrollFilm() {
           tl.to(
             outgoing,
             {
-              yPercent: -8,
-              scale: 1.03,
-              filter: "brightness(0.85)",
+              yPercent: -6,
+              scale: 1.04,
+              filter: "brightness(0.88)",
               duration: dur * 0.35,
             },
             at,
           );
         }
 
-        // —— 0.25–0.75: incoming rises to ~55vh; out still ≥30vh ——
+        // 0.22–0.72: incoming to ~50vh; out still ≥30vh; type peak
         tl.fromTo(
           incoming,
-          { yPercent: 100, scale: 1.12 },
-          { yPercent: 45, scale: 1.06, duration: dur * 0.5 },
-          at + dur * 0.25,
+          { yPercent: 100, scale: 1.14 },
+          { yPercent: 48, scale: 1.07, duration: dur * 0.5 },
+          at + dur * 0.22,
         );
         if (outgoing) {
           tl.to(
             outgoing,
             {
-              yPercent: -22,
-              scale: 1.06,
-              filter: "brightness(0.65)",
+              yPercent: -20,
+              scale: 1.07,
+              filter: "brightness(0.68)",
               duration: dur * 0.5,
             },
-            at + dur * 0.25,
+            at + dur * 0.22,
           );
         }
         if (typeEl) {
           tl.to(
             typeEl,
-            { yPercent: 10, autoAlpha: 0.92, duration: dur * 0.5 },
-            at + dur * 0.25,
+            { yPercent: 4, autoAlpha: 0.95, duration: dur * 0.5 },
+            at + dur * 0.22,
           );
         }
 
-        // Caption when incoming covers ~35% viewport (yPercent ~65 → visible ~35%)
-        // At yPercent 65, bottom 35% shows incoming
-        tl.call(() => setCaption(captionIndex, true), undefined, at + dur * 0.42);
+        // Caption when incoming covers ~35% viewport
+        tl.call(() => setCaption(captionIndex, true), undefined, at + dur * 0.4);
 
-        // —— 0.55–1: incoming expands to full; outgoing leaves ——
+        // 0.55–1: incoming full; outgoing exits; type fades
         tl.to(
           incoming,
           { yPercent: 0, scale: 1, duration: dur * 0.45 },
@@ -193,9 +188,9 @@ export function ScrollFilm() {
           tl.to(
             outgoing,
             {
-              yPercent: -55,
+              yPercent: -52,
               scale: 1.1,
-              filter: "brightness(0.45)",
+              filter: "brightness(0.48)",
               autoAlpha: 0,
               duration: dur * 0.45,
             },
@@ -205,28 +200,26 @@ export function ScrollFilm() {
         if (typeEl) {
           tl.to(
             typeEl,
-            { yPercent: -15, autoAlpha: 0, duration: dur * 0.4 },
-            at + dur * 0.6,
+            { yPercent: -18, autoAlpha: 0, duration: dur * 0.38 },
+            at + dur * 0.62,
           );
         }
 
-        showGhosts(incoming, at + dur * 0.3, dur * 0.55);
+        showGhosts(incoming, at + dur * 0.28, dur * 0.55);
       };
 
       let t = 0;
 
       // Hero hold + parallax
-      if (heroClouds) tl.to(heroClouds, { yPercent: -8, duration: heroHold }, t);
-      if (heroType) tl.to(heroType, { yPercent: -14, duration: heroHold }, t);
-      if (heroFrog) tl.to(heroFrog, { yPercent: -5, duration: heroHold }, t);
+      if (heroClouds) tl.to(heroClouds, { yPercent: -10, duration: heroHold }, t);
+      if (heroType) tl.to(heroType, { yPercent: -16, duration: heroHold }, t);
+      if (heroFrog) tl.to(heroFrog, { yPercent: -4, scale: 1.04, duration: heroHold }, t);
       t += heroHold;
 
       // Hero → Act1
-      const type0 = typeOverlays[0] ?? null;
-      transitionTriple(hero, acts[0], type0, t, transition, 0);
+      transitionTriple(hero, acts[0], typeOverlays[0] ?? null, t, transition, 0);
       t += transition;
 
-      // Act holds + act→act transitions
       for (let i = 0; i < acts.length; i++) {
         const hold = i === acts.length - 1 ? act5Hold : actHold;
         tl.to(acts[i], { scale: 1.02, duration: hold }, t);
@@ -301,7 +294,9 @@ export function ScrollFilm() {
               style={
                 {
                   "--cover-scale": a.coverScale,
+                  "--cover-scale-m": a.coverScaleMobile,
                   "--obj-pos": a.objectPosition,
+                  "--obj-pos-m": a.objectPositionMobile,
                 } as CSSProperties
               }
             >
@@ -328,7 +323,7 @@ export function ScrollFilm() {
             </div>
           ))}
 
-          {/* Type overlays — NEVER fullscreen black pages; sit between out/in */}
+          {/* Type overlays sit BETWEEN plates — never a black page */}
           {STORY_ACTS.map((a, i) =>
             a.enterType ? (
               <div
@@ -338,7 +333,15 @@ export function ScrollFilm() {
                 data-type-for={a.id}
                 aria-hidden="true"
               >
-                <span className="candy-type-overlay__text">{a.enterType}</span>
+                <div className="candy-type-overlay__stack">
+                  <span className="candy-type-overlay__echo" aria-hidden="true">
+                    {a.enterType}
+                  </span>
+                  <span className="candy-type-overlay__text">{a.enterType}</span>
+                  <span className="candy-type-overlay__echo candy-type-overlay__echo--b" aria-hidden="true">
+                    {a.enterType}
+                  </span>
+                </div>
               </div>
             ) : (
               <div
