@@ -19,7 +19,7 @@ export type StoryAct = {
 };
 
 /**
- * Locked five-act film — approved v4 story plates only.
+ * Locked five-act film — v5 plate 01 ingested; remaining plates pending v5.
  * Captions are HTML-only; never bake OS into art.
  * Dog lock (all plates that show the dog): tall narrow black triangular ears,
  * coarse white fur, small yellow eyes with hot-pink rings, huge foggy-black nose,
@@ -31,12 +31,12 @@ export const STORY_ACTS: StoryAct[] = [
     chapter: "01",
     image: "/assets/story/01-hope.jpg",
     lines: ["「我以為只要穿得像大家，我就會被喜歡。」"],
-    aria: "第一章希望：西裝青蛙與尖耳白狗在派對中",
-    // Keep frog face + tall dog ears in frame (dog lower-right)
-    objectPosition: "50% 28%",
-    objectPositionMobile: "50% 30%",
-    coverScale: 1.12,
-    coverScaleMobile: 1.18,
+    aria: "第一章希望：化妝室鏡前的西裝青蛙，右下尖耳白狗仰望",
+    // v5: dog sits lower-right — bias center so ears stay inside cover crop
+    objectPosition: "54% 46%",
+    objectPositionMobile: "58% 48%",
+    coverScale: 1.08,
+    coverScaleMobile: 1.12,
     pillBg: "#E8FF00",
     pillFg: "#111111",
     pillLabel: "希望",

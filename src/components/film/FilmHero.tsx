@@ -51,7 +51,7 @@ export function FilmHero() {
         data-hero-frog
         style={{ backgroundImage: `url(${HERO_MASTER})` }}
         role="img"
-        aria-label="西裝青蛙與高黑耳白狗站在派對中央——故事第一章同一角色"
+        aria-label="化妝室鏡前的西裝青蛙與右下高黑耳白狗——故事第一章同一角色"
       />
 
       <div className="candy-hero__clouds" data-hero-clouds aria-hidden="true">
