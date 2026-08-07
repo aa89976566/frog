@@ -28,6 +28,9 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
       touchMultiplier: 1.1,
     });
 
+    // QA / debug hook — drive ScrollTrigger from external scroll scripts
+    (window as Window & { __lenis?: Lenis }).__lenis = lenis;
+
     lenis.on("scroll", ScrollTrigger.update);
 
     const update = (time: number) => {
@@ -42,6 +45,7 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
     return () => {
       gsap.ticker.remove(update);
       lenis.destroy();
+      delete (window as Window & { __lenis?: Lenis }).__lenis;
       document.documentElement.classList.remove("lenis", "lenis-smooth");
     };
   }, []);
