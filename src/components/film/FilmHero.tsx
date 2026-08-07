@@ -10,8 +10,9 @@ const TYPE_A = ["青蛙誰在怕", "FROG WHO'S AFRAID", "嗷嗚計畫", "匠寵"
 const TYPE_B = ["嗷嗚計畫", "青蛙誰在怕", "FURMOSA", "RIBBIT"];
 
 /**
- * Lil Frogeth grammar: giant repeating type wall + central master character
- * + capsule nav (SiteNav) + right brand sticker + hand-drawn brush edge.
+ * Lil Frogeth grammar on Furmosa brand:
+ * black void · acid yellow repeating type wall · same locked dog as story 01
+ * · dark capsule nav (SiteNav) · brand sticker · grain/halftone.
  */
 export function FilmHero() {
   const typeRef = useRef<HTMLDivElement>(null);
@@ -44,13 +45,13 @@ export function FilmHero() {
     <div className="candy-hero" data-film-hero aria-label="嗷嗚計畫開場">
       <h1 className="sr-only">嗷嗚計畫｜匠寵｜青蛙誰在怕</h1>
 
-      {/* Master as CSS background — avoids sibling compositing paint drops */}
+      {/* Same plate as act 01 — locked dog, never the old brown-eared master */}
       <div
         className="candy-hero__master"
         data-hero-frog
         style={{ backgroundImage: `url(${HERO_MASTER})` }}
         role="img"
-        aria-label="穿西裝的匠寵青蛙與小狗站在蘑菇派對中央"
+        aria-label="西裝青蛙與高黑耳白狗站在派對中央——故事第一章同一角色"
       />
 
       <div className="candy-hero__clouds" data-hero-clouds aria-hidden="true">

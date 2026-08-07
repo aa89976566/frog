@@ -20,9 +20,8 @@ type CaptionSnapshot = {
 };
 
 /**
- * Lil-Frogeth-style bottom capsule.
- * Content crossfades when the next act hits ~35% viewport —
- * never late, never blank.
+ * Bottom dual-capsule strip (Lil Frogeth interaction language):
+ * left meta pill + right quote pill. HTML only — never baked into art.
  */
 export function CaptionPill({
   chapter,
@@ -36,7 +35,6 @@ export function CaptionPill({
   const [front, setFront] = useState(next);
   const [back, setBack] = useState<CaptionSnapshot | null>(null);
 
-  // Adjust state during render when props change (React-approved pattern)
   if (
     next.chapter !== front.chapter ||
     next.copy !== front.copy ||
@@ -64,7 +62,7 @@ export function CaptionPill({
             aria-hidden="true"
             onAnimationEnd={() => setBack(null)}
           >
-            <PillBody snap={back} />
+            <DualPills snap={back} />
           </div>
         ) : null}
         <div
@@ -72,25 +70,29 @@ export function CaptionPill({
             back ? " is-fading-in" : ""
           }`}
         >
-          <PillBody snap={front} />
+          <DualPills snap={front} />
         </div>
       </div>
     </div>
   );
 }
 
-function PillBody({ snap }: { snap: CaptionSnapshot }) {
+function DualPills({ snap }: { snap: CaptionSnapshot }) {
   return (
-    <div
-      className="candy-caption__pill"
-      style={{ backgroundColor: snap.bg, color: snap.fg }}
-    >
-      <div className="candy-caption__meta">
+    <div className="candy-caption__dual">
+      <div
+        className="candy-caption__meta-pill"
+        style={{ backgroundColor: snap.bg, color: snap.fg }}
+      >
         <span className="candy-caption__chapter">{snap.chapter}</span>
         <span className="candy-caption__label">{snap.label}</span>
       </div>
-      <span className="candy-caption__rule" aria-hidden="true" />
-      <p className="candy-caption__copy">{snap.copy}</p>
+      <div
+        className="candy-caption__quote-pill"
+        style={{ backgroundColor: snap.bg, color: snap.fg }}
+      >
+        <p className="candy-caption__copy">{snap.copy}</p>
+      </div>
     </div>
   );
 }

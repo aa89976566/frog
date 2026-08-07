@@ -114,8 +114,9 @@ export function ScrollFilm() {
       };
 
       /**
-       * Triple-layer transition (~125vh):
-       * Always see: outgoing image · giant type · incoming image
+       * Triple-layer transition: outgoing shrinks/fades while incoming
+       * stacks on top and reveals. Overlap window ≥35% of transition;
+       * never leave >18vh pure black void between plates.
        * z: out 10 · type 20 · in 30
        */
       const transitionTriple = (
@@ -130,12 +131,12 @@ export function ScrollFilm() {
         if (typeEl) tl.set(typeEl, { zIndex: 20 }, at);
         tl.set(incoming, { zIndex: 30, autoAlpha: 1 }, at);
 
-        // 0–0.35: type rises; outgoing holds ≥65vh
+        // 0–0.38: type rises; outgoing holds ≥62vh
         if (typeEl) {
           tl.fromTo(
             typeEl,
-            { yPercent: 72, autoAlpha: 0 },
-            { yPercent: 22, autoAlpha: 1, duration: dur * 0.35 },
+            { yPercent: 68, autoAlpha: 0 },
+            { yPercent: 18, autoAlpha: 1, duration: dur * 0.38 },
             at,
           );
         }
@@ -143,80 +144,78 @@ export function ScrollFilm() {
           tl.to(
             outgoing,
             {
-              yPercent: -6,
-              scale: 1.04,
-              filter: "brightness(0.88)",
-              duration: dur * 0.35,
+              yPercent: -4,
+              scale: 1.03,
+              filter: "brightness(0.9)",
+              duration: dur * 0.38,
             },
             at,
           );
         }
 
-        // 0.22–0.72: incoming to ~50vh; out still ≥30vh; type peak
+        // Incoming starts early so both plates share ≥35% of the segment
         tl.fromTo(
           incoming,
-          { yPercent: 100, scale: 1.14 },
-          { yPercent: 48, scale: 1.07, duration: dur * 0.5 },
-          at + dur * 0.22,
+          { yPercent: 100, scale: 1.12, autoAlpha: 0.55 },
+          { yPercent: 42, scale: 1.05, autoAlpha: 1, duration: dur * 0.48 },
+          at + dur * 0.18,
         );
         if (outgoing) {
           tl.to(
             outgoing,
             {
-              yPercent: -20,
-              scale: 1.07,
-              filter: "brightness(0.68)",
-              duration: dur * 0.5,
+              yPercent: -16,
+              scale: 1.06,
+              filter: "brightness(0.72)",
+              duration: dur * 0.48,
             },
-            at + dur * 0.22,
+            at + dur * 0.18,
           );
         }
         if (typeEl) {
           tl.to(
             typeEl,
-            { yPercent: 4, autoAlpha: 0.95, duration: dur * 0.5 },
-            at + dur * 0.22,
+            { yPercent: 2, autoAlpha: 0.95, duration: dur * 0.48 },
+            at + dur * 0.18,
           );
         }
 
-        // Caption sync when incoming covers ~35% viewport (crossfade, never late)
-        tl.call(() => setCaption(captionIndex, true), undefined, at + dur * 0.35);
+        // Caption when incoming covers ~35% viewport
+        tl.call(() => setCaption(captionIndex, true), undefined, at + dur * 0.32);
 
-        // 0.55–1: incoming full; outgoing exits; type fades
+        // Finish: incoming full; outgoing residual until covered
         tl.to(
           incoming,
-          { yPercent: 0, scale: 1, duration: dur * 0.45 },
-          at + dur * 0.55,
+          { yPercent: 0, scale: 1, duration: dur * 0.42 },
+          at + dur * 0.52,
         );
         if (outgoing) {
-          // Keep a residual slice until incoming fully covers — no solo black void
           tl.to(
             outgoing,
             {
-              yPercent: -42,
-              scale: 1.1,
-              filter: "brightness(0.52)",
-              autoAlpha: 0.15,
-              duration: dur * 0.4,
+              yPercent: -28,
+              scale: 1.08,
+              filter: "brightness(0.55)",
+              autoAlpha: 0.35,
+              duration: dur * 0.38,
             },
-            at + dur * 0.55,
+            at + dur * 0.52,
           );
           tl.to(
             outgoing,
             { autoAlpha: 0, duration: dur * 0.12 },
-            at + dur * 0.88,
+            at + dur * 0.9,
           );
         }
         if (typeEl) {
-          // Type peaks mid-junction then exits — always with both images
           tl.to(
             typeEl,
-            { yPercent: -14, autoAlpha: 0, duration: dur * 0.32 },
-            at + dur * 0.68,
+            { yPercent: -12, autoAlpha: 0, duration: dur * 0.3 },
+            at + dur * 0.7,
           );
         }
 
-        showGhosts(incoming, at + dur * 0.28, dur * 0.55);
+        showGhosts(incoming, at + dur * 0.26, dur * 0.55);
       };
 
       let t = 0;

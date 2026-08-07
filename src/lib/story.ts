@@ -19,10 +19,11 @@ export type StoryAct = {
 };
 
 /**
- * Locked five-act film — approved v3 story plates only.
+ * Locked five-act film — approved v4 story plates only.
  * Captions are HTML-only; never bake OS into art.
- * Dog lock (act 03): black pointed ears, white coarse fur,
- * round yellow eyes, black nose + black chest — do not swap breeds.
+ * Dog lock (all plates that show the dog): tall narrow black triangular ears,
+ * coarse white fur, small yellow eyes with hot-pink rings, huge foggy-black nose,
+ * rectangular black chest patch. Hero uses the same dog via plate 01.
  */
 export const STORY_ACTS: StoryAct[] = [
   {
@@ -30,12 +31,12 @@ export const STORY_ACTS: StoryAct[] = [
     chapter: "01",
     image: "/assets/story/01-hope.jpg",
     lines: ["「我以為只要穿得像大家，我就會被喜歡。」"],
-    aria: "第一章希望：西裝青蛙在派對中調整領帶",
-    // Extreme face + striped tie
-    objectPosition: "48% 18%",
-    objectPositionMobile: "50% 20%",
-    coverScale: 1.32,
-    coverScaleMobile: 1.42,
+    aria: "第一章希望：西裝青蛙與尖耳白狗在派對中",
+    // Keep frog face + tall dog ears in frame (dog lower-right)
+    objectPosition: "50% 28%",
+    objectPositionMobile: "50% 30%",
+    coverScale: 1.12,
+    coverScaleMobile: 1.18,
     pillBg: "#E8FF00",
     pillFg: "#111111",
     pillLabel: "希望",
@@ -47,12 +48,11 @@ export const STORY_ACTS: StoryAct[] = [
     chapter: "02",
     image: "/assets/story/02-scare.jpg",
     lines: ["「可是他們看見我，還是嚇得四散而逃。」"],
-    aria: "第二章驚散：青蛙巨大臉龐與驚逃人群",
-    // Extreme frog eyes + pink halo
-    objectPosition: "52% 26%",
-    objectPositionMobile: "50% 28%",
-    coverScale: 1.36,
-    coverScaleMobile: 1.48,
+    aria: "第二章驚散：青蛙與尖耳白狗、驚逃人群",
+    objectPosition: "50% 30%",
+    objectPositionMobile: "50% 32%",
+    coverScale: 1.14,
+    coverScaleMobile: 1.2,
     pillBg: "#FF2D95",
     pillFg: "#111111",
     pillLabel: "驚散",
@@ -64,12 +64,12 @@ export const STORY_ACTS: StoryAct[] = [
     chapter: "03",
     image: "/assets/story/03-dog.jpg",
     lines: ["「人群都走了。只有牠，還在看我。」"],
-    aria: "第三章留下：黑尖耳白毛黃眼小狗正面特寫",
-    // Extreme dog nose + round yellow eyes
-    objectPosition: "28% 38%",
-    objectPositionMobile: "20% 36%",
-    coverScale: 1.4,
-    coverScaleMobile: 1.55,
+    aria: "第三章留下：高黑耳白毛黃眼粉紅眼圈小狗正面",
+    // Protect tall triangular ears at top of frame
+    objectPosition: "50% 42%",
+    objectPositionMobile: "48% 40%",
+    coverScale: 1.1,
+    coverScaleMobile: 1.16,
     pillBg: "#39FF14",
     pillFg: "#111111",
     pillLabel: "留下",
@@ -81,12 +81,11 @@ export const STORY_ACTS: StoryAct[] = [
     chapter: "04",
     image: "/assets/story/04-free.jpg",
     lines: ["「原來我不需要合群。我只需要做回自己。」"],
-    aria: "第四章做自己：青蛙做回自己",
-    // Extreme bare frog face + raised arms
-    objectPosition: "50% 30%",
-    objectPositionMobile: "48% 26%",
-    coverScale: 1.28,
-    coverScaleMobile: 1.38,
+    aria: "第四章做自己：脫下西裝的青蛙與同一隻尖耳白狗",
+    objectPosition: "50% 36%",
+    objectPositionMobile: "50% 38%",
+    coverScale: 1.1,
+    coverScaleMobile: 1.16,
     pillBg: "#E8FF00",
     pillFg: "#111111",
     pillLabel: "做自己",
@@ -98,12 +97,12 @@ export const STORY_ACTS: StoryAct[] = [
     chapter: "05",
     image: "/assets/story/05-chase.jpg",
     lines: ["「等等——原來牠不是不怕我，牠只是想咬我！跑啊！」"],
-    aria: "第五章嗷嗚：狗咬住青蛙追逐",
-    // Extreme chase bite + panic face (action right)
-    objectPosition: "70% 40%",
-    objectPositionMobile: "78% 38%",
-    coverScale: 1.34,
-    coverScaleMobile: 1.5,
+    aria: "第五章嗷嗚：同一隻狗咬住青蛙追逐",
+    // Keep both runners and dog ears in frame
+    objectPosition: "52% 42%",
+    objectPositionMobile: "55% 40%",
+    coverScale: 1.12,
+    coverScaleMobile: 1.18,
     pillBg: "#FF2D95",
     pillFg: "#111111",
     pillLabel: "嗷嗚",
@@ -112,7 +111,8 @@ export const STORY_ACTS: StoryAct[] = [
   },
 ];
 
-export const HERO_MASTER = "/assets/hero/hero-master-v2.jpg";
+/** Hero core = first story plate — same locked dog, never the old master breed. */
+export const HERO_MASTER = STORY_ACTS[0].image;
 
 export const LOCKED_STORY_IMAGES: readonly string[] = STORY_ACTS.map((a) => a.image);
 
@@ -125,12 +125,12 @@ export const BRAND = {
 
 /**
  * Master timeline units (ease:none scrub).
- * Transition ≈ 1.25 vh-units (~125vh) — never a separate black page.
+ * Transition ≈ 1.35 vh-units — outgoing + incoming overlap ≥35%; no >18vh black void.
  */
 export const FILM_SEGMENTS = {
-  heroHold: 0.55,
-  /** hero → act1 / act→act transition (~125vh) */
-  transition: 1.25,
-  actHold: 0.7,
-  act5Hold: 0.95,
+  heroHold: 0.5,
+  /** hero → act1 / act→act transition */
+  transition: 1.35,
+  actHold: 0.65,
+  act5Hold: 0.9,
 } as const;

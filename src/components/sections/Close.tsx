@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-/** Closing beat — same candy language as the scroll film */
+/** Closing beat — black void + acid type echo, Furmosa brand */
 export function Close() {
   return (
     <section
@@ -10,22 +10,30 @@ export function Close() {
       className="relative flex min-h-[70svh] items-center justify-center overflow-hidden"
       style={{
         background:
-          "linear-gradient(180deg, #2a1040 0%, #5a1a8a 42%, #c45cff 100%)",
+          "linear-gradient(180deg, #050505 0%, #0a0a0a 48%, #111111 100%)",
       }}
     >
       <div
-        className="pointer-events-none absolute inset-0 opacity-40"
+        className="pointer-events-none absolute inset-0 opacity-50"
         aria-hidden="true"
         style={{
           background: `
-            radial-gradient(ellipse at 50% 20%, rgba(255,244,163,0.35) 0%, transparent 40%),
-            radial-gradient(ellipse at 80% 70%, rgba(255,78,200,0.28) 0%, transparent 42%),
-            radial-gradient(ellipse at 18% 75%, rgba(125,255,178,0.22) 0%, transparent 40%)
+            radial-gradient(ellipse at 50% 20%, rgba(232,255,0,0.14) 0%, transparent 42%),
+            radial-gradient(ellipse at 80% 70%, rgba(255,45,149,0.16) 0%, transparent 42%),
+            radial-gradient(ellipse at 18% 75%, rgba(57,255,20,0.12) 0%, transparent 40%)
           `,
         }}
       />
       <div
-        className="pointer-events-none absolute inset-x-0 top-[18%] select-none overflow-hidden text-center font-black leading-none text-[#fff4a3]/[0.12]"
+        className="pointer-events-none absolute inset-0 opacity-[0.16]"
+        aria-hidden="true"
+        style={{
+          backgroundImage: "radial-gradient(#e8ff00 0.7px, transparent 0.8px)",
+          backgroundSize: "4px 4px",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 top-[18%] select-none overflow-hidden text-center font-black leading-none text-[#E8FF00]/[0.14]"
         aria-hidden="true"
         style={{
           fontSize: "clamp(18vw, 22vw, 28vw)",
@@ -39,7 +47,7 @@ export function Close() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-[11px] font-bold tracking-[0.4em] text-[#fff4a3]"
+          className="text-[11px] font-bold tracking-[0.4em] text-[#E8FF00]"
         >
           嗷嗚計畫 · 匠寵
         </motion.p>
@@ -57,7 +65,7 @@ export function Close() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1, duration: 0.8 }}
-          className="mx-auto mt-8 max-w-lg text-base leading-relaxed text-[#ffe8ff] md:text-lg"
+          className="mx-auto mt-8 max-w-lg text-base leading-relaxed text-[#f0f0f0] md:text-lg"
         >
           真正怕青蛙的，一直都是主人。
           <br />
@@ -71,7 +79,7 @@ export function Close() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="mt-12 inline-flex rounded-full border-[3px] border-[#2a1040] bg-[#FF4EC8] px-10 py-4 text-sm font-bold tracking-[0.22em] text-white shadow-[4px_5px_0_#fff4a3] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+          className="mt-12 inline-flex rounded-full border-[2px] border-[#E8FF00]/40 bg-[#FF2D95] px-10 py-4 text-sm font-bold tracking-[0.22em] text-[#111] shadow-[0_0_0_1px_#111] transition-transform hover:scale-[1.02] active:scale-[0.98]"
         >
           跟著匠寵
         </motion.a>

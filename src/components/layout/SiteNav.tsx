@@ -8,7 +8,7 @@ const links = [
   { href: "#close", label: "嗷嗚", short: "嗷" },
 ];
 
-/** Wide candy capsule — desktop full labels; mobile compact */
+/** Centered dark capsule — Lil Frogeth interaction language, Furmosa brand */
 export function SiteNav() {
   const reduced = useReducedMotion();
 
@@ -29,7 +29,7 @@ export function SiteNav() {
             <span className="candy-nav__mark" aria-hidden="true">
               蛙
             </span>
-            <span className="candy-nav__name">Furmosa · 嗷嗚</span>
+            <span className="candy-nav__name">嗷嗚計畫</span>
           </a>
 
           {links.map((l) => (

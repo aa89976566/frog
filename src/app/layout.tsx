@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#c45cff",
+  themeColor: "#050505",
   width: "device-width",
   initialScale: 1,
 };
@@ -53,7 +53,7 @@ export default function RootLayout({
       lang="zh-Hant"
       className={`${display.variable} ${body.variable} ${serif.variable}`}
     >
-      <body className="min-h-dvh antialiased" style={{ background: "#c45cff" }}>
+      <body className="min-h-dvh antialiased" style={{ background: "#050505" }}>
         <SmoothScroll>
           <GrainOverlay />
           {children}
