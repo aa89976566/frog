@@ -241,9 +241,10 @@ body {
 .candy-hero__clouds {
   position: absolute;
   inset: -12%;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
-  will-change: transform;
+  opacity: 0.4;
+  mix-blend-mode: screen;
 }
 
 .candy-hero__cloud {
@@ -307,9 +308,9 @@ body {
 .candy-hero__halftone {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
-  opacity: 0.22;
+  opacity: 0.18;
   mix-blend-mode: multiply;
   background-image: radial-gradient(#2a1040 0.9px, transparent 1px);
   background-size: 5px 5px;
@@ -318,30 +319,29 @@ body {
 .candy-hero__typewall {
   position: absolute;
   inset: -10% -45%;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 0.01em;
   pointer-events: none;
   user-select: none;
-  will-change: transform;
   overflow: hidden;
-  /* Keep acid type wall, punch a soft window over the frog torso */
+  /* Punch a soft window so the central frog reads clearly */
   -webkit-mask-image: radial-gradient(
-    ellipse 48% 58% at 50% 34%,
+    ellipse 52% 62% at 50% 36%,
     transparent 0%,
-    transparent 40%,
-    rgba(0, 0, 0, 0.35) 60%,
-    #000 80%,
+    transparent 42%,
+    rgba(0, 0, 0, 0.4) 62%,
+    #000 82%,
     #000 100%
   );
   mask-image: radial-gradient(
-    ellipse 48% 58% at 50% 34%,
+    ellipse 52% 62% at 50% 36%,
     transparent 0%,
-    transparent 40%,
-    rgba(0, 0, 0, 0.35) 60%,
-    #000 80%,
+    transparent 42%,
+    rgba(0, 0, 0, 0.4) 62%,
+    #000 82%,
     #000 100%
   );
 }
@@ -384,38 +384,20 @@ body {
   filter: brightness(0.92);
 }
 
-/* Central master character — full-bleed, soft edge so type wall peeks around */
+/* Central master — CSS background plate (full frog under type wall window) */
 .candy-hero__master {
   position: absolute;
   inset: 0;
-  z-index: 4;
+  z-index: 1;
   pointer-events: none;
-  will-change: transform;
   overflow: clip;
-  /* Soft vignette via box-shadow instead of mask — more reliable across viewports */
-  -webkit-mask-image: none;
-  mask-image: none;
-}
-
-.candy-hero__master-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* hero-master-v2 frog mass sits upper-center (~20% from top) */
-  object-position: 48% 18%;
-  transform: scale(1.16);
-  transform-origin: 48% 22%;
-  user-select: none;
-  filter: saturate(1.16) contrast(1.12) brightness(1.06);
-}
-
-.candy-hero__master-veil {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 70% 65% at 50% 36%, transparent 42%, rgba(196, 92, 255, 0.18) 100%),
-    linear-gradient(180deg, transparent 55%, rgba(255, 45, 149, 0.22) 100%);
+  background-color: #c45cff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 48% 12%;
+  transform: scale(1.08);
+  transform-origin: 48% 18%;
+  filter: saturate(1.14) contrast(1.1) brightness(1.04);
 }
 
 .candy-hero__grain {
@@ -491,10 +473,10 @@ body {
 }
 
 @media (min-width: 768px) {
-  .candy-hero__master-img {
-    object-position: 48% 16%;
-    transform: scale(1.14);
-    transform-origin: 48% 20%;
+  .candy-hero__master {
+    background-position: 48% 12%;
+    transform: scale(1.06);
+    transform-origin: 48% 16%;
   }
 
   .candy-hero__type-row {
@@ -504,13 +486,8 @@ body {
 
 @media (max-width: 767px) {
   .candy-hero__master {
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
-  .candy-hero__master-img {
-    object-position: 50% 22%;
-    transform: scale(1.34);
+    background-position: 50% 22%;
+    transform: scale(1.28);
     transform-origin: 50% 24%;
   }
 

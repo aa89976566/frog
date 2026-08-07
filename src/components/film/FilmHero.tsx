@@ -44,6 +44,15 @@ export function FilmHero() {
     <div className="candy-hero" data-film-hero aria-label="嗷嗚計畫開場">
       <h1 className="sr-only">嗷嗚計畫｜匠寵｜青蛙誰在怕</h1>
 
+      {/* Master as CSS background — avoids sibling compositing paint drops */}
+      <div
+        className="candy-hero__master"
+        data-hero-frog
+        style={{ backgroundImage: `url(${HERO_MASTER})` }}
+        role="img"
+        aria-label="穿西裝的匠寵青蛙與小狗站在蘑菇派對中央"
+      />
+
       <div className="candy-hero__clouds" data-hero-clouds aria-hidden="true">
         <span className="candy-hero__cloud candy-hero__cloud--a" />
         <span className="candy-hero__cloud candy-hero__cloud--b" />
@@ -53,7 +62,6 @@ export function FilmHero() {
 
       <div className="candy-hero__halftone" aria-hidden="true" />
 
-      {/* Type wall behind + around character (face kept clear via mask) */}
       <div
         className="candy-hero__typewall"
         data-hero-type
@@ -77,21 +85,6 @@ export function FilmHero() {
             </div>
           );
         })}
-      </div>
-
-      {/* Central complete character — approved master, not regenerated */}
-      <div className="candy-hero__master" data-hero-frog>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={HERO_MASTER}
-          alt="穿西裝的匠寵青蛙與小狗站在蘑菇派對中央"
-          width={1024}
-          height={576}
-          decoding="async"
-          fetchPriority="high"
-          className="candy-hero__master-img"
-        />
-        <div className="candy-hero__master-veil" aria-hidden="true" />
       </div>
 
       <BrandSticker />
