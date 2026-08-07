@@ -290,7 +290,7 @@ export function ScrollFilm() {
         <FilmHero />
 
         <div className="candy-film__stage" id="story">
-          {STORY_ACTS.map((a, i) => (
+          {STORY_ACTS.map((a) => (
             <div
               key={a.id}
               className="candy-plate"
