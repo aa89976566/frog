@@ -77,7 +77,7 @@ export function ScrollFilm() {
           start: "top top",
           end: () => `+=${window.innerHeight * totalUnits}`,
           pin: pin,
-          scrub: 1.25,
+          scrub: 0.85,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           fastScrollEnd: true,
@@ -315,7 +315,7 @@ export function ScrollFilm() {
                 width={1024}
                 height={576}
                 decoding="async"
-                loading={i === 0 ? "eager" : "lazy"}
+                loading="eager"
               />
               <div className="candy-plate__grade" aria-hidden="true" />
               <div className="candy-plate__ghosts" aria-hidden="true">

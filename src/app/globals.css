@@ -327,6 +327,23 @@ body {
   user-select: none;
   will-change: transform;
   overflow: hidden;
+  /* Keep acid type wall, punch a soft window so the central frog reads clearly */
+  -webkit-mask-image: radial-gradient(
+    ellipse 42% 58% at 50% 42%,
+    transparent 0%,
+    transparent 38%,
+    rgba(0, 0, 0, 0.35) 58%,
+    #000 78%,
+    #000 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 42% 58% at 50% 42%,
+    transparent 0%,
+    transparent 38%,
+    rgba(0, 0, 0, 0.35) 58%,
+    #000 78%,
+    #000 100%
+  );
 }
 
 .candy-hero__type-row {
@@ -371,25 +388,25 @@ body {
 .candy-hero__master {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 4;
   pointer-events: none;
   will-change: transform;
   overflow: clip;
   -webkit-mask-image: radial-gradient(
-    ellipse 78% 88% at 50% 42%,
+    ellipse 72% 82% at 50% 44%,
     #000 0%,
-    #000 52%,
-    rgba(0, 0, 0, 0.85) 68%,
-    rgba(0, 0, 0, 0.35) 82%,
-    transparent 96%
+    #000 58%,
+    rgba(0, 0, 0, 0.9) 72%,
+    rgba(0, 0, 0, 0.4) 86%,
+    transparent 98%
   );
   mask-image: radial-gradient(
-    ellipse 78% 88% at 50% 42%,
+    ellipse 72% 82% at 50% 44%,
     #000 0%,
-    #000 52%,
-    rgba(0, 0, 0, 0.85) 68%,
-    rgba(0, 0, 0, 0.35) 82%,
-    transparent 96%
+    #000 58%,
+    rgba(0, 0, 0, 0.9) 72%,
+    rgba(0, 0, 0, 0.4) 86%,
+    transparent 98%
   );
 }
 
@@ -397,11 +414,11 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 34%;
-  transform: scale(1.1);
-  transform-origin: 50% 36%;
+  object-position: 50% 38%;
+  transform: scale(1.14);
+  transform-origin: 50% 40%;
   user-select: none;
-  filter: saturate(1.08) contrast(1.05);
+  filter: saturate(1.12) contrast(1.08) brightness(1.04);
 }
 
 .candy-hero__master-veil {
@@ -416,7 +433,7 @@ body {
 .candy-hero__grain {
   position: absolute;
   inset: 0;
-  z-index: 5;
+  z-index: 6;
   pointer-events: none;
   opacity: 0.16;
   mix-blend-mode: soft-light;
@@ -424,7 +441,7 @@ body {
 }
 
 .candy-hero__brush {
-  z-index: 6;
+  z-index: 7;
 }
 
 /* Sticker — desktop top-right; mobile bottom-right away from face */
@@ -487,8 +504,8 @@ body {
 
 @media (min-width: 768px) {
   .candy-hero__master-img {
-    object-position: 50% 36%;
-    transform: scale(1.05);
+    object-position: 50% 40%;
+    transform: scale(1.08);
   }
 
   .candy-hero__type-row {
@@ -499,31 +516,47 @@ body {
 @media (max-width: 767px) {
   .candy-hero__master {
     -webkit-mask-image: radial-gradient(
-      ellipse 92% 78% at 50% 38%,
+      ellipse 88% 72% at 50% 36%,
       #000 0%,
-      #000 48%,
-      rgba(0, 0, 0, 0.8) 66%,
-      rgba(0, 0, 0, 0.3) 80%,
-      transparent 94%
+      #000 55%,
+      rgba(0, 0, 0, 0.85) 70%,
+      rgba(0, 0, 0, 0.35) 84%,
+      transparent 96%
     );
     mask-image: radial-gradient(
-      ellipse 92% 78% at 50% 38%,
+      ellipse 88% 72% at 50% 36%,
       #000 0%,
-      #000 48%,
-      rgba(0, 0, 0, 0.8) 66%,
-      rgba(0, 0, 0, 0.3) 80%,
-      transparent 94%
+      #000 55%,
+      rgba(0, 0, 0, 0.85) 70%,
+      rgba(0, 0, 0, 0.35) 84%,
+      transparent 96%
     );
   }
 
   .candy-hero__master-img {
-    object-position: 50% 26%;
-    transform: scale(1.28);
-    transform-origin: 50% 28%;
+    object-position: 50% 28%;
+    transform: scale(1.32);
+    transform-origin: 50% 30%;
   }
 
   .candy-hero__typewall {
     inset: -8% -55%;
+    -webkit-mask-image: radial-gradient(
+      ellipse 55% 48% at 50% 34%,
+      transparent 0%,
+      transparent 42%,
+      rgba(0, 0, 0, 0.4) 62%,
+      #000 82%,
+      #000 100%
+    );
+    mask-image: radial-gradient(
+      ellipse 55% 48% at 50% 34%,
+      transparent 0%,
+      transparent 42%,
+      rgba(0, 0, 0, 0.4) 62%,
+      #000 82%,
+      #000 100%
+    );
   }
 
   .candy-hero__type-row {
@@ -532,7 +565,7 @@ body {
 
   .hero-sticker {
     top: auto;
-    bottom: 12%;
+    bottom: 14%;
     right: 3%;
     transform: scale(0.7);
     transform-origin: bottom right;
@@ -555,7 +588,7 @@ body {
   }
 
   .hero-sticker-brand {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
 
   .hero-sticker-sub {
@@ -587,6 +620,8 @@ body {
   object-position: var(--obj-pos, center center);
   transform: scale(var(--cover-scale, 1.18));
   transform-origin: var(--obj-pos, center center);
+  /* Prevent white flash while decoding / scrubbing */
+  background: #1a0a28;
 }
 
 @media (max-width: 767px) {
