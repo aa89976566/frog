@@ -175,8 +175,8 @@ export function ScrollFilm() {
           );
         }
 
-        // Caption when incoming covers ~35% viewport
-        tl.call(() => setCaption(captionIndex, true), undefined, at + dur * 0.4);
+        // Caption sync when incoming covers ~35% viewport (crossfade, never late)
+        tl.call(() => setCaption(captionIndex, true), undefined, at + dur * 0.35);
 
         // 0.55–1: incoming full; outgoing exits; type fades
         tl.to(
@@ -185,23 +185,30 @@ export function ScrollFilm() {
           at + dur * 0.55,
         );
         if (outgoing) {
+          // Keep a residual slice until incoming fully covers — no solo black void
           tl.to(
             outgoing,
             {
-              yPercent: -52,
+              yPercent: -42,
               scale: 1.1,
-              filter: "brightness(0.48)",
-              autoAlpha: 0,
-              duration: dur * 0.45,
+              filter: "brightness(0.52)",
+              autoAlpha: 0.15,
+              duration: dur * 0.4,
             },
             at + dur * 0.55,
           );
+          tl.to(
+            outgoing,
+            { autoAlpha: 0, duration: dur * 0.12 },
+            at + dur * 0.88,
+          );
         }
         if (typeEl) {
+          // Type peaks mid-junction then exits — always with both images
           tl.to(
             typeEl,
-            { yPercent: -18, autoAlpha: 0, duration: dur * 0.38 },
-            at + dur * 0.62,
+            { yPercent: -14, autoAlpha: 0, duration: dur * 0.32 },
+            at + dur * 0.68,
           );
         }
 

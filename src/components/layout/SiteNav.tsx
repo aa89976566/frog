@@ -29,7 +29,7 @@ export function SiteNav() {
             <span className="candy-nav__mark" aria-hidden="true">
               蛙
             </span>
-            <span className="candy-nav__name">嗷嗚計畫</span>
+            <span className="candy-nav__name">Furmosa · 嗷嗚</span>
           </a>
 
           {links.map((l) => (

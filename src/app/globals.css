@@ -1,32 +1,38 @@
 @import "tailwindcss";
 
 :root {
+  /* Lil Frogeth rhythm: acid yellow / hot pink / mint / black — Furmosa brand */
+  --acid: #e8ff00;
+  --hot-pink: #ff2d95;
+  --mint: #39ff14;
+  --ink-black: #111111;
+
   --candy-purple: #c45cff;
   --candy-purple-deep: #9b3dff;
-  --candy-pink: #ff4ec8;
+  --candy-pink: #ff2d95;
   --candy-pink-soft: #ff8adf;
-  --candy-cream: #fff4a3;
-  --candy-lime: #7dffb2;
+  --candy-cream: #e8ff00;
+  --candy-lime: #39ff14;
   --candy-mint: #39ff14;
   --candy-olive: #6b7a3a;
-  --candy-ink: #2a1040;
-  --candy-void: #0a0612;
+  --candy-ink: #111111;
+  --candy-void: #1a0a28;
 
   --void: #c45cff;
   --lime: #39ff14;
-  --ylime: #fff4a3;
-  --magenta: #ff4ec8;
+  --ylime: #e8ff00;
+  --magenta: #ff2d95;
   --violet: #c45cff;
-  --cream: #fff4a3;
-  --ink: #2a1040;
+  --cream: #e8ff00;
+  --ink: #111111;
   --fog: #fff8e8;
   --moss: #39ff14;
-  --owner: #ff4ec8;
-  --dog-gold: #fff4a3;
-  --grain-opacity: 0.12;
+  --owner: #ff2d95;
+  --dog-gold: #e8ff00;
+  --grain-opacity: 0.14;
 
   --background: #c45cff;
-  --foreground: #2a1040;
+  --foreground: #111111;
 }
 
 @theme inline {
@@ -346,18 +352,19 @@ body {
   font-weight: 800;
   letter-spacing: -0.04em;
   text-shadow:
-    0 3px 0 rgba(42, 16, 64, 0.55),
-    0 0 28px rgba(255, 244, 163, 0.35);
+    0 3px 0 rgba(17, 17, 17, 0.55),
+    0 0 28px rgba(232, 255, 0, 0.35);
 }
 
 .candy-hero__type-row--a {
-  opacity: 0.92;
-  color: #fff4a3;
+  opacity: 0.94;
+  color: var(--acid);
 }
 
 .candy-hero__type-row--b {
-  opacity: 0.82;
-  color: #7dffb2;
+  opacity: 0.84;
+  color: var(--acid);
+  filter: brightness(0.92);
 }
 
 /* Central master character — full-bleed, soft edge so type wall peeks around */
@@ -463,9 +470,9 @@ body {
 
 .hero-sticker-brand {
   font-weight: 900;
-  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
-  line-height: 0.9;
-  letter-spacing: 0.04em;
+  font-size: clamp(1.05rem, 2.8vw, 1.65rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
 }
 
 .hero-sticker-sub {
@@ -565,7 +572,8 @@ body {
   width: 100%;
   height: 100%;
   overflow: clip;
-  background: #2a1040;
+  /* Candy purple underlay — no white flash, no tall pure-black void */
+  background: #c45cff;
   will-change: transform, filter;
   transform-origin: 50% 50%;
 }
@@ -642,7 +650,8 @@ body {
 .candy-plate__seam {
   z-index: 12;
   top: 0;
-  height: clamp(60px, 8vh, 100px);
+  /* Black brush seam only — 60–110px irregular junction */
+  height: clamp(60px, 7.5vh, 110px);
 }
 
 /* ═══ TYPE OVERLAY — between plates, NOT a black page ═══ */
@@ -687,25 +696,25 @@ body {
 .candy-type-overlay__text {
   position: relative;
   z-index: 2;
-  color: #fff4a3;
+  color: var(--acid);
   text-shadow:
-    0 0 48px rgba(42, 16, 64, 0.7),
-    5px 5px 0 rgba(10, 6, 18, 0.75),
-    -2px -2px 0 rgba(255, 78, 200, 0.35);
+    0 0 48px rgba(17, 17, 17, 0.7),
+    5px 5px 0 rgba(10, 6, 18, 0.8),
+    -2px -2px 0 rgba(255, 45, 149, 0.4);
   transform: translateX(-4%);
-  -webkit-text-stroke: 1px rgba(42, 16, 64, 0.35);
+  -webkit-text-stroke: 1px rgba(17, 17, 17, 0.35);
 }
 
 .candy-type-overlay__echo {
   z-index: 1;
-  color: #ff4ec8;
+  color: var(--hot-pink);
   opacity: 0.55;
   transform: translate(-6%, -8%) scale(1.06);
   mix-blend-mode: screen;
 }
 
 .candy-type-overlay__echo--b {
-  color: #7dffb2;
+  color: var(--mint);
   opacity: 0.4;
   transform: translate(-2%, 10%) scale(0.96);
 }
@@ -715,7 +724,7 @@ body {
   position: absolute;
   inset-x: 0;
   z-index: 30;
-  height: clamp(60px, 8vh, 100px);
+  height: clamp(60px, 7.5vh, 110px);
   pointer-events: none;
 }
 
@@ -732,7 +741,7 @@ body {
   height: 100%;
 }
 
-/* ═══ CAPTION — desktop center; mobile 12px inset ═══ */
+/* ═══ CAPTION — desktop 620–760px; mobile 12px inset ═══ */
 .candy-caption {
   position: absolute;
   left: 0;
@@ -744,22 +753,63 @@ body {
   padding: 0 12px;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.22s ease;
 }
 
 .candy-caption.is-visible {
   opacity: 1;
 }
 
-.candy-caption__pill {
+.candy-caption__stack {
+  position: relative;
+  /* Desktop capsule 620–760px; collapses with 12px side inset on small screens */
+  width: min(740px, 100%);
+  min-width: min(620px, 100%);
   pointer-events: auto;
+}
+
+.candy-caption__layer {
+  width: 100%;
+}
+
+.candy-caption__layer--out {
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  animation: caption-fade-out 0.28s ease forwards;
+}
+
+.candy-caption__layer--in.is-fading-in {
+  animation: caption-fade-in 0.28s ease;
+}
+
+@keyframes caption-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes caption-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.candy-caption__pill {
   display: flex;
   align-items: center;
-  width: min(720px, 100%);
+  width: 100%;
   border-radius: 999px;
-  border: 1.5px solid rgba(42, 16, 64, 0.12);
-  box-shadow: 0 14px 40px rgba(42, 16, 64, 0.28);
+  border: 1.5px solid rgba(17, 17, 17, 0.14);
+  box-shadow: 0 14px 40px rgba(17, 17, 17, 0.28);
   overflow: hidden;
+  color: #111111;
 }
 
 .candy-caption__meta {
@@ -767,8 +817,9 @@ body {
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  width: 5.5rem;
+  width: 5.75rem;
   padding: 0.8rem 0 0.8rem 1.25rem;
+  color: #111111;
 }
 
 .candy-caption__chapter {
@@ -776,7 +827,8 @@ body {
   font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0.3em;
-  opacity: 0.7;
+  opacity: 0.72;
+  color: #111111;
 }
 
 .candy-caption__label {
@@ -784,13 +836,14 @@ body {
   font-weight: 800;
   letter-spacing: 0.14em;
   margin-top: 0.08rem;
+  color: #111111;
 }
 
 .candy-caption__rule {
   width: 1.5px;
   align-self: stretch;
   margin: 0.6rem 0;
-  background: currentColor;
+  background: #111111;
   opacity: 0.28;
   flex-shrink: 0;
 }
@@ -802,12 +855,17 @@ body {
   font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   font-weight: 800;
   line-height: 1.3;
+  color: #111111;
 }
 
 @media (max-width: 640px) {
   .candy-caption {
     padding: 0 12px;
     bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+
+  .candy-caption__stack {
+    width: 100%;
   }
 
   .candy-caption__pill {
@@ -820,12 +878,19 @@ body {
   .candy-caption__meta {
     width: auto;
     min-width: 3.5rem;
-    padding: 0.7rem 0.65rem 0.7rem 0.9rem;
+    max-width: 4.6rem;
+    padding: 0.7rem 0.55rem 0.7rem 0.85rem;
+  }
+
+  .candy-caption__label {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
   }
 
   .candy-caption__copy {
-    padding: 0.7rem 0.9rem 0.7rem 0.65rem;
-    font-size: 0.88rem;
+    padding: 0.7rem 0.85rem 0.7rem 0.55rem;
+    font-size: 0.82rem;
+    line-height: 1.35;
   }
 }
 
