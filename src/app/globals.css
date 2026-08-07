@@ -327,21 +327,21 @@ body {
   user-select: none;
   will-change: transform;
   overflow: hidden;
-  /* Keep acid type wall, punch a soft window so the central frog reads clearly */
+  /* Keep acid type wall, punch a soft window over the frog torso */
   -webkit-mask-image: radial-gradient(
-    ellipse 42% 58% at 50% 42%,
+    ellipse 48% 58% at 50% 34%,
     transparent 0%,
-    transparent 38%,
-    rgba(0, 0, 0, 0.35) 58%,
-    #000 78%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.35) 60%,
+    #000 80%,
     #000 100%
   );
   mask-image: radial-gradient(
-    ellipse 42% 58% at 50% 42%,
+    ellipse 48% 58% at 50% 34%,
     transparent 0%,
-    transparent 38%,
-    rgba(0, 0, 0, 0.35) 58%,
-    #000 78%,
+    transparent 40%,
+    rgba(0, 0, 0, 0.35) 60%,
+    #000 80%,
     #000 100%
   );
 }
@@ -392,31 +392,19 @@ body {
   pointer-events: none;
   will-change: transform;
   overflow: clip;
-  -webkit-mask-image: radial-gradient(
-    ellipse 72% 82% at 50% 44%,
-    #000 0%,
-    #000 58%,
-    rgba(0, 0, 0, 0.9) 72%,
-    rgba(0, 0, 0, 0.4) 86%,
-    transparent 98%
-  );
-  mask-image: radial-gradient(
-    ellipse 72% 82% at 50% 44%,
-    #000 0%,
-    #000 58%,
-    rgba(0, 0, 0, 0.9) 72%,
-    rgba(0, 0, 0, 0.4) 86%,
-    transparent 98%
-  );
+  /* Soft vignette via box-shadow instead of mask — more reliable across viewports */
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 .candy-hero__master-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 42%;
-  transform: scale(1.22);
-  transform-origin: 50% 42%;
+  /* hero-master-v2 frog mass sits upper-center (~20% from top) */
+  object-position: 48% 18%;
+  transform: scale(1.16);
+  transform-origin: 48% 22%;
   user-select: none;
   filter: saturate(1.16) contrast(1.12) brightness(1.06);
 }
@@ -426,8 +414,8 @@ body {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 55% 48% at 50% 40%, transparent 45%, rgba(42, 16, 64, 0.08) 100%),
-    linear-gradient(180deg, rgba(196, 92, 255, 0.04) 0%, transparent 35%, rgba(255, 45, 149, 0.08) 100%);
+    radial-gradient(ellipse 70% 65% at 50% 36%, transparent 42%, rgba(196, 92, 255, 0.18) 100%),
+    linear-gradient(180deg, transparent 55%, rgba(255, 45, 149, 0.22) 100%);
 }
 
 .candy-hero__grain {
@@ -504,8 +492,9 @@ body {
 
 @media (min-width: 768px) {
   .candy-hero__master-img {
-    object-position: 50% 44%;
-    transform: scale(1.18);
+    object-position: 48% 16%;
+    transform: scale(1.14);
+    transform-origin: 48% 20%;
   }
 
   .candy-hero__type-row {
@@ -515,28 +504,14 @@ body {
 
 @media (max-width: 767px) {
   .candy-hero__master {
-    -webkit-mask-image: radial-gradient(
-      ellipse 88% 72% at 50% 36%,
-      #000 0%,
-      #000 55%,
-      rgba(0, 0, 0, 0.85) 70%,
-      rgba(0, 0, 0, 0.35) 84%,
-      transparent 96%
-    );
-    mask-image: radial-gradient(
-      ellipse 88% 72% at 50% 36%,
-      #000 0%,
-      #000 55%,
-      rgba(0, 0, 0, 0.85) 70%,
-      rgba(0, 0, 0, 0.35) 84%,
-      transparent 96%
-    );
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .candy-hero__master-img {
-    object-position: 50% 28%;
-    transform: scale(1.32);
-    transform-origin: 50% 30%;
+    object-position: 50% 22%;
+    transform: scale(1.34);
+    transform-origin: 50% 24%;
   }
 
   .candy-hero__typewall {
@@ -609,6 +584,9 @@ body {
   background: #c45cff;
   will-change: transform, filter;
   transform-origin: 50% 50%;
+  /* Hidden until GSAP brings the plate in */
+  opacity: 0;
+  visibility: hidden;
 }
 
 .candy-plate__img {
@@ -702,6 +680,9 @@ body {
   /* Transparent — images show through */
   background: transparent;
   will-change: transform, opacity;
+  /* Hidden until GSAP transition — never cover the hero at rest */
+  opacity: 0;
+  visibility: hidden;
 }
 
 .candy-type-overlay--empty {

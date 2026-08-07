@@ -67,8 +67,12 @@ export function ScrollFilm() {
           yPercent: 70,
           autoAlpha: 0,
           zIndex: 20,
+          immediateRender: true,
         });
       });
+      // Ensure story chrome never flashes over hero before scrub starts
+      gsap.set(typeOverlays, { autoAlpha: 0 });
+      gsap.set(acts, { autoAlpha: 0 });
 
       const tl = gsap.timeline({
         defaults: { ease: "none" },
