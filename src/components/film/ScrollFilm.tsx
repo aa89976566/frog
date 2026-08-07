@@ -73,6 +73,9 @@ export function ScrollFilm() {
         gsap.set(el, { x: 0 });
       });
 
+      /** Caption windows in timeline units — synced on scrub (forward + reverse). */
+      const captionWindows: { index: number; start: number; end: number }[] = [];
+
       const tl = gsap.timeline({
         defaults: { ease: "none" },
         scrollTrigger: {
@@ -84,13 +87,23 @@ export function ScrollFilm() {
           anticipatePin: 1,
           invalidateOnRefresh: true,
           fastScrollEnd: true,
+          onUpdate: (self) => {
+            const unit = self.progress * totalUnits;
+            let next = -1;
+            for (const w of captionWindows) {
+              if (unit >= w.start && unit < w.end) {
+                next = w.index;
+                break;
+              }
+            }
+            if (next < 0 && unit >= (captionWindows.at(-1)?.start ?? Infinity)) {
+              next = captionWindows.at(-1)?.index ?? -1;
+            }
+            setActive(next);
+            setCaptionVisible(next >= 0);
+          },
         },
       });
-
-      const setCaption = (index: number, visible: boolean) => {
-        setActive(index);
-        setCaptionVisible(visible);
-      };
 
       /**
        * Overlapping crossfade (≥40% dual-visible window).
@@ -104,7 +117,6 @@ export function ScrollFilm() {
         typeEl: HTMLElement | null,
         at: number,
         dur: number,
-        captionIndex: number,
       ) => {
         if (outgoing) tl.set(outgoing, { zIndex: 10 }, at);
         if (typeEl) tl.set(typeEl, { zIndex: 25 }, at);
@@ -151,8 +163,6 @@ export function ScrollFilm() {
             at + dur * 0.62,
           );
         }
-
-        tl.call(() => setCaption(captionIndex, true), undefined, at + dur * 0.32);
       };
 
       let t = 0;
@@ -167,7 +177,12 @@ export function ScrollFilm() {
       t += heroHold;
 
       // Hero → Act1
-      transitionCrossfade(hero, acts[0], typeOverlays[0] ?? null, t, transition, 0);
+      transitionCrossfade(hero, acts[0], typeOverlays[0] ?? null, t, transition);
+      captionWindows.push({
+        index: 0,
+        start: t + transition * 0.32,
+        end: Infinity,
+      });
       t += transition;
 
       for (let i = 0; i < acts.length; i++) {
@@ -187,7 +202,15 @@ export function ScrollFilm() {
             raw && !raw.classList.contains("candy-type-overlay--empty")
               ? raw
               : null;
-          transitionCrossfade(acts[i], acts[i + 1], typeEl, t, transition, i + 1);
+          // close previous caption window at next chapter reveal
+          const prev = captionWindows.at(-1);
+          if (prev) prev.end = t + transition * 0.32;
+          transitionCrossfade(acts[i], acts[i + 1], typeEl, t, transition);
+          captionWindows.push({
+            index: i + 1,
+            start: t + transition * 0.32,
+            end: Infinity,
+          });
           t += transition;
         }
       }
