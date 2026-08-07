@@ -6,14 +6,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { STORY_ACTS, FILM_SEGMENTS } from "@/lib/story";
 import { FilmHero } from "@/components/film/FilmHero";
 import { CaptionPill } from "@/components/story/CaptionPill";
-import { BrushMask } from "@/components/story/BrushMask";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Continuous candy film — one pin, one scrub timeline.
- * Transitions keep outgoing + type overlay + incoming simultaneously visible.
- * No fullscreen black type pages.
+ * Single GSAP ScrollTrigger master timeline — sticky overlapping crossfade.
+ * Outgoing still at opacity .35–.55 while next enters from scale(.94) / y(12vh).
+ * Overlap ≥40%. No pure-black blank segments.
  */
 export function ScrollFilm() {
   const rootRef = useRef<HTMLElement>(null);
@@ -36,7 +35,6 @@ export function ScrollFilm() {
     if (!root || !pin || reduced) return;
 
     const hero = pin.querySelector<HTMLElement>("[data-film-hero]");
-    const heroClouds = pin.querySelector<HTMLElement>("[data-hero-clouds]");
     const heroType = pin.querySelector<HTMLElement>("[data-hero-type]");
     const heroFrog = pin.querySelector<HTMLElement>("[data-hero-frog]");
     const acts = gsap.utils.toArray<HTMLElement>(
@@ -45,34 +43,35 @@ export function ScrollFilm() {
     const typeOverlays = gsap.utils.toArray<HTMLElement>(
       pin.querySelectorAll("[data-type-overlay]"),
     );
+    const backdrops = gsap.utils.toArray<HTMLElement>(
+      pin.querySelectorAll("[data-plate-backdrop]"),
+    );
 
     const { heroHold, transition, actHold, act5Hold } = FILM_SEGMENTS;
     const totalUnits =
       heroHold + transition + actHold * 4 + transition * 4 + act5Hold;
 
     const ctx = gsap.context(() => {
-      gsap.set(hero, { yPercent: 0, autoAlpha: 1, zIndex: 10 });
+      gsap.set(hero, { autoAlpha: 1, zIndex: 10, y: 0, scale: 1 });
       acts.forEach((el) => {
         gsap.set(el, {
-          yPercent: 100,
-          scale: 1.12,
+          y: "12vh",
+          scale: 0.94,
           autoAlpha: 0,
           zIndex: 30,
-          filter: "brightness(1)",
         });
-        gsap.set(el.querySelectorAll("[data-ghost]"), { autoAlpha: 0 });
       });
       typeOverlays.forEach((el) => {
         gsap.set(el, {
-          yPercent: 70,
           autoAlpha: 0,
+          y: "8vh",
           zIndex: 20,
           immediateRender: true,
         });
       });
-      // Ensure story chrome never flashes over hero before scrub starts
-      gsap.set(typeOverlays, { autoAlpha: 0 });
-      gsap.set(acts, { autoAlpha: 0 });
+      backdrops.forEach((el) => {
+        gsap.set(el, { x: 0 });
+      });
 
       const tl = gsap.timeline({
         defaults: { ease: "none" },
@@ -93,33 +92,13 @@ export function ScrollFilm() {
         setCaptionVisible(visible);
       };
 
-      const showGhosts = (plate: HTMLElement, at: number, dur: number) => {
-        const ghosts = plate.querySelectorAll<HTMLElement>("[data-ghost]");
-        ghosts.forEach((g, i) => {
-          const ox = (i % 2 === 0 ? 1 : -1) * (12 + i * 5);
-          const oy = (i - 1) * 7;
-          tl.fromTo(
-            g,
-            { autoAlpha: 0, x: 0, y: 0 },
-            {
-              autoAlpha: 0.12 + i * 0.03,
-              x: ox,
-              y: oy,
-              duration: dur * 0.4,
-            },
-            at + dur * 0.2,
-          );
-          tl.to(g, { autoAlpha: 0, duration: dur * 0.3 }, at + dur * 0.7);
-        });
-      };
-
       /**
-       * Triple-layer transition: outgoing shrinks/fades while incoming
-       * stacks on top and reveals. Overlap window ≥35% of transition;
-       * never leave >18vh pure black void between plates.
-       * z: out 10 · type 20 · in 30
+       * Overlapping crossfade (≥40% dual-visible window).
+       * Incoming: scale(.94) → 1, y(12vh) → 0, opacity 0 → 1
+       * Outgoing: holds at opacity .35–.55 through the middle, then exits.
+       * Only transform / opacity.
        */
-      const transitionTriple = (
+      const transitionCrossfade = (
         outgoing: HTMLElement | null,
         incoming: HTMLElement,
         typeEl: HTMLElement | null,
@@ -127,112 +106,79 @@ export function ScrollFilm() {
         dur: number,
         captionIndex: number,
       ) => {
-        if (outgoing) tl.set(outgoing, { zIndex: 10, autoAlpha: 1 }, at);
-        if (typeEl) tl.set(typeEl, { zIndex: 20 }, at);
-        tl.set(incoming, { zIndex: 30, autoAlpha: 1 }, at);
+        if (outgoing) tl.set(outgoing, { zIndex: 10 }, at);
+        if (typeEl) tl.set(typeEl, { zIndex: 25 }, at);
+        tl.set(incoming, { zIndex: 30 }, at);
 
-        // 0–0.38: type rises; outgoing holds ≥62vh
+        // Giant chapter type / numeral rises mid-stack (z3 band)
         if (typeEl) {
           tl.fromTo(
             typeEl,
-            { yPercent: 68, autoAlpha: 0 },
-            { yPercent: 18, autoAlpha: 1, duration: dur * 0.38 },
+            { autoAlpha: 0, y: "10vh", scale: 0.96 },
+            { autoAlpha: 1, y: 0, scale: 1, duration: dur * 0.35 },
             at,
           );
-        }
-        if (outgoing) {
           tl.to(
-            outgoing,
-            {
-              yPercent: -4,
-              scale: 1.03,
-              filter: "brightness(0.9)",
-              duration: dur * 0.38,
-            },
-            at,
+            typeEl,
+            { autoAlpha: 0, y: "-6vh", duration: dur * 0.28 },
+            at + dur * 0.62,
           );
         }
 
-        // Incoming starts early so both plates share ≥35% of the segment
+        // Incoming starts immediately — full transition overlaps with outgoing
         tl.fromTo(
           incoming,
-          { yPercent: 100, scale: 1.12, autoAlpha: 0.55 },
-          { yPercent: 42, scale: 1.05, autoAlpha: 1, duration: dur * 0.48 },
-          at + dur * 0.18,
+          { y: "12vh", scale: 0.94, autoAlpha: 0 },
+          { y: 0, scale: 1, autoAlpha: 1, duration: dur * 0.62 },
+          at,
         );
+
+        // Outgoing dimmed but still readable through ≥40% of segment
         if (outgoing) {
           tl.to(
             outgoing,
-            {
-              yPercent: -16,
-              scale: 1.06,
-              filter: "brightness(0.72)",
-              duration: dur * 0.48,
-            },
-            at + dur * 0.18,
+            { autoAlpha: 0.5, scale: 1.02, y: "-2vh", duration: dur * 0.4 },
+            at,
           );
-        }
-        if (typeEl) {
           tl.to(
-            typeEl,
-            { yPercent: 2, autoAlpha: 0.95, duration: dur * 0.48 },
-            at + dur * 0.18,
+            outgoing,
+            { autoAlpha: 0.38, scale: 1.03, y: "-4vh", duration: dur * 0.22 },
+            at + dur * 0.4,
+          );
+          tl.to(
+            outgoing,
+            { autoAlpha: 0, scale: 1.04, y: "-6vh", duration: dur * 0.28 },
+            at + dur * 0.62,
           );
         }
 
-        // Caption when incoming covers ~35% viewport
         tl.call(() => setCaption(captionIndex, true), undefined, at + dur * 0.32);
-
-        // Finish: incoming full; outgoing residual until covered
-        tl.to(
-          incoming,
-          { yPercent: 0, scale: 1, duration: dur * 0.42 },
-          at + dur * 0.52,
-        );
-        if (outgoing) {
-          tl.to(
-            outgoing,
-            {
-              yPercent: -28,
-              scale: 1.08,
-              filter: "brightness(0.55)",
-              autoAlpha: 0.35,
-              duration: dur * 0.38,
-            },
-            at + dur * 0.52,
-          );
-          tl.to(
-            outgoing,
-            { autoAlpha: 0, duration: dur * 0.12 },
-            at + dur * 0.9,
-          );
-        }
-        if (typeEl) {
-          tl.to(
-            typeEl,
-            { yPercent: -12, autoAlpha: 0, duration: dur * 0.3 },
-            at + dur * 0.7,
-          );
-        }
-
-        showGhosts(incoming, at + dur * 0.26, dur * 0.55);
       };
 
       let t = 0;
 
-      // Hero hold + parallax
-      if (heroClouds) tl.to(heroClouds, { yPercent: -10, duration: heroHold }, t);
-      if (heroType) tl.to(heroType, { yPercent: -16, duration: heroHold }, t);
-      if (heroFrog) tl.to(heroFrog, { yPercent: -4, scale: 1.04, duration: heroHold }, t);
+      // Hero hold — three-rate parallax: type 6vw, image ~1.5vw, caption fixed
+      if (heroType) {
+        tl.to(heroType, { x: "-6vw", y: "-4vh", duration: heroHold }, t);
+      }
+      if (heroFrog) {
+        tl.to(heroFrog, { y: "-1.5vh", scale: 1.02, duration: heroHold }, t);
+      }
       t += heroHold;
 
       // Hero → Act1
-      transitionTriple(hero, acts[0], typeOverlays[0] ?? null, t, transition, 0);
+      transitionCrossfade(hero, acts[0], typeOverlays[0] ?? null, t, transition, 0);
       t += transition;
 
       for (let i = 0; i < acts.length; i++) {
         const hold = i === acts.length - 1 ? act5Hold : actHold;
-        tl.to(acts[i], { scale: 1.02, duration: hold }, t);
+        const bd = backdrops[i];
+        const frame = acts[i].querySelector<HTMLElement>("[data-plate-frame]");
+
+        // Hold: backdrop drifts 4–8vw, framed image barely moves 0–2vw
+        if (bd) tl.to(bd, { x: i % 2 === 0 ? "6vw" : "-5vw", duration: hold }, t);
+        if (frame) tl.to(frame, { y: "-1vh", scale: 1.01, duration: hold }, t);
+        else tl.to(acts[i], { scale: 1.01, duration: hold }, t);
         t += hold;
 
         if (i < acts.length - 1) {
@@ -241,7 +187,7 @@ export function ScrollFilm() {
             raw && !raw.classList.contains("candy-type-overlay--empty")
               ? raw
               : null;
-          transitionTriple(acts[i], acts[i + 1], typeEl, t, transition, i + 1);
+          transitionCrossfade(acts[i], acts[i + 1], typeEl, t, transition, i + 1);
           t += transition;
         }
       }
@@ -261,6 +207,9 @@ export function ScrollFilm() {
         <div id="story">
           {STORY_ACTS.map((a) => (
             <article key={a.id} className="candy-reduced" id={`act-${a.chapter}`}>
+              <div className="candy-reduced__backdrop" aria-hidden="true">
+                <span className="candy-reduced__num">{a.chapter}</span>
+              </div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={a.image}
@@ -268,7 +217,6 @@ export function ScrollFilm() {
                 className="candy-reduced__img"
                 style={{
                   objectPosition: a.objectPosition,
-                  transform: `scale(${a.coverScale})`,
                 }}
               />
               <div
@@ -293,52 +241,56 @@ export function ScrollFilm() {
         <FilmHero />
 
         <div className="candy-film__stage" id="story">
-          {STORY_ACTS.map((a) => (
-            <div
-              key={a.id}
-              className="candy-plate"
-              data-act-plate
-              data-act={a.id}
-              id={`act-${a.chapter}`}
-              aria-label={a.aria}
-              style={
-                {
-                  "--cover-scale": a.coverScale,
-                  "--cover-scale-m": a.coverScaleMobile,
-                  "--obj-pos": a.objectPosition,
-                  "--obj-pos-m": a.objectPositionMobile,
-                } as CSSProperties
-              }
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={a.image}
-                alt={a.aria}
-                className="candy-plate__img"
-                width={1024}
-                height={576}
-                decoding="async"
-                loading="eager"
-              />
-              <div className="candy-plate__grade" aria-hidden="true" />
-              <div className="candy-plate__ghosts" aria-hidden="true">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={a.image} alt="" data-ghost className="candy-ghost candy-ghost--a" />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={a.image} alt="" data-ghost className="candy-ghost candy-ghost--b" />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={a.image} alt="" data-ghost className="candy-ghost candy-ghost--c" />
-              </div>
-              <BrushMask edge="top" className="candy-plate__seam" />
-            </div>
-          ))}
+          {STORY_ACTS.map((a, i) => {
+            const tone = i % 2 === 0 ? "acid" : "pink";
+            return (
+              <div
+                key={a.id}
+                className={`candy-plate candy-plate--${tone}`}
+                data-act-plate
+                data-act={a.id}
+                id={`act-${a.chapter}`}
+                aria-label={a.aria}
+                style={
+                  {
+                    "--cover-scale": a.coverScale,
+                    "--cover-scale-m": a.coverScaleMobile,
+                    "--obj-pos": a.objectPosition,
+                    "--obj-pos-m": a.objectPositionMobile,
+                  } as CSSProperties
+                }
+              >
+                {/* Behind framed image — giant chapter numeral + chinese echo */}
+                <div
+                  className="candy-plate__backdrop"
+                  data-plate-backdrop
+                  aria-hidden="true"
+                >
+                  <span className="candy-plate__num">{a.chapter}</span>
+                  <span className="candy-plate__echo">{a.pillLabel}</span>
+                </div>
 
-          {/* Type overlays sit BETWEEN plates — never a black page */}
+                <div className="candy-plate__frame" data-plate-frame>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={a.image}
+                    alt={a.aria}
+                    className="candy-plate__img"
+                    width={1024}
+                    height={576}
+                    decoding="async"
+                    loading="eager"
+                  />
+                </div>
+              </div>
+            );
+          })}
+
           {STORY_ACTS.map((a, i) =>
             a.enterType ? (
               <div
                 key={`type-${a.id}`}
-                className="candy-type-overlay"
+                className={`candy-type-overlay candy-type-overlay--${i % 2 === 0 ? "acid" : "pink"}`}
                 data-type-overlay
                 data-type-for={a.id}
                 aria-hidden="true"
@@ -348,9 +300,6 @@ export function ScrollFilm() {
                     {a.enterType}
                   </span>
                   <span className="candy-type-overlay__text">{a.enterType}</span>
-                  <span className="candy-type-overlay__echo candy-type-overlay__echo--b" aria-hidden="true">
-                    {a.enterType}
-                  </span>
                 </div>
               </div>
             ) : (

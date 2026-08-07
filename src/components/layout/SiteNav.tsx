@@ -21,7 +21,7 @@ export function SiteNav() {
         ease: [0.22, 1, 0.36, 1],
         delay: reduced ? 0 : 0.1,
       }}
-      className="pointer-events-none fixed inset-x-0 top-0 z-[80]"
+      className="pointer-events-none fixed inset-x-0 top-0 z-[50]"
     >
       <div className="pointer-events-auto mx-auto mt-2 flex justify-center px-3 md:mt-4">
         <nav aria-label="主要導覽" className="candy-nav">

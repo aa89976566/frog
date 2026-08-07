@@ -18,26 +18,29 @@ export function Close() {
         aria-hidden="true"
         style={{
           background: `
-            radial-gradient(ellipse at 50% 20%, rgba(232,255,0,0.14) 0%, transparent 42%),
-            radial-gradient(ellipse at 80% 70%, rgba(255,45,149,0.16) 0%, transparent 42%),
-            radial-gradient(ellipse at 18% 75%, rgba(57,255,20,0.12) 0%, transparent 40%)
+            radial-gradient(ellipse at 50% 20%, rgba(239,244,118,0.12) 0%, transparent 42%),
+            radial-gradient(ellipse at 80% 70%, rgba(255,59,191,0.14) 0%, transparent 42%),
+            radial-gradient(ellipse at 18% 75%, rgba(82,255,32,0.1) 0%, transparent 40%)
           `,
         }}
       />
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.16]"
+        className="pointer-events-none absolute inset-0 opacity-[0.18]"
         aria-hidden="true"
         style={{
-          backgroundImage: "radial-gradient(#e8ff00 0.7px, transparent 0.8px)",
-          backgroundSize: "4px 4px",
+          backgroundImage: "radial-gradient(#eff476 0.7px, transparent 0.8px)",
+          backgroundSize: "3px 3px",
+          mixBlendMode: "soft-light",
         }}
       />
       <div
-        className="pointer-events-none absolute inset-x-0 top-[18%] select-none overflow-hidden text-center font-black leading-none text-[#E8FF00]/[0.14]"
+        className="pointer-events-none absolute inset-x-0 top-[18%] select-none overflow-hidden text-center font-black leading-none text-[#EFF476]/[0.16]"
         aria-hidden="true"
         style={{
           fontSize: "clamp(18vw, 22vw, 28vw)",
           fontFamily: "var(--font-display), Impact, sans-serif",
+          letterSpacing: "-0.07em",
+          lineHeight: 0.72,
         }}
       >
         嗷嗚
@@ -47,7 +50,7 @@ export function Close() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-[11px] font-bold tracking-[0.4em] text-[#E8FF00]"
+          className="text-[11px] font-bold tracking-[0.4em] text-[#EFF476]"
         >
           嗷嗚計畫 · 匠寵
         </motion.p>
@@ -79,7 +82,7 @@ export function Close() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="mt-12 inline-flex rounded-full border-[2px] border-[#E8FF00]/40 bg-[#FF2D95] px-10 py-4 text-sm font-bold tracking-[0.22em] text-[#111] shadow-[0_0_0_1px_#111] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+          className="mt-12 inline-flex rounded-full border-[2px] border-[#EFF476]/40 bg-[#FF3BBF] px-10 py-4 text-sm font-bold tracking-[0.22em] text-[#050505] transition-transform hover:scale-[1.02] active:scale-[0.98]"
         >
           跟著匠寵
         </motion.a>

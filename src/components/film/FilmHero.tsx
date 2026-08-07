@@ -3,16 +3,15 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { BrandSticker } from "@/components/hero/BrandSticker";
-import { BrushMask } from "@/components/story/BrushMask";
 import { HERO_MASTER } from "@/lib/story";
 
-const TYPE_A = ["青蛙誰在怕", "FROG WHO'S AFRAID", "嗷嗚計畫", "匠寵"];
-const TYPE_B = ["嗷嗚計畫", "青蛙誰在怕", "FURMOSA", "RIBBIT"];
+const ROW_A = "青蛙誰在怕　WHO'S AFRAID OF THE FROG?　";
+const ROW_B = "WHO'S AFRAID OF THE FROG?　青蛙誰在怕　";
 
 /**
- * Lil Frogeth grammar on Furmosa brand:
- * black void · acid yellow repeating type wall · same locked dog as story 01
- * · dark capsule nav (SiteNav) · brand sticker · grain/halftone.
+ * Lil Frogeth grammar: pure black void · acid type wall (z0)
+ * · framed hero plate (z2) · brand sticker (z3) · grain.
+ * Same locked dog as story 01 — never regenerate art.
  */
 export function FilmHero() {
   const typeRef = useRef<HTMLDivElement>(null);
@@ -27,11 +26,11 @@ export function FilmHero() {
 
     tracks.forEach((track, i) => {
       const reverse = i % 2 === 1;
-      gsap.set(track, { xPercent: reverse ? -40 : 0 });
+      gsap.set(track, { xPercent: reverse ? -35 : 0 });
       tweens.push(
         gsap.to(track, {
-          xPercent: reverse ? 0 : -40,
-          duration: 18 + i * 2.4,
+          xPercent: reverse ? 0 : -35,
+          duration: 22 + i * 3.2,
           ease: "none",
           repeat: -1,
         }),
@@ -41,58 +40,51 @@ export function FilmHero() {
     return () => tweens.forEach((t) => t.kill());
   }, []);
 
+  const rows = [ROW_A, ROW_B, ROW_A, ROW_B];
+
   return (
     <div className="candy-hero" data-film-hero aria-label="嗷嗚計畫開場">
       <h1 className="sr-only">嗷嗚計畫｜匠寵｜青蛙誰在怕</h1>
 
-      {/* Same plate as act 01 — locked dog, never the old brown-eared master */}
-      <div
-        className="candy-hero__master"
-        data-hero-frog
-        style={{ backgroundImage: `url(${HERO_MASTER})` }}
-        role="img"
-        aria-label="化妝室鏡前的西裝青蛙與右下高黑耳白狗——故事第一章同一角色"
-      />
-
-      <div className="candy-hero__clouds" data-hero-clouds aria-hidden="true">
-        <span className="candy-hero__cloud candy-hero__cloud--a" />
-        <span className="candy-hero__cloud candy-hero__cloud--b" />
-        <span className="candy-hero__cloud candy-hero__cloud--c" />
-        <span className="candy-hero__cloud candy-hero__cloud--d" />
-      </div>
-
-      <div className="candy-hero__halftone" aria-hidden="true" />
-
+      {/* z0 — HTML type wall, cropped by viewport edges */}
       <div
         className="candy-hero__typewall"
         data-hero-type
         ref={typeRef}
         aria-hidden="true"
       >
-        {Array.from({ length: 6 }).map((_, row) => {
-          const words = row % 2 === 0 ? TYPE_A : TYPE_B;
-          const line = Array.from({ length: 8 }, () => words)
-            .flat()
-            .join("　");
+        {rows.map((line, row) => {
+          const doubled = Array.from({ length: 6 }, () => line).join("");
           return (
             <div
               key={row}
               className={`candy-hero__type-row candy-hero__type-row--${row % 2 === 0 ? "a" : "b"}`}
             >
               <div data-type-track className="candy-hero__type-track">
-                <span>{line}</span>
-                <span aria-hidden="true">{line}</span>
+                <span>{doubled}</span>
+                <span aria-hidden="true">{doubled}</span>
               </div>
             </div>
           );
         })}
       </div>
 
+      {/* z2 — same story-01 plate, framed so dog ears / frog face stay readable */}
+      <div className="candy-hero__frame" data-hero-frog>
+        <div
+          className="candy-hero__master"
+          style={{ backgroundImage: `url(${HERO_MASTER})` }}
+          role="img"
+          aria-label="化妝室鏡前的西裝青蛙與右下高黑耳白狗——故事第一章同一角色"
+        />
+      </div>
+
+      {/* z3 — brand mark */}
       <BrandSticker />
 
+      {/* soft grain — does not obscure faces */}
       <div className="candy-hero__grain" aria-hidden="true" />
-
-      <BrushMask edge="bottom" className="candy-hero__brush" />
+      <div className="candy-hero__halftone" aria-hidden="true" />
     </div>
   );
 }

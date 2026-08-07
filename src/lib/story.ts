@@ -10,8 +10,8 @@ export type StoryAct = {
   coverScale: number;
   coverScaleMobile: number;
   pillBg: string;
-  /** Capsule text is always black on candy fills */
-  pillFg: "#111111";
+  /** Capsule text on acid/pink/mint fills — near-black only */
+  pillFg: "#050505";
   pillLabel: string;
   /** Giant type overlay shown during transition INTO this act */
   enterType?: string;
@@ -35,10 +35,10 @@ export const STORY_ACTS: StoryAct[] = [
     // v5: dog sits lower-right — bias center so ears stay inside cover crop
     objectPosition: "54% 46%",
     objectPositionMobile: "58% 48%",
-    coverScale: 1.08,
-    coverScaleMobile: 1.12,
-    pillBg: "#E8FF00",
-    pillFg: "#111111",
+    coverScale: 1.02,
+    coverScaleMobile: 1.04,
+    pillBg: "#EFF476",
+    pillFg: "#050505",
     pillLabel: "希望",
     enterType: "希望",
     ghost: "soft",
@@ -51,10 +51,10 @@ export const STORY_ACTS: StoryAct[] = [
     aria: "第二章驚散：青蛙與尖耳白狗、驚逃人群",
     objectPosition: "50% 30%",
     objectPositionMobile: "50% 32%",
-    coverScale: 1.14,
-    coverScaleMobile: 1.2,
-    pillBg: "#FF2D95",
-    pillFg: "#111111",
+    coverScale: 1.03,
+    coverScaleMobile: 1.05,
+    pillBg: "#FF3BBF",
+    pillFg: "#050505",
     pillLabel: "驚散",
     enterType: "驚散",
     ghost: "scatter",
@@ -68,10 +68,10 @@ export const STORY_ACTS: StoryAct[] = [
     // Protect tall triangular ears at top of frame
     objectPosition: "50% 42%",
     objectPositionMobile: "48% 40%",
-    coverScale: 1.1,
-    coverScaleMobile: 1.16,
-    pillBg: "#39FF14",
-    pillFg: "#111111",
+    coverScale: 1.02,
+    coverScaleMobile: 1.04,
+    pillBg: "#52FF20",
+    pillFg: "#050505",
     pillLabel: "留下",
     enterType: "留下",
     ghost: "soft",
@@ -84,10 +84,10 @@ export const STORY_ACTS: StoryAct[] = [
     aria: "第四章做自己：脫下西裝的青蛙與同一隻尖耳白狗",
     objectPosition: "50% 36%",
     objectPositionMobile: "50% 38%",
-    coverScale: 1.1,
-    coverScaleMobile: 1.16,
-    pillBg: "#E8FF00",
-    pillFg: "#111111",
+    coverScale: 1.02,
+    coverScaleMobile: 1.04,
+    pillBg: "#EFF476",
+    pillFg: "#050505",
     pillLabel: "做自己",
     enterType: "做自己",
     ghost: "breathe",
@@ -101,10 +101,10 @@ export const STORY_ACTS: StoryAct[] = [
     // Keep both runners and dog ears in frame
     objectPosition: "52% 42%",
     objectPositionMobile: "55% 40%",
-    coverScale: 1.12,
-    coverScaleMobile: 1.18,
-    pillBg: "#FF2D95",
-    pillFg: "#111111",
+    coverScale: 1.03,
+    coverScaleMobile: 1.05,
+    pillBg: "#FF3BBF",
+    pillFg: "#050505",
     pillLabel: "嗷嗚",
     enterType: "嗷嗚！",
     ghost: "chase",
@@ -125,12 +125,13 @@ export const BRAND = {
 
 /**
  * Master timeline units (ease:none scrub).
- * Transition ≈ 1.35 vh-units — outgoing + incoming overlap ≥35%; no >18vh black void.
+ * Transition overlap ≥40%; outgoing stays at opacity .35–.55 mid-window.
+ * No pure-black blank segments between chapters.
  */
 export const FILM_SEGMENTS = {
-  heroHold: 0.5,
-  /** hero → act1 / act→act transition */
-  transition: 1.35,
-  actHold: 0.65,
-  act5Hold: 0.9,
+  heroHold: 0.55,
+  /** hero → act1 / act→act overlapping crossfade */
+  transition: 1.55,
+  actHold: 0.72,
+  act5Hold: 1.0,
 } as const;
