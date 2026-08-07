@@ -575,7 +575,7 @@ body {
   transform: scale(var(--cover-scale, 1.18));
   transform-origin: var(--obj-pos, center center);
   /* Prevent white flash while decoding / scrubbing */
-  background: #1a0a28;
+  background: #050505;
 }
 
 @media (max-width: 767px) {
