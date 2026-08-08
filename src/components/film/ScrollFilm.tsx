@@ -74,6 +74,22 @@ export function ScrollFilm() {
         gsap.set(el, { autoAlpha: 0 });
       });
 
+      // Chapter type walls — slow 2–3% opposing drift (idle)
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        actTitles.forEach((wall) => {
+          wall.querySelectorAll<HTMLElement>("[data-type-track]").forEach((track, i) => {
+            const amp = i % 2 === 0 ? -2.4 : 2.4;
+            gsap.to(track, {
+              xPercent: amp,
+              duration: 8 + i * 0.35,
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: -1,
+            });
+          });
+        });
+      }
+
       // Caption entrance: rise 24px / fade in
       if (
         captionEl &&
@@ -309,11 +325,12 @@ export function ScrollFilm() {
         <div className="candy-film__stage" id="story">
           {STORY_ACTS.map((a, i) => {
             const tone = i % 2 === 0 ? "acid" : "pink";
-            const title = a.enterType ?? a.pillLabel;
+            const chapterTitle = a.enterType ?? a.pillLabel;
+            const campaign = "青蛙誰在怕　";
             return (
               <div
                 key={a.id}
-                className={`candy-plate candy-plate--${tone}`}
+                className={`candy-plate poster-scene candy-plate--${tone}`}
                 data-act-plate
                 data-act={a.id}
                 id={`act-${a.chapter}`}
@@ -327,33 +344,38 @@ export function ScrollFilm() {
                   } as CSSProperties
                 }
               >
-                {/* One chapter title wall — rhythmic rows in the margins */}
+                {/* 3–4 campaign rows + one short chapter title — no pile */}
                 <div
-                  className="candy-plate__title"
+                  className="poster-typewall"
                   data-act-title
                   aria-hidden="true"
                 >
-                  {Array.from({ length: 5 }, (_, row) => {
-                    const line = Array.from({ length: 8 }, () => `${title}　`).join(
+                  {Array.from({ length: 4 }, (_, row) => {
+                    const line = Array.from({ length: 10 }, () => campaign).join(
                       "",
                     );
                     return (
                       <div
                         key={row}
-                        className={`candy-plate__title-row candy-plate__title-row--${row % 2 === 0 ? "a" : "b"}`}
+                        className={`poster-typewall__row poster-typewall__row--${row % 2 === 0 ? "a" : "b"}`}
                       >
-                        <span>{line}</span>
+                        <div data-type-track className="poster-typewall__track">
+                          <span>{line}</span>
+                        </div>
                       </div>
                     );
                   })}
+                  <div className="poster-typewall__chapter">
+                    <span>{chapterTitle}</span>
+                  </div>
                 </div>
 
-                <div className="candy-plate__frame" data-plate-frame>
+                <div className="poster-frame" data-plate-frame>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={a.image}
                     alt={a.aria}
-                    className="candy-plate__img"
+                    className="poster-frame__img"
                     width={1024}
                     height={576}
                     decoding="async"

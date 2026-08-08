@@ -6,10 +6,11 @@ import { BrandSticker } from "@/components/hero/BrandSticker";
 import { HERO_MASTER } from "@/lib/story";
 
 const TYPE_LINE = "青蛙誰在怕　";
+const TYPE_ROWS = 4;
 
 /**
- * Full-bleed poster hero: black void · rhythmic acid type wall (behind)
- * · dominant framed close-up · secondary brand sticker · no face overlays.
+ * Shared poster-grid hero: typographic frame (3–4 rows) behind a
+ * 90vw × 84–88svh visual, sticker locked to the frame corner.
  */
 export function FilmHero() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -25,17 +26,7 @@ export function FilmHero() {
     const tracks = type.querySelectorAll<HTMLElement>("[data-type-track]");
     const tweens: gsap.core.Tween[] = [];
 
-    gsap.set(type, { xPercent: 0, yPercent: 0 });
     if (frame) gsap.set(frame, { scale: 1.035 });
-
-    // Entrance: type drifts 2–4%, image settles 1.035→1
-    tweens.push(
-      gsap.to(type, {
-        xPercent: -2.5,
-        duration: 1.35,
-        ease: "power2.out",
-      }),
-    );
     if (frame) {
       tweens.push(
         gsap.to(frame, {
@@ -46,15 +37,16 @@ export function FilmHero() {
       );
     }
 
-    // Idle marquee — slow, even, no bounce
+    // Slow 2–3% opposing drift on alternate rows
     tracks.forEach((track, i) => {
-      const reverse = i % 2 === 1;
-      gsap.set(track, { xPercent: reverse ? -20 : 0 });
+      const amp = i % 2 === 0 ? -2.6 : 2.6;
+      gsap.set(track, { xPercent: 0 });
       tweens.push(
         gsap.to(track, {
-          xPercent: reverse ? 0 : -20,
-          duration: 28 + i * 2.5,
-          ease: "none",
+          xPercent: amp,
+          duration: 7.5 + i * 0.4,
+          ease: "sine.inOut",
+          yoyo: true,
           repeat: -1,
         }),
       );
@@ -63,51 +55,47 @@ export function FilmHero() {
     return () => tweens.forEach((t) => t.kill());
   }, []);
 
-  const rows = Array.from({ length: 6 }, () => TYPE_LINE);
-
   return (
     <div
       ref={rootRef}
-      className="candy-hero"
+      className="candy-hero poster-scene"
       data-film-hero
       aria-label="嗷嗚計畫開場"
     >
       <h1 className="sr-only">嗷嗚計畫｜匠寵｜青蛙誰在怕</h1>
 
       <div
-        className="candy-hero__typewall"
+        className="poster-typewall"
         data-hero-type
         ref={typeRef}
         aria-hidden="true"
       >
-        {rows.map((line, row) => {
-          const doubled = Array.from({ length: 8 }, () => line).join("");
+        {Array.from({ length: TYPE_ROWS }, (_, row) => {
+          const doubled = Array.from({ length: 10 }, () => TYPE_LINE).join("");
           return (
             <div
               key={row}
-              className={`candy-hero__type-row candy-hero__type-row--${row % 2 === 0 ? "a" : "b"}`}
+              className={`poster-typewall__row poster-typewall__row--${row % 2 === 0 ? "a" : "b"}`}
             >
-              <div data-type-track className="candy-hero__type-track">
+              <div data-type-track className="poster-typewall__track">
                 <span>{doubled}</span>
-                <span aria-hidden="true">{doubled}</span>
               </div>
             </div>
           );
         })}
       </div>
 
-      <div className="candy-hero__frame" data-hero-frog>
+      <div className="poster-frame" data-hero-frog>
         <div
-          className="candy-hero__master"
+          className="poster-frame__media"
           style={{ backgroundImage: `url(${HERO_MASTER})` }}
           role="img"
           aria-label="西裝青蛙近景——第一屏 Hero 獨立主視覺"
         />
+        <div className="poster-frame__sticker">
+          <BrandSticker />
+        </div>
       </div>
-
-      <BrandSticker />
-
-      <div className="candy-hero__grain" aria-hidden="true" />
     </div>
   );
 }

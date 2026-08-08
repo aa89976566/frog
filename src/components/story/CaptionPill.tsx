@@ -10,8 +10,8 @@ type CaptionPillProps = {
 };
 
 /**
- * Bottom caption anchor — high-contrast dual pill (meta + OS).
- * Parent swaps props only after the incoming plate is readable (≥0.7).
+ * Bottom caption on the shared poster grid — fixed meta column,
+ * full OS sentence at desktop, stacked at 390.
  */
 export function CaptionPill({
   chapter,

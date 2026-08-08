@@ -188,7 +188,7 @@ body {
   }
 }
 
-/* ═══ FILM PIN ═══ */
+/* ═══ FILM PIN + SHARED POSTER GRID ═══ */
 .candy-film {
   position: relative;
   background: #050505;
@@ -196,6 +196,15 @@ body {
 }
 
 .candy-film__pin {
+  --poster-nav-inset: 20px;
+  --poster-frame-top: 48px;
+  --poster-w: min(90vw, 1280px);
+  --poster-h: 86svh;
+  --poster-radius: 28px;
+  --poster-caption-bottom: max(1rem, env(safe-area-inset-bottom));
+  --poster-meta-w: 112px;
+  --poster-gutter-x: calc((100vw - min(90vw, 1280px)) / 2);
+
   position: relative;
   height: 100svh;
   height: 100dvh;
@@ -218,86 +227,121 @@ body {
   pointer-events: auto;
 }
 
-/* ═══ HERO — full-bleed poster on black void ═══ */
-.candy-hero {
+/* Shared scene shell — hero + chapters */
+.poster-scene {
   position: absolute;
   inset: 0;
-  z-index: 10;
   overflow: clip;
   background: #050505;
+}
+
+.candy-hero {
+  z-index: 10;
   transform-origin: 50% 50%;
   will-change: transform, opacity;
 }
 
-/* Rhythmic acid type wall — visible in margins, masked by poster */
-.candy-hero__typewall {
+.candy-plate {
+  z-index: 8;
+  width: 100%;
+  height: 100%;
+  will-change: transform, opacity;
+  transform-origin: 50% 50%;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Typographic frame — 18–28% of glyphs peek around the visual */
+.poster-typewall {
   position: absolute;
   inset: 0;
   z-index: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 0.02em;
-  padding: 8svh 0;
+  justify-content: space-between;
+  padding: 1.5svh 0 2svh;
   pointer-events: none;
   user-select: none;
   overflow: hidden;
 }
 
-.candy-hero__type-row {
+.poster-typewall__row {
   overflow: hidden;
   font-family: var(--font-display), "Arial Narrow", Impact, "Noto Sans TC", sans-serif;
   font-weight: 900;
-  font-size: clamp(4.2rem, 10.5vw, 9.5rem);
-  line-height: 0.9;
-  letter-spacing: -0.05em;
+  font-size: clamp(5.5rem, 16vw, 13rem);
+  line-height: 0.82;
+  letter-spacing: -0.055em;
   white-space: nowrap;
   color: #eff476;
 }
 
-.candy-hero__type-track {
-  display: inline-flex;
-  gap: 0.2em;
+.poster-typewall__track {
+  display: inline-block;
   will-change: transform;
 }
 
-.candy-hero__type-track span {
-  flex-shrink: 0;
+.poster-typewall__track span {
   font-weight: 900;
-  letter-spacing: -0.045em;
   text-shadow: none;
   -webkit-text-stroke: 0;
 }
 
-.candy-hero__type-row--a {
-  opacity: 0.88;
+.poster-typewall__row--a {
+  opacity: 0.92;
+}
+
+.poster-typewall__row--b {
+  opacity: 0.7;
+}
+
+.poster-typewall__chapter {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--poster-frame-top) - 1.55rem);
+  transform: translateX(-50%);
+  z-index: 1;
+  font-family: var(--font-display), "Noto Sans TC", Impact, sans-serif;
+  font-weight: 900;
+  font-size: clamp(0.95rem, 2vw, 1.35rem);
+  letter-spacing: 0.32em;
+  white-space: nowrap;
+  color: #eff476;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.candy-plate--pink .poster-typewall__row,
+.candy-plate--pink .poster-typewall__chapter {
+  color: #ff3bbf;
+}
+
+.candy-plate--acid .poster-typewall__row,
+.candy-plate--acid .poster-typewall__chapter {
   color: #eff476;
 }
 
-.candy-hero__type-row--b {
-  opacity: 0.62;
-  color: #eff476;
-}
-
-/* Dominant poster — immersive, not a floating card */
-.candy-hero__frame {
+/* Shared visual frame */
+.poster-frame {
   position: absolute;
   z-index: 2;
-  inset: 0;
-  margin: auto;
-  width: min(94vw, 1500px);
-  height: 91svh;
-  max-height: 91svh;
-  border-radius: 30px;
+  top: var(--poster-frame-top);
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  width: var(--poster-w);
+  height: var(--poster-h);
+  max-height: var(--poster-h);
+  border-radius: var(--poster-radius);
   overflow: clip;
   background: #050505;
-  box-shadow: none;
-  pointer-events: none;
   transform-origin: 50% 50%;
   will-change: transform;
+  pointer-events: none;
 }
 
-.candy-hero__master {
+.poster-frame__media,
+.poster-frame__img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -305,48 +349,37 @@ body {
   background-color: #050505;
   background-repeat: no-repeat;
   background-size: cover;
-  /* Eyes preserved — upper-center bias */
   background-position: 50% 34%;
+  object-fit: cover;
+  object-position: var(--obj-pos, 50% 34%);
+  transform: scale(var(--cover-scale, 1.02));
+  transform-origin: var(--obj-pos, 50% 34%);
+}
+
+.poster-frame__media {
   transform: none;
-  filter: none;
 }
 
-.candy-hero__grain {
+/* Sticker locked to visual frame (not free-floating on viewport) */
+.poster-frame__sticker {
   position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: none;
-  opacity: 0.16;
-  mix-blend-mode: soft-light;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  -webkit-mask-image: radial-gradient(
-    ellipse 55% 60% at 50% 48%,
-    transparent 0%,
-    transparent 45%,
-    #000 88%
-  );
-  mask-image: radial-gradient(
-    ellipse 55% 60% at 50% 48%,
-    transparent 0%,
-    transparent 45%,
-    #000 88%
-  );
-}
-
-.candy-hero__brush,
-.candy-hero__halftone {
-  display: none;
-}
-
-/* Brand sticker — secondary, static, away from face */
-.hero-sticker {
-  position: absolute;
-  top: max(5.25rem, 10svh);
-  right: max(1.5%, calc((100vw - min(94vw, 1500px)) / 2 + 0.85rem));
+  top: 1rem;
+  right: 1rem;
   z-index: 5;
   pointer-events: none;
+}
+
+.poster-frame__sticker .hero-sticker {
+  position: static;
+  top: auto;
+  right: auto;
   animation: none;
   transform: none;
+}
+
+.hero-sticker {
+  pointer-events: none;
+  animation: none;
 }
 
 .hero-sticker-card {
@@ -354,7 +387,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.7rem 0.95rem 0.6rem;
+  padding: 0.65rem 0.9rem 0.55rem;
   background: #ff3bbf;
   color: #050505;
   border: 2px solid #eff476;
@@ -365,185 +398,73 @@ body {
 
 .hero-sticker-brand {
   font-weight: 900;
-  font-size: clamp(0.95rem, 2.2vw, 1.35rem);
+  font-size: clamp(0.9rem, 2vw, 1.25rem);
   line-height: 0.95;
   letter-spacing: 0.02em;
 }
 
 .hero-sticker-sub {
-  font-size: 0.58rem;
+  font-size: 0.55rem;
   font-weight: 700;
   letter-spacing: 0.22em;
-  padding: 0.16rem 0.5rem;
+  padding: 0.14rem 0.48rem;
   border-radius: 999px;
   background: #050505;
   color: #eff476;
 }
 
-@media (min-width: 768px) {
-  .candy-hero__frame {
-    width: min(94vw, 1500px);
-    height: 91svh;
-    border-radius: 32px;
-  }
-
-  .candy-hero__master {
-    background-position: 50% 34%;
-  }
-}
-
 @media (max-width: 767px) {
-  .candy-hero__type-row {
-    font-size: clamp(2.8rem, 15vw, 4.4rem);
-    line-height: 0.94;
+  .candy-film__pin {
+    --poster-frame-top: 44px;
+    --poster-w: calc(100vw - 32px);
+    --poster-h: 78svh;
+    --poster-radius: 24px;
+    --poster-meta-w: 100%;
+    --poster-gutter-x: 16px;
   }
 
-  .candy-hero__typewall {
-    padding: 8svh 0;
+  .poster-typewall {
+    justify-content: flex-start;
+    padding: 10svh 0 0;
+    gap: 0;
   }
 
-  .candy-hero__frame {
-    width: calc(100vw - 32px);
-    height: 82svh;
-    max-height: 82svh;
-    border-radius: 22px;
+  /* One oversized offset row — no horizontal overflow */
+  .poster-typewall__row {
+    display: none;
+    font-size: clamp(4.8rem, 28vw, 7rem);
+    line-height: 0.86;
   }
 
-  .candy-hero__master {
+  .poster-typewall__row--a:first-child {
+    display: block;
+    transform: translateX(-8%) rotate(-8deg);
+    opacity: 0.88;
+  }
+
+  .poster-typewall__chapter {
+    top: calc(var(--poster-frame-top) - 1.35rem);
+    font-size: 0.85rem;
+    letter-spacing: 0.22em;
+  }
+
+  .poster-frame__media,
+  .poster-frame__img {
+    object-position: var(--obj-pos-m, 50% 36%);
     background-position: 50% 36%;
+    transform: scale(var(--cover-scale-m, var(--cover-scale, 1.04)));
+    transform-origin: var(--obj-pos-m, 50% 36%);
   }
 
-  .hero-sticker {
-    top: max(4.25rem, 8svh);
-    bottom: auto;
-    right: 16px;
+  .poster-frame__media {
+    transform: none;
+  }
+
+  .poster-frame__sticker {
+    top: 0.7rem;
+    right: 0.7rem;
     transform: scale(0.72);
     transform-origin: top right;
-  }
-
-  .hero-sticker-card {
-    width: 70px;
-    padding: 0.42rem 0.42rem 0.36rem;
-  }
-
-  .hero-sticker-brand {
-    font-size: 0.85rem;
-  }
-
-  .hero-sticker-sub {
-    font-size: 0.42rem;
-    letter-spacing: 0.1em;
-    padding: 0.1rem 0.28rem;
-  }
-}
-
-/* ═══ STORY PLATES — 100svh poster frames ═══ */
-.candy-plate {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: clip;
-  background: #050505;
-  will-change: transform, opacity;
-  transform-origin: 50% 50%;
-  opacity: 0;
-  visibility: hidden;
-  display: grid;
-  place-items: center;
-}
-
-/* Single chapter title wall — rows readable in black gutters */
-.candy-plate__title {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.04em;
-  padding: 6svh 0;
-  pointer-events: none;
-  overflow: hidden;
-  user-select: none;
-}
-
-.candy-plate__title-row {
-  overflow: hidden;
-  font-family: var(--font-display), "Noto Sans TC", Impact, sans-serif;
-  font-weight: 900;
-  font-size: clamp(3.2rem, 8.5vw, 7.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-  white-space: nowrap;
-}
-
-.candy-plate__title-row--a {
-  opacity: 0.9;
-}
-
-.candy-plate__title-row--b {
-  opacity: 0.62;
-}
-
-.candy-plate--acid .candy-plate__title-row {
-  color: #eff476;
-}
-
-.candy-plate--pink .candy-plate__title-row {
-  color: #ff3bbf;
-}
-
-/* Poster image frame ≈ 88–94vw × 78–88svh */
-.candy-plate__frame {
-  position: relative;
-  z-index: 2;
-  width: min(94vw, 1480px);
-  height: 86svh;
-  max-height: 86svh;
-  border-radius: 28px;
-  overflow: clip;
-  background: #050505;
-  will-change: transform;
-  transform-origin: 50% 50%;
-}
-
-.candy-plate__img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: var(--obj-pos, center center);
-  transform: scale(var(--cover-scale, 1.02));
-  transform-origin: var(--obj-pos, center center);
-  background: #050505;
-}
-
-@media (max-width: 767px) {
-  .candy-plate__frame {
-    width: calc(100vw - 32px);
-    height: 76svh;
-    max-height: 76svh;
-    border-radius: 22px;
-  }
-
-  .candy-plate__img {
-    object-position: var(--obj-pos-m, var(--obj-pos, center center));
-    transform: scale(var(--cover-scale-m, var(--cover-scale, 1.04)));
-    transform-origin: var(--obj-pos-m, var(--obj-pos, center center));
-  }
-
-  .candy-plate__title-row {
-    font-size: clamp(2.4rem, 13vw, 3.8rem);
-  }
-}
-
-@media (min-width: 768px) {
-  .candy-plate__frame {
-    width: min(94vw, 1480px);
-    height: 86svh;
-    border-radius: 30px;
   }
 }
 
@@ -625,30 +546,30 @@ body {
   transform: translate(-2%, 10%) scale(0.96);
 }
 
-/* ═══ CAPTION — dual bottom capsules ═══ */
+/* ═══ CAPTION — aligned to shared poster grid ═══ */
 .candy-caption-anchor {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: max(1.1rem, env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--poster-w);
+  max-width: calc(100vw - 32px);
+  bottom: var(--poster-caption-bottom, max(1rem, env(safe-area-inset-bottom)));
   z-index: 40;
   pointer-events: none;
 }
 
 .candy-caption {
   position: relative;
-  left: auto;
-  right: auto;
-  bottom: auto;
   z-index: 40;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  padding: 0 16px;
+  padding: 0;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.22s ease;
-  max-height: 26vh;
+  max-height: 28vh;
+  width: 100%;
 }
 
 .candy-caption.is-visible {
@@ -658,11 +579,14 @@ body {
 .candy-caption--static {
   position: relative;
   padding-bottom: 1rem;
+  transform: none;
+  left: auto;
+  width: 100%;
 }
 
 .candy-caption__stack {
   position: relative;
-  width: min(860px, 100%);
+  width: 100%;
   pointer-events: auto;
 }
 
@@ -701,7 +625,7 @@ body {
 
 .candy-caption__dual {
   display: grid;
-  grid-template-columns: minmax(88px, 140px) minmax(0, 1fr);
+  grid-template-columns: var(--poster-meta-w, 112px) minmax(0, 1fr);
   gap: 0.55rem;
   width: 100%;
   align-items: stretch;
@@ -716,19 +640,21 @@ body {
 }
 
 .candy-caption__meta-pill {
+  width: var(--poster-meta-w, 112px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0.75rem 0.85rem;
+  padding: 0.7rem 0.65rem;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .candy-caption__quote-pill {
   display: flex;
   align-items: center;
   min-width: 0;
-  padding: 0.85rem 1.35rem;
+  padding: 0.85rem 1.25rem;
 }
 
 .candy-caption__chapter {
@@ -750,30 +676,31 @@ body {
 
 .candy-caption__copy {
   margin: 0;
-  font-size: clamp(0.88rem, 1.45vw, 1.08rem);
+  font-size: clamp(0.92rem, 1.35vw, 1.05rem);
   font-weight: 800;
-  line-height: 1.35;
+  line-height: 1.4;
   color: #050505;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
 }
 
-@media (max-width: 640px) {
-  .candy-caption {
-    padding: 0 16px max(0.75rem, env(safe-area-inset-bottom));
-    max-height: 30vh;
+@media (max-width: 767px) {
+  .candy-caption-anchor {
+    width: var(--poster-w);
   }
 
-  .candy-caption__stack {
-    width: 100%;
-    max-height: 30vh;
+  .candy-caption {
+    max-height: 32vh;
   }
 
   .candy-caption__dual {
     grid-template-columns: 1fr;
     gap: 0.35rem;
-    max-height: 30vh;
   }
 
   .candy-caption__meta-pill {
+    width: 100%;
     border-radius: 999px;
     flex-direction: row;
     justify-content: center;
@@ -798,11 +725,8 @@ body {
 
   .candy-caption__copy {
     font-size: 1rem;
-    line-height: 1.35;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    line-height: 1.4;
+    white-space: normal;
   }
 }
 

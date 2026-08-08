@@ -8,7 +8,7 @@ const links = [
   { href: "#close", label: "嗷嗚", short: "嗷" },
 ];
 
-/** Centered pill nav — above all imagery, never clipped on mobile */
+/** Centered pill nav — shared poster-grid top inset (18–24px) */
 export function SiteNav() {
   const reduced = useReducedMotion();
 
@@ -23,7 +23,7 @@ export function SiteNav() {
       }}
       className="pointer-events-none fixed inset-x-0 top-0 z-[60]"
     >
-      <div className="pointer-events-auto mx-auto mt-3 flex justify-center px-6 md:mt-4">
+      <div className="pointer-events-auto mx-auto flex justify-center px-6 pt-[20px] md:pt-[22px]">
         <nav aria-label="主要導覽" className="candy-nav">
           <a href="#top" className="candy-nav__brand">
             <span className="candy-nav__mark" aria-hidden="true">
