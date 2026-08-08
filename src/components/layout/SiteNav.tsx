@@ -8,22 +8,22 @@ const links = [
   { href: "#close", label: "嗷嗚", short: "嗷" },
 ];
 
-/** Centered dark capsule — Lil Frogeth interaction language, Furmosa brand */
+/** Centered pill nav — above all imagery, never clipped on mobile */
 export function SiteNav() {
   const reduced = useReducedMotion();
 
   return (
     <motion.header
-      initial={reduced ? false : { y: -20, opacity: 0 }}
+      initial={reduced ? false : { y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{
-        duration: reduced ? 0 : 0.55,
+        duration: reduced ? 0 : 0.5,
         ease: [0.22, 1, 0.36, 1],
-        delay: reduced ? 0 : 0.1,
+        delay: reduced ? 0 : 0.08,
       }}
-      className="pointer-events-none fixed inset-x-0 top-0 z-[50]"
+      className="pointer-events-none fixed inset-x-0 top-0 z-[60]"
     >
-      <div className="pointer-events-auto mx-auto mt-2 flex justify-center px-3 md:mt-4">
+      <div className="pointer-events-auto mx-auto mt-3 flex justify-center px-6 md:mt-4">
         <nav aria-label="主要導覽" className="candy-nav">
           <a href="#top" className="candy-nav__brand">
             <span className="candy-nav__mark" aria-hidden="true">

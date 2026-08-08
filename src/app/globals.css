@@ -89,16 +89,16 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ═══ NAV — deep olive capsule z5 ═══ */
+/* ═══ NAV — deep olive capsule above all imagery ═══ */
 .candy-nav {
   display: grid;
   grid-template-columns: 1.35fr repeat(3, 1fr);
   align-items: center;
-  width: min(720px, calc(100vw - 24px));
+  width: min(900px, calc(100vw - 48px));
   height: 52px;
-  padding: 0 1rem;
+  padding: 0 1.1rem;
   border-radius: 999px;
-  border: 1px solid rgba(239, 244, 118, 0.2);
+  border: 1px solid rgba(239, 244, 118, 0.22);
   background: #252c1c;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -155,11 +155,11 @@ body {
 
 @media (max-width: 640px) {
   .candy-nav {
-    width: 100%;
-    max-width: calc(100vw - 24px);
-    height: 50px;
-    padding: 0 0.65rem;
-    grid-template-columns: 1.2fr repeat(3, 0.7fr);
+    width: min(900px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    height: 48px;
+    padding: 0 0.7rem;
+    grid-template-columns: 1.25fr repeat(3, 0.7fr);
     gap: 0;
   }
 
@@ -208,92 +208,93 @@ body {
 .candy-film__stage {
   position: absolute;
   inset: 0;
-  z-index: 25;
+  z-index: 20;
   overflow: clip;
-  /* Transparent — hero shows through until plates cover it */
   background: transparent;
   pointer-events: none;
 }
 
-.candy-film__stage .candy-plate,
-.candy-film__stage .candy-type-overlay {
+.candy-film__stage .candy-plate {
   pointer-events: auto;
 }
 
-/* ═══ HERO — pure black + HTML acid type wall ═══ */
+/* ═══ HERO — full-bleed poster on black void ═══ */
 .candy-hero {
   position: absolute;
   inset: 0;
-  z-index: 4;
+  z-index: 10;
   overflow: clip;
   background: #050505;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
 }
 
-/* z0 — oversized cropped type wall */
+/* Rhythmic acid type wall — visible in margins, masked by poster */
 .candy-hero__typewall {
   position: absolute;
-  inset: -8% -40%;
+  inset: 0;
   z-index: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0;
+  gap: 0.02em;
+  padding: 8svh 0;
   pointer-events: none;
   user-select: none;
   overflow: hidden;
 }
 
 .candy-hero__type-row {
-  overflow: visible;
+  overflow: hidden;
   font-family: var(--font-display), "Arial Narrow", Impact, "Noto Sans TC", sans-serif;
   font-weight: 900;
-  font-size: clamp(8rem, 19vw, 24rem);
-  line-height: 0.72;
-  letter-spacing: -0.07em;
+  font-size: clamp(3.8rem, 9.5vw, 8.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
   white-space: nowrap;
   color: #eff476;
 }
 
 .candy-hero__type-track {
   display: inline-flex;
-  gap: 0.15em;
+  gap: 0.2em;
   will-change: transform;
 }
 
 .candy-hero__type-track span {
   flex-shrink: 0;
   font-weight: 900;
-  letter-spacing: -0.07em;
-  /* no neon glow — flat acid type only */
+  letter-spacing: -0.045em;
   text-shadow: none;
   -webkit-text-stroke: 0;
 }
 
 .candy-hero__type-row--a {
-  opacity: 0.92;
+  opacity: 0.88;
   color: #eff476;
 }
 
 .candy-hero__type-row--b {
-  opacity: 0.78;
+  opacity: 0.62;
   color: #eff476;
 }
 
-/* z2 — framed hero plate; keep dog ears / frog face inside */
+/* Dominant poster — not a floating card */
 .candy-hero__frame {
   position: absolute;
   z-index: 2;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -52%);
-  width: min(92vw, 1100px);
-  aspect-ratio: 16 / 9;
-  max-height: min(68svh, 620px);
+  inset: 0;
+  margin: auto;
+  width: min(94vw, 1500px);
+  height: 90svh;
+  max-height: 90svh;
   border-radius: 32px;
   overflow: clip;
   background: #050505;
   box-shadow: none;
   pointer-events: none;
+  transform-origin: 50% 50%;
+  will-change: transform;
 }
 
 .candy-hero__master {
@@ -304,35 +305,10 @@ body {
   background-color: #050505;
   background-repeat: no-repeat;
   background-size: cover;
-  /* 獨立 Hero 近景：偏上對準眼睛，禁止裁到眼部 */
-  background-position: 50% 36%;
+  /* Eyes preserved — upper-center bias */
+  background-position: 50% 34%;
   transform: none;
   filter: none;
-}
-
-/* soft grain + halftone — soft-light, do not pollute faces */
-.candy-hero__halftone {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: none;
-  opacity: 0.18;
-  mix-blend-mode: soft-light;
-  background-image: radial-gradient(#eff476 0.7px, transparent 0.85px);
-  background-size: 3px 3px;
-  /* keep center plate readable */
-  -webkit-mask-image: radial-gradient(
-    ellipse 48% 55% at 50% 48%,
-    transparent 0%,
-    transparent 55%,
-    #000 85%
-  );
-  mask-image: radial-gradient(
-    ellipse 48% 55% at 50% 48%,
-    transparent 0%,
-    transparent 55%,
-    #000 85%
-  );
 }
 
 .candy-hero__grain {
@@ -340,51 +316,37 @@ body {
   inset: 0;
   z-index: 4;
   pointer-events: none;
-  opacity: 0.2;
+  opacity: 0.16;
   mix-blend-mode: soft-light;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   -webkit-mask-image: radial-gradient(
-    ellipse 48% 55% at 50% 48%,
+    ellipse 55% 60% at 50% 48%,
     transparent 0%,
-    transparent 50%,
-    #000 82%
+    transparent 45%,
+    #000 88%
   );
   mask-image: radial-gradient(
-    ellipse 48% 55% at 50% 48%,
+    ellipse 55% 60% at 50% 48%,
     transparent 0%,
-    transparent 50%,
-    #000 82%
+    transparent 45%,
+    #000 88%
   );
 }
 
-.candy-hero__brush {
+.candy-hero__brush,
+.candy-hero__halftone {
   display: none;
 }
 
-/* z3 — brand sticker */
+/* Brand sticker — secondary, static, away from face */
 .hero-sticker {
   position: absolute;
-  top: 12%;
-  right: 3%;
-  z-index: 3;
+  top: max(5.5rem, 12svh);
+  right: max(2.5%, calc((100vw - min(94vw, 1500px)) / 2 + 1.25rem));
+  z-index: 5;
   pointer-events: none;
-  animation: sticker-bob 3.6s ease-in-out infinite;
-}
-
-@keyframes sticker-bob {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-6px) rotate(-1.5deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-sticker {
-    animation: none;
-  }
+  animation: none;
+  transform: none;
 }
 
 .hero-sticker-card {
@@ -392,26 +354,27 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.75rem 1.05rem 0.65rem;
+  padding: 0.7rem 0.95rem 0.6rem;
   background: #ff3bbf;
   color: #050505;
   border: 2px solid #eff476;
-  border-radius: 1.1rem 1.35rem 1rem 1.4rem;
+  border-radius: 1.05rem 1.25rem 0.95rem 1.3rem;
   box-shadow: none;
+  transform: rotate(-6deg);
 }
 
 .hero-sticker-brand {
   font-weight: 900;
-  font-size: clamp(1.05rem, 2.8vw, 1.65rem);
+  font-size: clamp(0.95rem, 2.2vw, 1.35rem);
   line-height: 0.95;
   letter-spacing: 0.02em;
 }
 
 .hero-sticker-sub {
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   font-weight: 700;
-  letter-spacing: 0.24em;
-  padding: 0.18rem 0.55rem;
+  letter-spacing: 0.22em;
+  padding: 0.16rem 0.5rem;
   border-radius: 999px;
   background: #050505;
   color: #eff476;
@@ -419,74 +382,62 @@ body {
 
 @media (min-width: 768px) {
   .candy-hero__frame {
-    width: min(90vw, 1080px);
+    width: min(94vw, 1500px);
+    height: 90svh;
     border-radius: 34px;
-    max-height: min(66svh, 600px);
   }
 
   .candy-hero__master {
-    background-position: 50% 36%;
+    background-position: 50% 34%;
   }
 }
 
 @media (max-width: 767px) {
   .candy-hero__type-row {
-    font-size: max(22vw, 8rem);
-    line-height: 0.72;
-    letter-spacing: -0.07em;
+    font-size: clamp(2.6rem, 14vw, 4.2rem);
+    line-height: 0.94;
   }
 
   .candy-hero__typewall {
-    inset: -6% -55%;
+    padding: 10svh 0;
   }
 
   .candy-hero__frame {
-    width: 92vw;
-    border-radius: 28px;
-    max-height: min(52svh, 420px);
-    top: 46%;
+    width: calc(100vw - 32px);
+    height: 78svh;
+    max-height: 78svh;
+    border-radius: 24px;
   }
 
   .candy-hero__master {
-    background-position: 50% 40%;
+    background-position: 50% 38%;
   }
 
   .hero-sticker {
     top: auto;
-    bottom: 16%;
-    right: 3%;
-    transform: scale(0.7);
+    bottom: max(6.5rem, 18svh);
+    right: calc(16px + 0.4rem);
+    transform: scale(0.78);
     transform-origin: bottom right;
-    animation-name: sticker-bob-m;
-  }
-
-  @keyframes sticker-bob-m {
-    0%,
-    100% {
-      transform: scale(0.7) translateY(0);
-    }
-    50% {
-      transform: scale(0.7) translateY(-5px);
-    }
   }
 
   .hero-sticker-card {
-    width: 78px;
-    padding: 0.48rem 0.5rem 0.42rem;
+    width: 72px;
+    padding: 0.45rem 0.45rem 0.4rem;
   }
 
   .hero-sticker-brand {
-    font-size: 0.95rem;
+    font-size: 0.88rem;
   }
 
   .hero-sticker-sub {
-    font-size: 0.46rem;
-    letter-spacing: 0.12em;
-    padding: 0.12rem 0.32rem;
+    font-size: 0.44rem;
+    letter-spacing: 0.1em;
+    padding: 0.1rem 0.28rem;
   }
 }
 
-/* ═══ STORY PLATES — 100svh black film frames ═══ */
+/* ═══ STORY PLATES — 100svh poster frames ═══ */
 .candy-plate {
   position: absolute;
   inset: 0;
@@ -502,8 +453,8 @@ body {
   place-items: center;
 }
 
-/* Behind framed image — giant chapter numeral / chinese echo */
-.candy-plate__backdrop {
+/* Single chapter title wall (no double-exposure) */
+.candy-plate__title {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -514,49 +465,36 @@ body {
   user-select: none;
 }
 
-.candy-plate__num {
-  font-family: var(--font-display), "Arial Narrow", Impact, sans-serif;
-  font-weight: 900;
-  font-size: clamp(42vw, 58vw, 72vw);
-  line-height: 0.72;
-  letter-spacing: -0.08em;
-  white-space: nowrap;
-  opacity: 0.9;
-}
-
-.candy-plate__echo {
-  position: absolute;
+.candy-plate__title-text {
   font-family: var(--font-display), "Noto Sans TC", Impact, sans-serif;
   font-weight: 900;
-  font-size: clamp(10vw, 14vw, 18vw);
+  font-size: clamp(18vw, 28vw, 34vw);
   line-height: 0.8;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.06em;
   white-space: nowrap;
-  opacity: 0.55;
-  transform: translateY(28vh);
+  opacity: 1;
 }
 
-.candy-plate--acid .candy-plate__num,
-.candy-plate--acid .candy-plate__echo {
+.candy-plate--acid .candy-plate__title-text {
   color: #eff476;
 }
 
-.candy-plate--pink .candy-plate__num,
-.candy-plate--pink .candy-plate__echo {
+.candy-plate--pink .candy-plate__title-text {
   color: #ff3bbf;
 }
 
-/* Framed story image 88–94vw, radius 28–36px */
+/* Poster image frame ≈ 88–94vw × 78–88svh */
 .candy-plate__frame {
   position: relative;
   z-index: 2;
-  width: min(92vw, 1180px);
-  aspect-ratio: 16 / 9;
-  max-height: min(78svh, 720px);
+  width: min(92vw, 1400px);
+  height: 84svh;
+  max-height: 84svh;
   border-radius: 32px;
   overflow: clip;
   background: #050505;
   will-change: transform;
+  transform-origin: 50% 50%;
 }
 
 .candy-plate__img {
@@ -573,9 +511,10 @@ body {
 
 @media (max-width: 767px) {
   .candy-plate__frame {
-    width: 94vw;
-    border-radius: 28px;
-    max-height: min(58svh, 480px);
+    width: calc(100vw - 32px);
+    height: 72svh;
+    max-height: 72svh;
+    border-radius: 24px;
   }
 
   .candy-plate__img {
@@ -584,19 +523,15 @@ body {
     transform-origin: var(--obj-pos-m, var(--obj-pos, center center));
   }
 
-  .candy-plate__num {
-    font-size: max(48vw, 22vw);
-  }
-
-  .candy-plate__echo {
-    font-size: max(14vw, 2.5rem);
-    transform: translateY(22vh);
+  .candy-plate__title-text {
+    font-size: clamp(22vw, 30vw, 36vw);
   }
 }
 
 @media (min-width: 768px) {
   .candy-plate__frame {
-    width: min(90vw, 1140px);
+    width: min(92vw, 1400px);
+    height: 84svh;
     border-radius: 34px;
   }
 }
@@ -680,24 +615,38 @@ body {
 }
 
 /* ═══ CAPTION — dual bottom capsules ═══ */
-.candy-caption {
+.candy-caption-anchor {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: max(1rem, env(safe-area-inset-bottom));
-  z-index: 50;
+  bottom: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.candy-caption {
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  z-index: 40;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  padding: 0 12px;
+  padding: 0 16px max(1rem, env(safe-area-inset-bottom));
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.22s ease;
-  max-height: 22vh;
+  max-height: 26vh;
 }
 
 .candy-caption.is-visible {
   opacity: 1;
+}
+
+.candy-caption--static {
+  position: relative;
+  padding-bottom: 1rem;
 }
 
 .candy-caption__stack {
@@ -798,42 +747,49 @@ body {
 
 @media (max-width: 640px) {
   .candy-caption {
-    padding: 0 12px;
-    bottom: max(0.75rem, env(safe-area-inset-bottom));
-    max-height: 22vh;
+    padding: 0 16px max(0.75rem, env(safe-area-inset-bottom));
+    max-height: 30vh;
   }
 
   .candy-caption__stack {
     width: 100%;
-    max-height: 22vh;
+    max-height: 30vh;
   }
 
   .candy-caption__dual {
-    grid-template-columns: minmax(72px, 96px) minmax(0, 1fr);
-    gap: 0.4rem;
-    max-height: 22vh;
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+    max-height: 30vh;
   }
 
   .candy-caption__meta-pill {
-    border-radius: 1.2rem;
-    padding: 0.55rem 0.4rem;
+    border-radius: 999px;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.9rem;
   }
 
   .candy-caption__quote-pill {
-    border-radius: 1.2rem;
-    padding: 0.55rem 0.8rem;
+    border-radius: 1.25rem;
+    padding: 0.7rem 1rem;
+  }
+
+  .candy-caption__chapter {
+    font-size: 0.7rem;
   }
 
   .candy-caption__label {
-    font-size: 0.68rem;
-    letter-spacing: 0.06em;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    margin-top: 0;
   }
 
   .candy-caption__copy {
-    font-size: 0.74rem;
-    line-height: 1.3;
+    font-size: 1rem;
+    line-height: 1.35;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
