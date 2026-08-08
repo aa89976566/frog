@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { VacuumPack } from "@/components/_archive/ui/VacuumPack";
-import { ExcitedDog } from "@/components/_archive/ui/ExcitedDog";
+import { VacuumPack } from "@/components/ui/VacuumPack";
+import { ExcitedDog } from "@/components/ui/ExcitedDog";
 
 type Phase =
   | "idle"

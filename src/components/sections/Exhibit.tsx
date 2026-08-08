@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { VacuumPack } from "@/components/_archive/ui/VacuumPack";
+import { VacuumPack } from "@/components/ui/VacuumPack";
 
 export function Exhibit() {
   return (

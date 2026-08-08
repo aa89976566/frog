@@ -16,10 +16,10 @@ npm install
 npm run dev
 ```
 
-## Homepage render path (single mount)
+## Pages
 
-1. `FilmHero` — first-screen hero (via `ScrollFilm`)
-2. Five-act scroll film — `ScrollFilm` + `STORY_ACTS` / `HERO_MASTER` in `src/lib/story.ts`
-3. Close — campaign close CTA
-
-Obsolete section components live under `src/components/_archive` and are not mounted.
+1. Hero — mysterious frog watches you
+2. Who is afraid — owner vs dog, leash pull scroll
+3. The Test — hold to reveal 青蛙凍乾
+4. Exhibit F-001 — museum product presentation
+5. 嗷嗚計畫 — campaign invitation
