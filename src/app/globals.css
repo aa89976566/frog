@@ -357,6 +357,10 @@ body {
   );
 }
 
+.candy-hero__brush {
+  display: none;
+}
+
 /* z3 — brand sticker */
 .hero-sticker {
   position: absolute;
@@ -597,6 +601,14 @@ body {
   }
 }
 
+/* legacy unused plate chrome — keep inert */
+.candy-plate__grade,
+.candy-plate__ghosts,
+.candy-plate__seam,
+.candy-ghost {
+  display: none !important;
+}
+
 /* ═══ TYPE OVERLAY — between plates, NOT a black page ═══ */
 .candy-type-overlay {
   position: absolute;
@@ -659,6 +671,12 @@ body {
 
 .candy-type-overlay--pink .candy-type-overlay__echo {
   color: #eff476;
+}
+
+.candy-type-overlay__echo--b {
+  color: #52ff20;
+  opacity: 0.35;
+  transform: translate(-2%, 10%) scale(0.96);
 }
 
 /* ═══ CAPTION — dual bottom capsules ═══ */
