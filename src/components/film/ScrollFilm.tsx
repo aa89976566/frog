@@ -327,13 +327,25 @@ export function ScrollFilm() {
                   } as CSSProperties
                 }
               >
-                {/* One chapter title wall — no double-exposure echo */}
+                {/* One chapter title wall — rhythmic rows in the margins */}
                 <div
                   className="candy-plate__title"
                   data-act-title
                   aria-hidden="true"
                 >
-                  <span className="candy-plate__title-text">{title}</span>
+                  {Array.from({ length: 5 }, (_, row) => {
+                    const line = Array.from({ length: 8 }, () => `${title}　`).join(
+                      "",
+                    );
+                    return (
+                      <div
+                        key={row}
+                        className={`candy-plate__title-row candy-plate__title-row--${row % 2 === 0 ? "a" : "b"}`}
+                      >
+                        <span>{line}</span>
+                      </div>
+                    );
+                  })}
                 </div>
 
                 <div className="candy-plate__frame" data-plate-frame>

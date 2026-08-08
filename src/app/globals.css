@@ -248,9 +248,9 @@ body {
   overflow: hidden;
   font-family: var(--font-display), "Arial Narrow", Impact, "Noto Sans TC", sans-serif;
   font-weight: 900;
-  font-size: clamp(3.8rem, 9.5vw, 8.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.045em;
+  font-size: clamp(4.2rem, 10.5vw, 9.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
   white-space: nowrap;
   color: #eff476;
 }
@@ -279,16 +279,16 @@ body {
   color: #eff476;
 }
 
-/* Dominant poster — not a floating card */
+/* Dominant poster — immersive, not a floating card */
 .candy-hero__frame {
   position: absolute;
   z-index: 2;
   inset: 0;
   margin: auto;
   width: min(94vw, 1500px);
-  height: 90svh;
-  max-height: 90svh;
-  border-radius: 32px;
+  height: 91svh;
+  max-height: 91svh;
+  border-radius: 30px;
   overflow: clip;
   background: #050505;
   box-shadow: none;
@@ -341,8 +341,8 @@ body {
 /* Brand sticker — secondary, static, away from face */
 .hero-sticker {
   position: absolute;
-  top: max(5.5rem, 12svh);
-  right: max(2.5%, calc((100vw - min(94vw, 1500px)) / 2 + 1.25rem));
+  top: max(5.25rem, 10svh);
+  right: max(1.5%, calc((100vw - min(94vw, 1500px)) / 2 + 0.85rem));
   z-index: 5;
   pointer-events: none;
   animation: none;
@@ -383,8 +383,8 @@ body {
 @media (min-width: 768px) {
   .candy-hero__frame {
     width: min(94vw, 1500px);
-    height: 90svh;
-    border-radius: 34px;
+    height: 91svh;
+    border-radius: 32px;
   }
 
   .candy-hero__master {
@@ -394,44 +394,44 @@ body {
 
 @media (max-width: 767px) {
   .candy-hero__type-row {
-    font-size: clamp(2.6rem, 14vw, 4.2rem);
+    font-size: clamp(2.8rem, 15vw, 4.4rem);
     line-height: 0.94;
   }
 
   .candy-hero__typewall {
-    padding: 10svh 0;
+    padding: 8svh 0;
   }
 
   .candy-hero__frame {
     width: calc(100vw - 32px);
-    height: 78svh;
-    max-height: 78svh;
-    border-radius: 24px;
+    height: 82svh;
+    max-height: 82svh;
+    border-radius: 22px;
   }
 
   .candy-hero__master {
-    background-position: 50% 38%;
+    background-position: 50% 36%;
   }
 
   .hero-sticker {
-    top: auto;
-    bottom: max(6.5rem, 18svh);
-    right: calc(16px + 0.4rem);
-    transform: scale(0.78);
-    transform-origin: bottom right;
+    top: max(4.25rem, 8svh);
+    bottom: auto;
+    right: 16px;
+    transform: scale(0.72);
+    transform-origin: top right;
   }
 
   .hero-sticker-card {
-    width: 72px;
-    padding: 0.45rem 0.45rem 0.4rem;
+    width: 70px;
+    padding: 0.42rem 0.42rem 0.36rem;
   }
 
   .hero-sticker-brand {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
   }
 
   .hero-sticker-sub {
-    font-size: 0.44rem;
+    font-size: 0.42rem;
     letter-spacing: 0.1em;
     padding: 0.1rem 0.28rem;
   }
@@ -453,33 +453,44 @@ body {
   place-items: center;
 }
 
-/* Single chapter title wall (no double-exposure) */
+/* Single chapter title wall — rows readable in black gutters */
 .candy-plate__title {
   position: absolute;
   inset: 0;
   z-index: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.04em;
+  padding: 6svh 0;
   pointer-events: none;
   overflow: hidden;
   user-select: none;
 }
 
-.candy-plate__title-text {
+.candy-plate__title-row {
+  overflow: hidden;
   font-family: var(--font-display), "Noto Sans TC", Impact, sans-serif;
   font-weight: 900;
-  font-size: clamp(18vw, 28vw, 34vw);
-  line-height: 0.8;
-  letter-spacing: -0.06em;
+  font-size: clamp(3.2rem, 8.5vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
   white-space: nowrap;
-  opacity: 1;
 }
 
-.candy-plate--acid .candy-plate__title-text {
+.candy-plate__title-row--a {
+  opacity: 0.9;
+}
+
+.candy-plate__title-row--b {
+  opacity: 0.62;
+}
+
+.candy-plate--acid .candy-plate__title-row {
   color: #eff476;
 }
 
-.candy-plate--pink .candy-plate__title-text {
+.candy-plate--pink .candy-plate__title-row {
   color: #ff3bbf;
 }
 
@@ -487,10 +498,10 @@ body {
 .candy-plate__frame {
   position: relative;
   z-index: 2;
-  width: min(92vw, 1400px);
-  height: 84svh;
-  max-height: 84svh;
-  border-radius: 32px;
+  width: min(94vw, 1480px);
+  height: 86svh;
+  max-height: 86svh;
+  border-radius: 28px;
   overflow: clip;
   background: #050505;
   will-change: transform;
@@ -512,9 +523,9 @@ body {
 @media (max-width: 767px) {
   .candy-plate__frame {
     width: calc(100vw - 32px);
-    height: 72svh;
-    max-height: 72svh;
-    border-radius: 24px;
+    height: 76svh;
+    max-height: 76svh;
+    border-radius: 22px;
   }
 
   .candy-plate__img {
@@ -523,16 +534,16 @@ body {
     transform-origin: var(--obj-pos-m, var(--obj-pos, center center));
   }
 
-  .candy-plate__title-text {
-    font-size: clamp(22vw, 30vw, 36vw);
+  .candy-plate__title-row {
+    font-size: clamp(2.4rem, 13vw, 3.8rem);
   }
 }
 
 @media (min-width: 768px) {
   .candy-plate__frame {
-    width: min(92vw, 1400px);
-    height: 84svh;
-    border-radius: 34px;
+    width: min(94vw, 1480px);
+    height: 86svh;
+    border-radius: 30px;
   }
 }
 
@@ -619,7 +630,7 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: max(1.1rem, env(safe-area-inset-bottom));
   z-index: 40;
   pointer-events: none;
 }
@@ -633,7 +644,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  padding: 0 16px max(1rem, env(safe-area-inset-bottom));
+  padding: 0 16px;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.22s ease;
