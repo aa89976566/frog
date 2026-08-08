@@ -3,9 +3,9 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { AtmosphereBackground } from "@/components/hero/AtmosphereBackground";
-import { TypeMarqueeGSAP } from "@/components/hero/TypeMarqueeGSAP";
-import { FrogLayer } from "@/components/hero/FrogLayer";
+import { AtmosphereBackground } from "@/components/_archive/hero/AtmosphereBackground";
+import { TypeMarqueeGSAP } from "@/components/_archive/hero/TypeMarqueeGSAP";
+import { FrogLayer } from "@/components/_archive/hero/FrogLayer";
 import { BrandSticker } from "@/components/hero/BrandSticker";
 
 gsap.registerPlugin(ScrollTrigger);

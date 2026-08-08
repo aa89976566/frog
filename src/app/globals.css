@@ -357,10 +357,6 @@ body {
   );
 }
 
-.candy-hero__brush {
-  display: none;
-}
-
 /* z3 — brand sticker */
 .hero-sticker {
   position: absolute;
@@ -601,14 +597,6 @@ body {
   }
 }
 
-/* legacy unused plate chrome — keep inert */
-.candy-plate__grade,
-.candy-plate__ghosts,
-.candy-plate__seam,
-.candy-ghost {
-  display: none !important;
-}
-
 /* ═══ TYPE OVERLAY — between plates, NOT a black page ═══ */
 .candy-type-overlay {
   position: absolute;
@@ -671,34 +659,6 @@ body {
 
 .candy-type-overlay--pink .candy-type-overlay__echo {
   color: #eff476;
-}
-
-.candy-type-overlay__echo--b {
-  color: #52ff20;
-  opacity: 0.35;
-  transform: translate(-2%, 10%) scale(0.96);
-}
-
-/* ═══ BRUSH ═══ */
-.candy-brush {
-  position: absolute;
-  inset-x: 0;
-  z-index: 30;
-  height: clamp(60px, 7.5vh, 110px);
-  pointer-events: none;
-}
-
-.candy-brush--top {
-  top: 0;
-}
-.candy-brush--bottom {
-  bottom: 0;
-}
-
-.candy-brush__svg {
-  display: block;
-  width: 100%;
-  height: 100%;
 }
 
 /* ═══ CAPTION — dual bottom capsules ═══ */
