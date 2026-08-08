@@ -197,13 +197,13 @@ body {
 
 .candy-film__pin {
   --poster-nav-inset: 20px;
-  --poster-frame-top: 48px;
-  --poster-w: min(90vw, 1280px);
-  --poster-h: 86svh;
+  --poster-frame-top: 52px;
+  --poster-w: min(88vw, 1240px);
+  --poster-h: 84svh;
   --poster-radius: 28px;
   --poster-caption-bottom: max(1rem, env(safe-area-inset-bottom));
   --poster-meta-w: 112px;
-  --poster-gutter-x: calc((100vw - min(90vw, 1280px)) / 2);
+  --poster-gutter-x: calc((100vw - min(88vw, 1240px)) / 2);
 
   position: relative;
   height: 100svh;
@@ -259,7 +259,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1.5svh 0 2svh;
+  padding: 0.4svh 0 1svh;
   pointer-events: none;
   user-select: none;
   overflow: hidden;
@@ -269,9 +269,10 @@ body {
   overflow: hidden;
   font-family: var(--font-display), "Arial Narrow", Impact, "Noto Sans TC", sans-serif;
   font-weight: 900;
-  font-size: clamp(5.5rem, 16vw, 13rem);
-  line-height: 0.82;
-  letter-spacing: -0.055em;
+  /* Oversized so 18–28%+ of each glyph remains in the gutters */
+  font-size: clamp(6rem, 18vw, 14rem);
+  line-height: 0.8;
+  letter-spacing: -0.06em;
   white-space: nowrap;
   color: #eff476;
 }
