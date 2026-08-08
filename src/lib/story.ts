@@ -111,8 +111,12 @@ export const STORY_ACTS: StoryAct[] = [
   },
 ];
 
-/** Hero core = first story plate — same locked dog, never the old master breed. */
-export const HERO_MASTER = STORY_ACTS[0].image;
+/**
+ * Hero 獨立主視覺（僅第一屏）。
+ * 禁止用於第二章／故事板；禁止裁切眼睛或在圖內加字。
+ * 五章故事板路徑見 STORY_ACTS，與本檔完全分離。
+ */
+export const HERO_MASTER = "/assets/hero/hero-frog-closeup-v10.jpg";
 
 export const LOCKED_STORY_IMAGES: readonly string[] = STORY_ACTS.map((a) => a.image);
 

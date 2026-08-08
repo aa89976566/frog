@@ -304,7 +304,8 @@ body {
   background-color: #050505;
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: 54% 46%;
+  /* 獨立 Hero 近景：偏上對準眼睛，禁止裁到眼部 */
+  background-position: 50% 36%;
   transform: none;
   filter: none;
 }
@@ -424,7 +425,7 @@ body {
   }
 
   .candy-hero__master {
-    background-position: 54% 46%;
+    background-position: 50% 36%;
   }
 }
 
@@ -447,7 +448,7 @@ body {
   }
 
   .candy-hero__master {
-    background-position: 58% 48%;
+    background-position: 50% 40%;
   }
 
   .hero-sticker {

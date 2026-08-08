@@ -69,13 +69,13 @@ export function FilmHero() {
         })}
       </div>
 
-      {/* z2 — same story-01 plate, framed so dog ears / frog face stay readable */}
+      {/* z2 — independent Hero close-up only; never reuse on chapter 2 */}
       <div className="candy-hero__frame" data-hero-frog>
         <div
           className="candy-hero__master"
           style={{ backgroundImage: `url(${HERO_MASTER})` }}
           role="img"
-          aria-label="化妝室鏡前的西裝青蛙與右下高黑耳白狗——故事第一章同一角色"
+          aria-label="西裝青蛙近景——第一屏 Hero 獨立主視覺"
         />
       </div>
 
