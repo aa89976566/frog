@@ -116,7 +116,7 @@ export const STORY_ACTS: StoryAct[] = [
  * 禁止用於第二章／故事板；禁止裁切眼睛或在圖內加字。
  * 五章故事板路徑見 STORY_ACTS，與本檔完全分離。
  */
-export const HERO_MASTER = "/assets/hero/hero-frog-closeup-v10.jpg";
+export const HERO_MASTER = "/assets/hero/hero-approved.png";
 
 export const LOCKED_STORY_IMAGES: readonly string[] = STORY_ACTS.map((a) => a.image);
 
