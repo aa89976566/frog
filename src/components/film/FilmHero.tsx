@@ -18,39 +18,23 @@ export function FilmHero() {
 
   useEffect(() => {
     const root = rootRef.current;
-    const type = typeRef.current;
-    if (!root || !type) return;
+    if (!root) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const frame = root.querySelector<HTMLElement>("[data-hero-frog]");
-    const tracks = type.querySelectorAll<HTMLElement>("[data-type-track]");
     const tweens: gsap.core.Tween[] = [];
 
-    if (frame) gsap.set(frame, { scale: 1.035 });
+    if (frame) gsap.set(frame, { autoAlpha: 0, scale: 1.025 });
     if (frame) {
       tweens.push(
         gsap.to(frame, {
+          autoAlpha: 1,
           scale: 1,
-          duration: 1.2,
+          duration: 0.95,
           ease: "power2.out",
         }),
       );
     }
-
-    // Slow 2–3% opposing drift on alternate rows
-    tracks.forEach((track, i) => {
-      const amp = i % 2 === 0 ? -2.6 : 2.6;
-      gsap.set(track, { xPercent: 0 });
-      tweens.push(
-        gsap.to(track, {
-          xPercent: amp,
-          duration: 7.5 + i * 0.4,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-        }),
-      );
-    });
 
     return () => tweens.forEach((t) => t.kill());
   }, []);
@@ -71,14 +55,15 @@ export function FilmHero() {
         aria-hidden="true"
       >
         {Array.from({ length: TYPE_ROWS }, (_, row) => {
-          const doubled = Array.from({ length: 10 }, () => TYPE_LINE).join("");
+          const sequence = Array.from({ length: 8 }, () => TYPE_LINE).join("");
           return (
             <div
               key={row}
               className={`poster-typewall__row poster-typewall__row--${row % 2 === 0 ? "a" : "b"}`}
             >
               <div data-type-track className="poster-typewall__track">
-                <span>{doubled}</span>
+                <span>{sequence}</span>
+                <span aria-hidden="true">{sequence}</span>
               </div>
             </div>
           );
@@ -90,7 +75,7 @@ export function FilmHero() {
           className="poster-frame__media"
           style={{ backgroundImage: `url(${HERO_MASTER})` }}
           role="img"
-          aria-label="西裝青蛙近景——第一屏 Hero 獨立主視覺"
+          aria-label="粉紅上衣綠色青蛙站在青蛙誰在怕字牆前"
         />
         <div className="poster-frame__sticker">
           <BrandSticker />
