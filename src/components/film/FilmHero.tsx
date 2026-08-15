@@ -71,11 +71,10 @@ export function FilmHero() {
       </div>
 
       <div className="poster-frame" data-hero-frog>
-        <div
-          className="poster-frame__media"
-          style={{ backgroundImage: `url(${HERO_MASTER})` }}
-          role="img"
-          aria-label="粉紅上衣綠色青蛙站在青蛙誰在怕字牆前"
+        <img
+          className="poster-frame__frog"
+          src={HERO_MASTER}
+          alt="粉紅上衣綠色青蛙站在輪播的青蛙誰在怕字牆前"
         />
         <div className="poster-frame__sticker">
           <BrandSticker />
