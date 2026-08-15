@@ -388,12 +388,25 @@ body {
 }
 
 .candy-hero .poster-frame {
-  background: #5f35a8;
+  background: transparent;
+  overflow: visible;
 }
 
-.candy-hero .poster-frame__media {
-  background-size: contain;
-  background-position: 50% 100%;
+.poster-frame__frog {
+  position: absolute;
+  left: 50%;
+  bottom: -1px;
+  width: auto;
+  height: min(90svh, 920px);
+  max-width: 92vw;
+  object-fit: contain;
+  object-position: 50% 100%;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 1.5rem 2rem rgba(5, 5, 5, 0.28));
+}
+
+.candy-hero .poster-typewall {
+  background: #5f35a8;
 }
 
 /* Sticker locked to visual frame (not free-floating on viewport) */
